@@ -84,9 +84,35 @@ No full scene or large raw file was downloaded; only remote metadata, HTTP heade
 - What EULA and redistribution conditions apply to derived hackathon outputs?
 - Which environmental phenomenon and final study area should the project select?
 
-## Supporting datasets
+## Phase 3 supporting datasets
 
-No supporting analysis dataset has been selected or downloaded. The Folly Lake inventory and official place-name information are used only to validate the temporary AOI.
+### Nova Scotia Hydrographic Network
+
+- Open Government record: <https://open.canada.ca/data/en/dataset/2ed55c68-b7f8-4db0-15d9-bef40797a4c4>
+- Publisher: Government of Nova Scotia
+- Service used: `WTR_NSHN_UT83/MapServer/16` (`Wet Features`)
+- Query class: `FEAT_DESC = 'Lake Water polygon'`
+- Folly Lake feature: object 2385, HID `A938C361055748859F18C4E5B3FF36AE`
+- Reported source area: 836,901.92 m²; reprojected area: 83.69 ha
+- Use: independent nominal hydrographic geometry
+- Caveat: the vector is not acquisition-date shoreline truth and may reflect mapping generalization or update lag
+
+The public service is queried at run time. No copy of the source vector is stored in the repository.
+
+### Sentinel-2 Collection 1 Level-2A
+
+- Earth Search STAC API: <https://earth-search.aws.element84.com/v1>
+- Collection metadata: <https://earth-search.aws.element84.com/v1/collections/sentinel-2-c1-l2a>
+- Selected item: `S2B_T20TMR_20250726T151759_L2A`
+- Acquisition: 2025-07-26 15:20:18 UTC
+- Platform / tile / CRS: Sentinel-2B / T20TMR / EPSG:32620
+- Scene cloud cover: 0.005936%; no SCL-excluded cloud pixels occur in the fixed analysis rectangle
+- Pairing: 4.80 hours after the selected 2025-07-26 RCM acquisition
+- Assets: B03 green and B08 NIR at 10 m; SCL at 20 m
+- Radiometry: Level-2A reflectance scale 0.0001 and offset -0.1 read from STAC raster-band metadata
+- Use: independent NDWI water/non-water signal
+
+Only public COG byte ranges for the AOI are read. No full Sentinel-2 tile is downloaded or stored.
 
 ## Phase 2 confirmed asset details
 
@@ -97,3 +123,11 @@ No supporting analysis dataset has been selected or downloaded. The Folly Lake i
 - Mean local incidence angle over the analysis rectangle is approximately 27.971°–27.985° across the eight dates.
 - The 2025-10-26 and 2025-11-07 searches each return two overlapping catalogue records for one satellite/orbit acquisition. Phase 2 retains one deterministic item per acquisition and does not count the duplicates as separate dates.
 - All selected RR and RL windows were read remotely without credentials. No complete satellite scene was downloaded.
+
+## Phase 3 confirmed asset details
+
+- All eight RCM analysis windows share an identical EPSG:32620, 20 m, 110 × 50 grid with zero measured cross-date affine/extent offset.
+- Product XML identifies data-mask codes 1, 2, 5, 7, and 9 as valid, invalid, layover, shadow, and layover-shadow respectively. The tested windows contain only codes 1 and 5; Phase 3 retains only code 1.
+- Mean local incidence angle spans 27.97080°–27.98475° and mean gamma-to-sigma ratio spans 0.878532–0.878701 across dates.
+- Sentinel-2 continuous reflectance is processed at 10 m. Categorical SCL uses nearest-neighbour resampling, and the final water/non-water/unknown class uses mode aggregation onto the native RCM 20 m grid.
+- The authoritative vector, Sentinel-2 arrays, and RCM arrays remain remote/in-memory. No large data artifacts were added to Git.

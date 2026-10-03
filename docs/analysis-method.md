@@ -1,6 +1,6 @@
 # Analysis Method
 
-This document records the Phase 2 RCM backscatter exploration confirmed on 2026-10-03. The method is a feasibility baseline for Folly Lake, not a validated water classifier or evidence of environmental change.
+This document records the Phase 2 RCM backscatter exploration and Phase 3 preprocessing/validation work confirmed on 2026-10-03. The method is a feasibility baseline for Folly Lake, not a universal water classifier or evidence of environmental change.
 
 ## Confirmed observations
 
@@ -120,6 +120,69 @@ At this stable-lake control site, the provisional RR method reports a 3.20% coef
 - The result depends on the fixed analysis rectangle, samples, threshold, and seeded-connectivity rule.
 - Visual inspection is insufficient for final validation. A later phase must compare the derived mask with an authoritative lake polygon or contemporaneous cloud-free Sentinel-2 water delineation.
 
-## Phase 3 requirements
+## Phase 3 preprocessing and alignment
 
-Phase 3 is still required to formalize common-grid alignment, quality/nodata handling, local-incidence review, radiometric comparability, shoreline treatment, and independent validation. The Phase 2 result must not be used as evidence of climate-related environmental change.
+### RCM grid registration
+
+All eight retained RCM windows have the following tested grid:
+
+| Property | Result |
+| --- | --- |
+| CRS | EPSG:32620 |
+| Pixel size | 20 m × 20 m |
+| Window shape | 110 rows × 50 columns |
+| Affine origin | 457000 m E, 5044100 m N |
+| Bounds | 457000–458000 m E, 5041900–5044100 m N |
+| Maximum cross-date origin/extent offset | 0 m / 0 pixels |
+
+No RCM reprojection or backscatter resampling is needed inside the tested AOI. The supplied grid is preserved.
+
+### Quality masks and support layers
+
+Product XML defines the CEOS-ARD data-mask values as `1 = valid`, `2 = invalid`, `5 = layover`, `7 = shadow`, and `9 = layover + shadow`. RR is readable in all 5,500 AOI pixels on each date. The data mask flags 0–16 layover pixels per acquisition; only code 1 is analysis-valid. No invalid, shadow, or combined layover-shadow values occur in this window.
+
+Mean local incidence angle is 27.97080°–27.98475° across dates, a span of only 0.01396°. The mean gamma-to-sigma ratio is 0.878532–0.878701. These stable summaries reduce concern about cross-date geometry drift, although the broad within-scene local-incidence range still matters per pixel.
+
+### Radiometric and platform consistency
+
+The fixed RR water/land samples remain separated on all dates, with a median gap of 10.77–13.95 dB. Four RCM2 and four RCM3 dates are present. Descriptively, their means differ as follows:
+
+- RCM2 water-sample median is 0.71 dB lower than RCM3;
+- RCM2 land-sample median is 0.93 dB higher than RCM3;
+- RCM2 provisional lake area is 0.88 ha higher than RCM3 on average;
+- sample local-incidence means are nearly identical.
+
+The small sample and platform/date/season confounding do not support attributing these differences to satellite calibration. Platform identity must remain available as a diagnostic variable.
+
+## Independent validation
+
+### Reference sources
+
+Two sources are used independently of the SAR-derived training samples:
+
+1. **Sentinel-2 Collection 1 Level-2A** item `S2B_T20TMR_20250726T151759_L2A`, acquired 2025-07-26 15:20:18 UTC. It is paired with the RCM acquisition at 10:32:24 UTC, an absolute offset of 4.80 hours. Scene cloud cover is 0.005936%, and the tested AOI contains no SCL-excluded cloud pixels.
+2. **Nova Scotia Hydrographic Network Wet Features** object 2385, HID `A938C361055748859F18C4E5B3FF36AE`. Its reprojected full-polygon area is 83.69 ha. It is treated as authoritative nominal hydrography, not acquisition-date shoreline truth.
+
+### Sentinel-2 method
+
+Earth Search B03 green and B08 NIR assets are read at their native 10 m resolution. Surface reflectance is calculated with the asset scale and offset (`DN × 0.0001 − 0.1`). The independent optical class is `NDWI = (green − NIR) / (green + NIR) > 0`, without fitting to RCM.
+
+SCL classes 0, 1, 3, 8, 9, 10, and 11 are invalid. SCL is moved from 20 m to the 10 m spectral grid with nearest-neighbour resampling. The three-state water/non-water/unknown result is aggregated to the exact 20 m RCM grid with mode resampling. Categorical classes are not interpolated. The NSHN vector is rasterized directly on that grid with center-pixel semantics.
+
+### Agreement results
+
+RCM is treated as the prediction to make precision and recall direction explicit:
+
+| Comparison | Precision | Recall | F1 | IoU | RCM / prediction area | Reference area | Area error |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| RCM RR vs same-day Sentinel-2 NDWI | 0.864 | 0.906 | 0.885 | 0.794 | 70.44 ha | 67.16 ha | +3.28 ha (+4.88%) |
+| RCM RR vs NSHN nominal polygon | 0.999 | 0.854 | 0.921 | 0.853 | 70.44 ha | 82.40 ha inside the fixed AOI | -11.96 ha (-14.51%) |
+| Sentinel-2 NDWI vs NSHN nominal polygon | 0.957 | 0.780 | 0.860 | 0.754 | 67.16 ha | 82.40 ha inside the fixed AOI | -15.24 ha (-18.50%) |
+
+For the primary RCM/Sentinel comparison, TP = 1,522, FP = 239, FN = 157, and TN = 3,573 across 5,491 mutually valid 20 m cells. RCM-only water is concentrated along the western/northwestern lobe and parts of the shoreline. Fewer Sentinel-only pixels occur around southern and narrow shore edges plus small disconnected patches. Mixed pixels, 10-to-20 m aggregation, optical response to vegetation/dark water, SAR roughness/speckle, and fixed thresholds are plausible contributors.
+
+## Phase 3 conclusion and Phase 4 guardrails
+
+The RCM series is technically suitable to continue as a **conditional relative-change baseline**: grids are exactly aligned in the tested AOI, supplied quality masking is available, geometry-support layers are stable, and the same-day independent EO comparison shows coherent lake-interior agreement.
+
+It is not reliable enough for small absolute-shoreline claims. Phase 4 must preserve the native common grid, exclude all data-mask codes other than 1, retain the fixed RR rule, track platform, and flag only changes clearly larger than the Phase 2 stability/sensitivity envelope. Additional cloud-free optical dates are needed before interpreting a temporal signal. Folly Lake remains a control/calibration site, and no climate or causal claim is supported.
