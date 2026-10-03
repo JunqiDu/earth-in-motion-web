@@ -48,3 +48,14 @@
 - Use Sentinel-2 only as independent recovery-period evidence because event-window optical coverage is cloud-obstructed. Retain Sentinel-1 metadata coverage but do not force requester-pays Level-1 measurements into an anonymously reproducible analysis.
 - Describe road/bridge intersections as **intersecting** or **potentially exposed**. Do not claim satellite overlap proves damage, closure, or flood depth.
 - When Phase 5 is started in a later task, focus impact analysis on the two cells above the control-site context while keeping provenance and uncertainty visible.
+
+## 2026-10-03 — Phase 5 impact layers and handoff
+
+- Reconstruct only the 12 and 21 December EGS endpoint masks needed for impact geometry, and verify them against Phase 4 metrics. Do not rerun event screening or the full Phase 4 workflow.
+- Preserve the Phase 4 1 km grid IDs. Retain grids descriptively when they exceed the 5.88 percentage-point control context or contain direct mapped road/bridge overlap. Do not create a numerical risk score.
+- Use OSM highway and bridge-tagged ways for infrastructure context because they are lightweight, queryable, and carry useful tags. Clip the query response to the exact projected AOI before metric calculations and preserve ODbL attribution. Treat intersections only as potential exposure.
+- Use Canada's official geolocated place-name points for community context. Do not infer settlement boundaries, population counts, or affected population from point proximity.
+- Use the B.C. Agricultural Land Reserve as the authoritative, rapidly accessible land-designation layer. Report overlap as ALR-designated land, not active crop area or agricultural damage. A separate crop/parcel damage model is out of scope.
+- Use cumulative 50 m, 100 m, and 250 m proximity bands. They are transparent descriptive distances, not hazard or damage-probability thresholds.
+- Keep official regional event reporting separate from pixel and asset-level evidence. Use wording such as *spatially consistent with* and do not transfer the reported Highway 1 closure to the compact AOI; no Highway 1 segment intersects the AOI.
+- Retain a small Phase 6 package of derived CSV, GeoJSON, JSON, and PNG files. Keep raw EGS archives and public-data caches outside the repository.

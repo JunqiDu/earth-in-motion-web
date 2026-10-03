@@ -1,0 +1,10 @@
+grid_id,baseline_water_ratio_pct,event_water_ratio_pct,recovery_water_ratio_pct,event_minus_baseline_pp,event_gain_area_ha,interpretation,temporal_class,road_count_direct,road_intersection_m,bridge_count_direct,nearest_community,community_distance_to_cell_gain_m,alr_overlap_ha,evidence_notes
+G042,15.0,36.5,31.833333333333336,21.5,5.16,high observed expansion,recovery observed,1,6.584824495024199,0,Deroche (Leq'á:mel First Nation),2168.250770548735,0.7477914162169158,above control-site context; road intersection
+G015,35.78947368421053,42.578947368421055,41.68421052631579,6.789473684210527,5.16,high observed expansion,recovery observed,0,0.0,0,Leq' a: mel,2584.720072449389,5.11528617605677,above control-site context
+G047,5.0,10.083333333333332,5.0,5.083333333333332,4.88,moderate observed expansion,recovery observed,2,60.21706288384442,0,Leq' a: mel,2968.823880972926,4.64,road intersection
+G018,0.36,3.8,2.08,3.44,3.44,moderate observed expansion,recovery observed,1,40.001758344851915,0,Leq' a: mel,778.4033760912768,3.44,road intersection
+G019,21.52,24.6,22.2,3.080000000000002,3.08,moderate observed expansion,recovery observed,5,76.88761818523915,0,Leq' a: mel,999.0591713509626,2.8933331325374607,road intersection
+G034,12.920000000000002,15.879999999999999,14.799999999999999,2.9599999999999973,2.96,moderate observed expansion,recovery observed,2,41.340627495452,1,Leq' a: mel,1833.3758966075166,1.6935554941238726,road intersection; bridge-tag intersection
+G026,20.16,21.64,20.16,1.4800000000000004,1.48,low observed expansion,recovery observed,1,7.519410334251614,0,Leq' a: mel,621.7045290878006,1.2975775780983212,road intersection
+G022,33.631578947368425,34.36842105263158,33.631578947368425,0.7368421052631575,0.56,low observed expansion,recovery observed,1,36.425598250125006,0,Leq' a: mel,2592.8505298674395,0.26548729607935484,road intersection
+G009,79.60000000000001,80.32000000000001,79.60000000000001,0.7199999999999989,0.72,low observed expansion,recovery observed,1,76.76651783729915,0,Leq' a: mel,2459.1569192893407,0.5623934190187893,road intersection

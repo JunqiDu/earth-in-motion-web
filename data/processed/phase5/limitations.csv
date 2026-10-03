@@ -1,0 +1,9 @@
+limitation
+"EGS is operational best-effort open-water mapping and may omit urban, forested or vegetated flooding."
+"The semantic baseline is the EGS permanent-water class, not a multi-date pre-event frequency model."
+Road and bridge results depend on current OSM geometry and tag completeness.
+ALR is a legal designation and cannot identify active crops or losses.
+"Official place points are contextual locations, not settlement boundaries or population surfaces."
+Distance buffers (50/100/250 m) are descriptive and do not estimate damage probability.
+Official reports concern the wider region and are not exact asset-level validation inside the AOI.
+Sentinel-2 recovery comparison has a 6.2-day timing offset.

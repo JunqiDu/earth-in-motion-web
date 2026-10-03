@@ -1,0 +1,16 @@
+{
+"type": "FeatureCollection",
+"name": "priority_grids",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32610" } },
+"features": [
+{"type":"Feature","properties":{"grid_id":"G042","event_minus_baseline_pp":21.5,"event_gain_area_ha":5.16,"interpretation":"high observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[569000.0,5449000.0],[569000.0,5450000.0],[568000.0,5450000.0],[568000.0,5449000.0],[569000.0,5449000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G015","event_minus_baseline_pp":6.7894736842105274,"event_gain_area_ha":5.16,"interpretation":"high observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[566000.0,5443000.0],[566000.0,5444000.0],[565000.0,5444000.0],[565000.0,5443000.0],[566000.0,5443000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G047","event_minus_baseline_pp":5.0833333333333321,"event_gain_area_ha":4.88,"interpretation":"moderate observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[570000.0,5447000.0],[570000.0,5448000.0],[569000.0,5448000.0],[569000.0,5447000.0],[570000.0,5447000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G018","event_minus_baseline_pp":3.44,"event_gain_area_ha":3.44,"interpretation":"moderate observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[566000.0,5446000.0],[566000.0,5447000.0],[565000.0,5447000.0],[565000.0,5446000.0],[566000.0,5446000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G019","event_minus_baseline_pp":3.08,"event_gain_area_ha":3.08,"interpretation":"moderate observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[566000.0,5447000.0],[566000.0,5448000.0],[565000.0,5448000.0],[565000.0,5447000.0],[566000.0,5447000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G034","event_minus_baseline_pp":2.96,"event_gain_area_ha":2.96,"interpretation":"moderate observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[568000.0,5448000.0],[568000.0,5449000.0],[567000.0,5449000.0],[567000.0,5448000.0],[568000.0,5448000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G026","event_minus_baseline_pp":1.48,"event_gain_area_ha":1.48,"interpretation":"low observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[567000.0,5447000.0],[567000.0,5448000.0],[566000.0,5448000.0],[566000.0,5447000.0],[567000.0,5447000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G022","event_minus_baseline_pp":0.73684210526315752,"event_gain_area_ha":0.56,"interpretation":"low observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[567000.0,5443000.0],[567000.0,5444000.0],[566000.0,5444000.0],[566000.0,5443000.0],[567000.0,5443000.0]]]}},
+{"type":"Feature","properties":{"grid_id":"G009","event_minus_baseline_pp":0.72,"event_gain_area_ha":0.72,"interpretation":"low observed expansion"},"geometry":{"type":"Polygon","coordinates":[[[565000.0,5444000.0],[565000.0,5445000.0],[564000.0,5445000.0],[564000.0,5444000.0],[565000.0,5444000.0]]]}}
+]
+}

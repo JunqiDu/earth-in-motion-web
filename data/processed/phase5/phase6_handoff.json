@@ -1,0 +1,36 @@
+{
+  "phase": 5,
+  "status": "complete",
+  "crs": "EPSG:32610",
+  "event": "December 2025 Fraser Valley / Lower Fraser flood",
+  "tables": [
+    "bridge_exposure.csv",
+    "community_proximity.csv",
+    "evidence_chain.csv",
+    "final_case_metrics.csv",
+    "limitations.csv",
+    "official_event_sources.csv",
+    "priority_grid_impact.csv",
+    "road_exposure.csv",
+    "temporal_series.csv"
+  ],
+  "vectors": [
+    "alr_gain_overlap.geojson",
+    "exposed_roads.geojson",
+    "flood_gain.geojson",
+    "flood_gain_zones.geojson",
+    "priority_grids.geojson"
+  ],
+  "maps": [
+    "01_flood_gain_map.png",
+    "02_priority_grid_map.png",
+    "03_infrastructure_exposure_map.png",
+    "04_context_map.png"
+  ],
+  "claims_sections": [
+    "supported claims",
+    "unsupported / restricted claims",
+    "limitations"
+  ],
+  "phase6_note": "Use these derived outputs; do not rerun raw discovery in the dashboard."
+}

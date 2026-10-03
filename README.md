@@ -58,8 +58,8 @@ Run the Streamlit placeholder:
 streamlit run app.py
 ```
 
-Raw and processed satellite data, along with generated outputs, are intentionally excluded from Git. Only `.gitkeep` placeholders are committed in the data directories.
+Raw satellite data and general generated outputs are intentionally excluded from Git. The small, reproducible Phase 5 handoff package under `data/processed/phase5/` and four reusable maps under `assets/phase5/` are retained; no source scenes or extracted archives are committed.
 
 ## Status
 
-Phases 1–4 of the satellite analysis are complete for the current prototype. The selected case is the December 2025 Fraser Valley / Lower Fraser flood; the Streamlit application remains a placeholder. Analysis currently lives truthfully in the notebooks—no reusable Python package has been introduced yet.
+Phases 1–5 of the satellite and impact analysis are complete for the current prototype. The selected case is the December 2025 Fraser Valley / Lower Fraser flood. Phase 5 consolidates priority grids, road/bridge proximity, community and Agricultural Land Reserve context, official evidence, claims, limitations, and a compact Phase 6 handoff package. The Streamlit application remains a placeholder; no Phase 6 implementation has started.

@@ -1,0 +1,235 @@
+osm_id,name,ref,highway,road_group,bridge,surface,access,length_in_aoi_m,flood_intersection_m,distance_to_gain_m,direct_intersection,within_50m,within_100m,within_250m
+35499004,Tremblay Island Road,,unclassified,unclassified,,,,458.07872681363654,6.584824495024199,0.0,True,True,True,True
+35499368,Ross Road,,residential,residential,,asphalt,,305.3845569500013,40.001758344851915,0.0,True,True,True,True
+35499471,Nicomen Slough Road,,residential,residential,,,,296.626901470746,20.378615182461125,0.0,True,True,True,True
+35499561,Taylor Road,,residential,residential,,,,2418.5632848382143,7.519410334251614,0.0,True,True,True,True
+35501431,Dyke Road,,track,other,,,private,815.9623469850571,47.15340718187281,0.0,True,True,True,True
+62001004,Lougheed Highway,BC 7,primary,primary,yes,concrete,,60.87430510519482,8.71720046678686,0.0,True,True,True,True
+502175282,Lougheed Highway,BC 7,primary,primary,,,,258.98514746258087,32.623427028665134,0.0,True,True,True,True
+576124615,Nicomen Island Dyke,,track,other,,,private,1503.68364119575,76.76651783729915,0.0,True,True,True,True
+1346293505,,,track,other,,,,1564.2127949806295,14.740351342784324,0.0,True,True,True,True
+1353553405,,,track,other,,unpaved,private,997.170933497274,13.063655701971614,0.0,True,True,True,True
+1394094237,,,path,other,,,,668.697459153806,36.425598250125006,0.0,True,True,True,True
+1416643899,,,track,other,,,,517.1217889183446,40.00013769337856,0.0,True,True,True,True
+1459939236,,,path,other,,,private,132.1367619303557,1.297796583861098,0.0,True,True,True,True
+1465242274,,,residential,residential,,,,44.66827893655206,0.4707173827540265,0.0,True,True,True,True
+576104524,Dyke Road,,track,other,,,private,1760.437971909221,0.0,1.1908062091620943,False,True,True,True
+35501390,Johnson Road,,residential,residential,,asphalt,,1507.8691449416679,0.0,1.6072697075494426,False,True,True,True
+1465242275,,,service,service,,,private,40.221133051081154,0.0,1.8714445023440112,False,True,True,True
+1353309035,Nicomen Island Dyke,,track,other,,,yes,1120.4668098026268,0.0,1.8840398498535984,False,True,True,True
+35497994,Nicomen Slough Road,,residential,residential,,,,1696.3082497308562,0.0,1.9439428578577618,False,True,True,True
+35499035,Hodgson Road,,residential,residential,,,,938.3220300993902,0.0,1.9480923712666793,False,True,True,True
+371281539,Lougheed Highway,BC 7,primary,primary,,asphalt,,4571.025176911156,0.0,3.890810567554096,False,True,True,True
+35501722,Taylor Road,,residential,residential,,,,187.729983249813,0.0,4.866159460001199,False,True,True,True
+1346291618,Taylor Road,,residential,residential,,,,256.074338443651,0.0,5.103620068723829,False,True,True,True
+1353309040,Nicomen Island Dyke,,track,other,,,,888.7416868728947,0.0,5.834626100317323,False,True,True,True
+1353309037,Nicomen Island Dyke,,track,other,,,yes,241.48158403058494,0.0,7.817980333050787,False,True,True,True
+35498789,Nicomen Slough Road,,residential,residential,,,,568.2468127268121,0.0,8.54436068666196,False,True,True,True
+1353549898,,,track,other,,,private,397.83625629295875,0.0,8.973371729254723,False,True,True,True
+35498562,Athey Road,,residential,residential,,,,784.6781639189278,0.0,9.13160505453431,False,True,True,True
+1299664655,Lougheed Highway,BC 7,primary,primary,,asphalt,,830.1648044046628,0.0,9.795403719879687,False,True,True,True
+35497842,Soam Road,,residential,residential,,,,79.92719051271565,0.0,11.593905194662511,False,True,True,True
+35501704,,,residential,residential,,unpaved,,24.70849339744413,0.0,11.87960923195897,False,True,True,True
+1353424876,Nicomen Island Dyke,,track,other,,,yes,697.1822422451871,0.0,12.075164469693634,False,True,True,True
+35501205,,,unclassified,unclassified,,,,485.56361828467027,0.0,12.640227521702595,False,True,True,True
+35501135,Sterling Road,,residential,residential,,asphalt,,379.14065491170817,0.0,13.570650436915457,False,True,True,True
+1489869258,,,service,service,,,,100.55328655411402,0.0,13.854767460376024,False,True,True,True
+61858464,Athey Road,,residential,residential,,unpaved,,449.4289170197836,0.0,14.610714075521173,False,True,True,True
+1353309039,Nicomen Island Dyke,,track,other,,,yes,51.14288451486565,0.0,19.249063959864525,False,True,True,True
+1353309036,,,track,other,,,yes,7.747135600407303,0.0,20.2315685544163,False,True,True,True
+35497136,Athey Road,,residential,residential,,asphalt,,991.602154014404,0.0,25.12076481245458,False,True,True,True
+568885247,,,service,service,,unpaved,private,139.25600779276417,0.0,26.362302922302487,False,True,True,True
+27895289,Old Orchard Road,,unclassified,unclassified,,,,1705.581459463265,0.0,26.73354636056905,False,True,True,True
+35499809,Carter Road,,residential,residential,,,,583.6585984846065,0.0,27.70046939700842,False,True,True,True
+576125372,Nicomen Island Dyke,,service,service,,,private,1108.3008159373674,0.0,28.19995512196607,False,True,True,True
+1353424878,Nicomen Island Dyke,,track,other,,,yes,1108.9477958960974,0.0,29.052957746200264,False,True,True,True
+35498088,Dyke Road,,residential,residential,,gravel,,724.2502527325961,0.0,29.90876073835022,False,True,True,True
+35501299,McDonald Road,,residential,residential,,,,97.27173414086992,0.0,31.637988249257504,False,True,True,True
+1353309042,,,track,other,,,yes,39.10867023849268,0.0,31.87866540066898,False,True,True,True
+35497602,North Nicomen Road,,residential,residential,,,,885.6712424882707,0.0,34.99349467109671,False,True,True,True
+1353555845,,,track,other,,,,54.66487396086265,0.0,37.648752256948356,False,True,True,True
+1353424877,,,path,other,,,,14.40450560642774,0.0,37.87301888322802,False,True,True,True
+35498355,North Nicomen Road,,residential,residential,,,,1065.7455113691512,0.0,48.57431443362795,False,True,True,True
+499275551,Arnold Road,,service,service,,,private,410.2277476516034,0.0,49.210176400188296,False,True,True,True
+1459939235,,,path,other,,,private,46.30340836569959,0.0,49.21035258757827,False,True,True,True
+1489869262,,,service,service,,,private,63.39555804335047,0.0,50.48827757953593,False,False,True,True
+24962146,Arnold Road,,unclassified,unclassified,,paved,,303.4428988136085,0.0,52.96826096798726,False,False,True,True
+1346293508,,,track,other,,,,185.5114968897388,0.0,54.232595744868945,False,False,True,True
+35499397,,,service,service,,,,262.470760783886,0.0,56.60448652701451,False,False,True,True
+1489869257,,,service,service,,,,182.3910104793357,0.0,58.68830091792963,False,False,True,True
+35497343,,,service,service,,,,163.28255376362014,0.0,59.12784784142553,False,False,True,True
+35500900,,,service,service,,,,118.04680351034548,0.0,59.12784784142553,False,False,True,True
+1416810127,,,service,service,,,private,38.01946573445907,0.0,61.544542366505254,False,False,True,True
+61858463,Athey Road,,residential,residential,,paved,,53.016408805615754,0.0,64.06582364976886,False,False,True,True
+35497439,Tremblay Road,,residential,residential,,,,733.7656540856246,0.0,68.41761375573904,False,False,True,True
+27895280,Old Orchard Road,,unclassified,unclassified,,,,212.11350669275262,0.0,68.44473046504274,False,False,True,True
+1459939234,,,path,other,,,private,124.31975862410532,0.0,76.79142379849944,False,False,True,True
+1346291628,,,track,other,,,,496.77976259275783,0.0,77.90468161391154,False,False,True,True
+25177145,Trans-Canada Highway,TCH 1,motorway,motorway,,asphalt,,1511.2816536251694,0.0,78.93769014234866,False,False,True,True
+1346296723,,,track,other,,,,58.857448559629844,0.0,84.16753795187928,False,False,True,True
+35500108,Soam Road,,residential,residential,,,,26.05326738643943,0.0,85.00264300793357,False,False,True,True
+35500219,Soam Road,,residential,residential,,,,120.51221383814989,0.0,85.00264300793357,False,False,True,True
+35497991,Nicomen Island Trunk Road,,residential,residential,,,,1772.3354921147693,0.0,85.17278170388822,False,False,True,True
+35500953,McDonald Road,,residential,residential,,,,620.516847886264,0.0,87.42208708524741,False,False,True,True
+35501725,North Nicomen Road,,residential,residential,,,,48.374638027486114,0.0,88.57788577270138,False,False,True,True
+568885123,,,residential,residential,,,,214.50966246379292,0.0,88.65161673405831,False,False,True,True
+1420796734,Nicomen Island Dyke,,track,other,,,,10.552848859005243,0.0,92.18366956974594,False,False,True,True
+402820698,Trans-Canada Highway,TCH 1,motorway,motorway,,asphalt,,1579.373346683926,0.0,96.10357891115626,False,False,True,True
+1459939232,,,path,other,,,private,18.394018939442766,0.0,105.39674776327654,False,False,False,True
+1353806084,,,track,other,,,,49.754663772271414,0.0,105.97204589346276,False,False,False,True
+35501226,Clerihue Road,,residential,residential,,,,251.09640615999555,0.0,110.0507099662825,False,False,False,True
+568885121,,,residential,residential,,,,56.27141943299417,0.0,112.9784934171538,False,False,False,True
+1346296725,,,track,other,,,,227.41201917839737,0.0,113.88104829979424,False,False,False,True
+1459939233,,,path,other,,,private,27.485585037070667,0.0,117.0305920266929,False,False,False,True
+1489869261,,,service,service,,,,135.11413014081128,0.0,118.35037445228134,False,False,False,True
+1346291619,Taylor Road,,residential,residential,yes,,,22.100212884542934,0.0,132.279285976135,False,False,False,True
+1346293507,,,track,other,,,,25.25143379283948,0.0,134.91569478805943,False,False,False,True
+1365592051,,,service,service,,asphalt,,71.6695735257655,0.0,137.7459366042167,False,False,False,True
+35499487,,,service,service,,,,195.70465715421352,0.0,142.40010648441137,False,False,False,True
+576125371,Nicomen Island Dyke,,track,other,,,private,412.82035511456877,0.0,143.76316085705744,False,False,False,True
+27895411,Industrial Way,,unclassified,unclassified,,asphalt,,1517.1753053352156,0.0,148.8510483526266,False,False,False,True
+1353549900,,,track,other,,unpaved,private,1325.3986113653045,0.0,149.76795319963605,False,False,False,True
+1416810144,,,track,other,,,,165.029590375343,0.0,151.18505874039298,False,False,False,True
+35497636,,,residential,residential,,,private,280.56265772079223,0.0,152.18815990809864,False,False,False,True
+1353549899,,,track,other,,unpaved,private,96.56244624120036,0.0,155.85405675502136,False,False,False,True
+1353424879,,,track,other,,,yes,10.036461954531799,0.0,167.62441301497387,False,False,False,True
+35500764,Arnold Road,,residential,residential,,unpaved,,318.61489975296286,0.0,174.87747909090086,False,False,False,True
+440358382,,,service,service,,,,296.1567492924768,0.0,175.81165131684708,False,False,False,True
+35497165,,,service,service,,,,123.25412072667899,0.0,175.83372364848228,False,False,False,True
+1353550828,,,service,service,,,,123.11026886833255,0.0,177.6866404654649,False,False,False,True
+461398053,,,service,service,,,,70.08345286120226,0.0,178.19977649766702,False,False,False,True
+1353549890,,,track,other,,unpaved,private,723.9912112743042,0.0,180.46809181658477,False,False,False,True
+35497502,,,service,service,,,,127.72831946776994,0.0,186.32654221218766,False,False,False,True
+35500752,,,service,service,,,,76.20280929849011,0.0,186.32654221218766,False,False,False,True
+1353553380,,,track,other,,unpaved,private,233.6964215201642,0.0,187.73403277480975,False,False,False,True
+35500657,Cooper Road,,residential,residential,,,,326.2081777091211,0.0,188.673623752866,False,False,False,True
+699152147,,,service,service,,,private,114.80279394869538,0.0,195.4150295426804,False,False,False,True
+1353424880,,,service,service,,asphalt,,103.44857008358083,0.0,196.70921380071866,False,False,False,True
+1353550829,,,service,service,,,,39.08434080946185,0.0,197.45555539640182,False,False,False,True
+1353550842,,,service,service,,,,48.95118337035267,0.0,197.5133198747172,False,False,False,True
+910048336,,,service,service,,,,168.0880353330507,0.0,198.67155762505718,False,False,False,True
+910048333,Soam Road,,residential,residential,,,,57.47179131874392,0.0,203.97218610564627,False,False,False,True
+568885237,,,service,service,,,,744.0319675624793,0.0,212.93795718646462,False,False,False,True
+499827469,Skweahm Place,,residential,residential,,,private,79.7351691447666,0.0,214.82533906331977,False,False,False,True
+910048332,,,service,service,,,,90.61423321321985,0.0,215.62768622921496,False,False,False,True
+1416790973,,,service,service,,,private,45.68898462627963,0.0,217.35503592723174,False,False,False,True
+35499544,Bovington Road,,residential,residential,,,,414.04826551858844,0.0,217.36488076047232,False,False,False,True
+478242730,Lougheed Highway,BC 7,primary,primary,,asphalt,,27.78625177996539,0.0,219.72729732956302,False,False,False,True
+1346293506,,,track,other,,,,7.445638150567737,0.0,220.05243309926905,False,False,False,True
+35498978,,,service,service,,,,292.16416571350186,0.0,228.23133242824017,False,False,False,True
+699152146,,,residential,residential,,,private,70.54103002148547,0.0,232.74607526668183,False,False,False,True
+568885236,,,track,other,,,private,334.50412737108405,0.0,235.79927890048853,False,False,False,True
+1353549897,,,track,other,,unpaved,private,386.84951853455965,0.0,241.45876807905734,False,False,False,True
+189453125,,,track,other,,,,1947.1930398384834,0.0,252.15532536368457,False,False,False,False
+1416804208,,,service,service,,,private,188.10060162175222,0.0,255.11783857429506,False,False,False,False
+35498619,McKimmon Road,,residential,residential,,gravel,,505.3965503681985,0.0,260.8054747386754,False,False,False,False
+1346291629,,,track,other,,,,1039.8863525964125,0.0,264.0172699065879,False,False,False,False
+1558990079,,,service,service,,,,265.7959048398814,0.0,264.61076264311544,False,False,False,False
+1416804193,,,service,service,,,private,61.010154355631975,0.0,277.68039864418097,False,False,False,False
+35497383,Skweahm Place,,residential,residential,,,private,74.2024375766339,0.0,277.71632149203816,False,False,False,False
+35501707,Eagle Drive,,residential,residential,,,private,28.016219632262715,0.0,277.71632149203816,False,False,False,False
+568885228,,,track,other,,,private,341.75576373634027,0.0,278.82404043804854,False,False,False,False
+1558990073,,,service,service,,,,968.6231053499073,0.0,283.15545203933857,False,False,False,False
+35500178,Deroche Landing Road,,residential,residential,,,,355.1658007510252,0.0,293.21565149690116,False,False,False,False
+1416790963,,,service,service,,,private,118.7708926663022,0.0,293.21565149690116,False,False,False,False
+1416804194,,,service,service,,,private,71.84925712631292,0.0,298.7446120421053,False,False,False,False
+1417140700,,,track,other,,,private,17.678991874574738,0.0,298.7786528776429,False,False,False,False
+35500592,North Deroche Road,,residential,residential,,,,322.00440148674636,0.0,298.938760746525,False,False,False,False
+1365591682,North Nicomen Road,,residential,residential,,,,61.43564583904427,0.0,298.938760746525,False,False,False,False
+35499387,North Nicomen Road,,residential,residential,,,,169.64470464298762,0.0,299.9582433927672,False,False,False,False
+1365591672,,,service,service,,asphalt,,122.23044924418151,0.0,300.05815744035715,False,False,False,False
+35499424,Eagle Drive,,residential,residential,,,private,41.064098103510496,0.0,303.16811193594344,False,False,False,False
+1365591676,,,service,service,,unpaved,,38.40715330336685,0.0,304.67115680694997,False,False,False,False
+1365595671,,,track,other,,,private,22.72812905972731,0.0,317.3104711463076,False,False,False,False
+1365591673,,,service,service,,asphalt,,47.65631566678753,0.0,318.24806170590335,False,False,False,False
+1365591683,North Nicomen Road,,residential,residential,,,,40.81026823864784,0.0,323.8602898980303,False,False,False,False
+35498420,Victor Lane,,residential,residential,,,private,63.098582312846595,0.0,327.07872043785505,False,False,False,False
+1353555848,,,track,other,,unpaved,private,359.03341941551645,0.0,331.43456240969215,False,False,False,False
+27895312,Chelmsford Place,,residential,residential,,,,36.79786224560465,0.0,331.49988171296104,False,False,False,False
+189453118,,,track,other,,,,345.71456996834036,0.0,335.7232912514507,False,False,False,False
+35497255,Skweahm Place,,residential,residential,,,private,38.56608191456434,0.0,341.2530153769645,False,False,False,False
+35498252,North Nicomen Road,,residential,residential,yes,wood,,12.56474966566733,0.0,343.2199114114992,False,False,False,False
+1420796737,Nicomen Island Dyke,,track,other,,,private,66.27693127086968,0.0,349.24633516561573,False,False,False,False
+35499388,North Nicomen Road,,residential,residential,,,,18.56521976932452,0.0,349.6376939963095,False,False,False,False
+1353549891,,,track,other,,unpaved,private,125.78568012117269,0.0,352.72838684916496,False,False,False,False
+1558990076,,,service,service,,,,144.73310406950534,0.0,355.9485470060608,False,False,False,False
+35500826,StEx Drive,,residential,residential,,,,53.26780429880539,0.0,357.58914610382806,False,False,False,False
+35500980,North Nicomen Road,,residential,residential,,,,90.0876654687877,0.0,357.58914610382806,False,False,False,False
+35497727,Sterling Road,,residential,residential,,,,948.6657809978625,0.0,358.61987888113043,False,False,False,False
+35498116,Kirkpatrick Road,,residential,residential,,,,1287.5995418808475,0.0,358.61987888113043,False,False,False,False
+438381684,,,service,service,,,,396.65923067858785,0.0,360.0604407290019,False,False,False,False
+1420796735,Nicomen Island Dyke,,track,other,,,private,8.582913245595641,0.0,364.28892601348616,False,False,False,False
+576125370,Nicomen Island Dyke,,track,other,,,private,789.4484956248165,0.0,367.0935273185182,False,False,False,False
+1416791016,,,track,other,,,private,39.49703975771518,0.0,367.9529926261377,False,False,False,False
+1353549880,,,track,other,,unpaved,private,119.47477703587805,0.0,372.58747013128925,False,False,False,False
+1330618842,,,service,service,,,,45.53686371498025,0.0,376.9694057275938,False,False,False,False
+438381683,,,service,service,,,,320.75645189115806,0.0,390.2927583425788,False,False,False,False
+35499018,,,service,service,,,,190.97072543447965,0.0,390.84577458956977,False,False,False,False
+612077776,,,track,other,,,,565.9273318251545,0.0,393.38908130518803,False,False,False,False
+1353549881,,,track,other,,unpaved,private,489.62776516209044,0.0,399.1876296966572,False,False,False,False
+35498668,StEx Drive,,service,service,,,,53.68452513293494,0.0,403.7329789259789,False,False,False,False
+35498891,StEx Drive,,residential,residential,,,,79.569380307567,0.0,403.7329789259789,False,False,False,False
+35501452,Welam Road,,residential,residential,,,,41.475109054213114,0.0,408.19109435662995,False,False,False,False
+35501489,North Nicomen Road,,residential,residential,,,,196.3282859428653,0.0,408.19109435662995,False,False,False,False
+1416457365,,,track,other,,,private,92.8355722479815,0.0,410.0582733539459,False,False,False,False
+1416790998,,,track,other,,,private,290.84888439370985,0.0,410.2329968321257,False,False,False,False
+1558990070,,,service,service,,,,978.9916176625997,0.0,410.64520661513666,False,False,False,False
+35501537,Howell Road,,residential,residential,,,,791.8706172392272,0.0,413.9430289618493,False,False,False,False
+35499700,Welam Road,,service,service,,,,29.247191788736863,0.0,431.3413833152568,False,False,False,False
+35499524,Nicomen Island Trunk Road,,residential,residential,,,,762.2419584838873,0.0,437.0542226766324,False,False,False,False
+1420796733,Carter Road,,residential,residential,,,,135.21284032040592,0.0,440.7996184737775,False,False,False,False
+1420796736,Nicomen Island Dyke,,track,other,,,,12.278177453271136,0.0,440.7996184737775,False,False,False,False
+35497404,Welam Road,,residential,residential,,,,110.75686097525858,0.0,441.5563528367526,False,False,False,False
+576137144,,,track,other,,,,1217.8684377814752,0.0,445.0300252268864,False,False,False,False
+1558990078,,,service,service,,,,150.98888955786248,0.0,466.08328066845127,False,False,False,False
+1416790999,,,service,service,,,private,105.97218940624559,0.0,468.76988321724644,False,False,False,False
+1558990077,,,service,service,,,,161.58836768008774,0.0,479.13430180657025,False,False,False,False
+1558990080,,,service,service,,,,157.88952604147056,0.0,483.31307558179674,False,False,False,False
+1353549876,,,track,other,,unpaved,private,795.6965848111029,0.0,483.5933715548128,False,False,False,False
+1558990074,,,service,service,,,,163.85513864601228,0.0,492.110871775673,False,False,False,False
+35498189,Parke Road,,residential,residential,,,,314.32115535043266,0.0,500.7189464890547,False,False,False,False
+35500815,Nicomen Island Trunk Road,,residential,residential,,,,1165.610271280762,0.0,506.2885470191732,False,False,False,False
+35497557,Nicomen Island Trunk Road,,residential,residential,,,,1431.2727800847715,0.0,506.54784459941004,False,False,False,False
+189453115,,,track,other,,,,539.7605524950711,0.0,508.31676477988606,False,False,False,False
+1353549861,,,track,other,,unpaved,private,32.40244379007155,0.0,515.2161278079277,False,False,False,False
+35501663,Pullin Road,,residential,residential,,,,91.23934150840887,0.0,529.9548553648768,False,False,False,False
+1416804152,,,track,other,,,private,292.8303387141754,0.0,531.9355317289409,False,False,False,False
+1416790997,,,service,service,,,private,23.155163350100484,0.0,538.5727192201302,False,False,False,False
+1416791006,,,track,other,,,private,19.653783069406302,0.0,546.4923827790591,False,False,False,False
+1558990081,,,service,service,,,,14.85476061294076,0.0,546.7397580890427,False,False,False,False
+1416790977,,,track,other,,,private,23.373017466917,0.0,550.3526573913308,False,False,False,False
+35501421,Johnson Road,,residential,residential,,asphalt,,502.30028843275807,0.0,555.993761464265,False,False,False,False
+1353553382,,,track,other,,,private,223.28671324978882,0.0,556.1395047179074,False,False,False,False
+1416794069,,,track,other,,,private,17.273775837415023,0.0,556.8922822277393,False,False,False,False
+1353553383,,,track,other,,unpaved,private,33.52382347127093,0.0,559.6941690486422,False,False,False,False
+576137145,,,path,other,,,,136.79504707994747,0.0,561.1401005843991,False,False,False,False
+1510501916,,,service,service,,,,221.1549197701019,0.0,569.9097070455324,False,False,False,False
+954770500,,,path,other,,,private,129.3563223850075,0.0,571.25928285227,False,False,False,False
+1416465264,,,service,service,,,private,212.34014607890683,0.0,571.7963336632423,False,False,False,False
+35497480,North Deroche Road,,residential,residential,,,,130.53593252346664,0.0,576.4784661008631,False,False,False,False
+35500437,Deroche Landing Road,,residential,residential,,,,307.60107160194923,0.0,605.8238554944303,False,False,False,False
+35498520,North Deroche Road,,residential,residential,,,,169.8696688805578,0.0,616.0869838264572,False,False,False,False
+1416790976,,,track,other,,,private,432.0249992987141,0.0,619.394125526771,False,False,False,False
+1558990075,,,service,service,,,,20.078700847447063,0.0,621.9911023473586,False,False,False,False
+1416790975,,,track,other,,,private,368.22564455121005,0.0,628.8720413774212,False,False,False,False
+1416790991,,,service,service,,,private,28.59520834052124,0.0,634.640184558308,False,False,False,False
+1416790981,,,service,service,,,private,173.60205874496017,0.0,640.7958955498061,False,False,False,False
+35497484,Fernie Road,,residential,residential,,,,334.69348408509086,0.0,642.3901294548413,False,False,False,False
+1558990071,,,service,service,,,,158.2844530012406,0.0,643.3902790405604,False,False,False,False
+1353553449,,,service,service,,,private,57.540690914124674,0.0,670.1005061785252,False,False,False,False
+1353553394,,,service,service,,,private,35.69193169206371,0.0,676.082082903008,False,False,False,False
+35498902,Parke Road,,residential,residential,,,,38.07868362939716,0.0,677.6532873213139,False,False,False,False
+35500052,Cannor Road,,residential,residential,,,,1309.9647343428883,0.0,689.453745443536,False,False,False,False
+1510501917,,,service,service,,,,98.50160802111837,0.0,701.7421722075969,False,False,False,False
+1558990072,,,service,service,,,,119.42317843439626,0.0,719.5340462989858,False,False,False,False
+1353555833,,,service,service,,unpaved,private,222.25366859741615,0.0,742.8619892207504,False,False,False,False
+1416790995,,,track,other,,,private,120.8540508469051,0.0,742.86890588384,False,False,False,False
+1353555835,,,track,other,,unpaved,private,186.061196856454,0.0,760.7305953827291,False,False,False,False
+1416790994,,,service,service,,,private,21.888344750986768,0.0,767.4256845407799,False,False,False,False
+1353555836,,,track,other,,unpaved,private,10.552088982214368,0.0,789.3512108723306,False,False,False,False
+1346291623,Morton Road,,unclassified,unclassified,,,,336.61911201194755,0.0,793.9344258108889,False,False,False,False
+1353553391,,,service,service,,,private,21.178880001174598,0.0,797.2239049740949,False,False,False,False
+1353553388,,,service,service,,,private,49.50218850244849,0.0,801.6303459199376,False,False,False,False
+1546188072,Industrial Way,,unclassified,unclassified,,asphalt,,187.04791845354873,0.0,862.0286125894673,False,False,False,False
+35500440,Nicomen Island Trunk Road,,residential,residential,,,,389.37073988318434,0.0,1009.1522077573533,False,False,False,False
+1346291622,,,track,other,,,,47.55695444982788,0.0,1025.9830893273054,False,False,False,False

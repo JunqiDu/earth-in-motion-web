@@ -1,0 +1,9 @@
+evidence_type,source,date,observation,role,limitation
+Official warning,EmergencyInfoBC,2025-12-10,Fraser Valley / Lower Fraser flood warning,Establishes event and region,Not a pixel label
+Near-event flood map,"NRCan EGS, RCM-derived",2025-12-12,Permanent-water and open-water flood classes,Maps event-period water,Moderate confidence; open water emphasis
+Change detection,Phase 4/5 fixed-grid analysis,2025-12-12,54.92 ha outside semantic permanent-water baseline,Quantifies mapped gain,Depends on EGS classes and 20 m rasterization
+Temporal recession,NRCan EGS sequence,2025-12-12 to 21,35.44 ha mapped loss by recovery observation,Supports recovery interpretation,Not a long-term trend
+Independent EO,Sentinel-2 L2A,2025-12-27,RCM/optical recovery F1 0.790; IoU 0.653,Independent recovery support,6.2-day timing offset
+Infrastructure exposure,OpenStreetMap / Overpass,retrieved 2026-10-03,14 road ways and 1 bridge-tagged way intersect gain,Adds asset context,Completeness/tagging vary; no damage proof
+Agricultural context,BC Agricultural Land Reserve,retrieved 2026-10-03,36.65 ha of mapped gain intersects ALR designation,Adds authoritative land designation,Not actual crop or damage mapping
+Regional impact,Abbotsford / B.C. official reports,2025-12-11 to 23,"Evacuations, road interruption, property and livestock impacts",Corroborates wider event significance,Not exact AOI asset attribution

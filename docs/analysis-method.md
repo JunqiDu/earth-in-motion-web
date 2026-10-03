@@ -238,3 +238,25 @@ Open-water flood area declined from 54.92 ha on 12 December to 21.64 ha on 21 De
 The recovery-period RCM water mask (21 December) is compared with Sentinel-2 NDWI (27 December) on mutually valid cells. RCM is the prediction for metric direction. Precision is 0.663, recall 0.978, F1 0.790, and IoU 0.653. The 6.2-day timing offset, recession, cloud/SCL exclusions, resolution, mixed shoreline cells, vegetation, and different SAR/optical physics are plausible disagreement causes.
 
 OpenStreetMap road ways are intersected with the near-event water-gain geometry. Fourteen ways intersect over 0.346 km, including one bridge-tagged way. These are described only as **intersecting** or **potentially exposed**; satellite overlap is not proof of physical damage, closure, depth, or traffic impact.
+
+## Phase 5 impact-analysis method
+
+Phase 5 reuses the fixed Phase 4 AOI, 20 m grid, semantic class interpretation, and validated endpoint metrics. It reconstructs only the 12 December near-event and 21 December recovery masks required for impact geometry; it does not repeat candidate screening, the seven-date discovery workflow, or full satellite preprocessing. The reconstruction is accepted only when baseline, near-event, gain, recovery, and loss areas reproduce the validated Phase 4 values to within 0.01 ha.
+
+### Priority zones and grid interpretation
+
+The Phase 4 1 km grid IDs are preserved. A grid is retained in the descriptive priority table when it has mapped event gain and either exceeds the 5.88 percentage-point Folly Lake control context or contains a direct OSM road/bridge intersection. Tables remain ordered by observed percentage-point expansion and gain area; no composite risk score is calculated. `G042` is the strongest cell at +21.50 percentage points and 5.16 ha, followed by `G015` at +6.79 points and 5.16 ha. Contiguous gain components are also exported with area, direct road/bridge counts, nearest official place, and ALR overlap.
+
+### Exposure and proximity logic
+
+All impact geometries are transformed to EPSG:32610 before metric operations. OSM highway ways are clipped to the exact AOI, then measured for length in the AOI, line length inside mapped gain, and minimum distance to gain. Direct intersection uses non-zero line overlap. Bridge candidates are OSM highway ways whose `bridge` tag is present and is not `no` or `false`. Road and bridge records retain OSM ID, name, reference, highway class, bridge, surface, and access tags where available.
+
+Distance summaries use cumulative 50 m, 100 m, and 250 m bands for roads, bridge-tagged ways, and official place points. Direct intersections are included in all applicable cumulative bands. These are proximity measures only: the bands do not represent flood depth, damage probability, safety, accessibility, or population exposure.
+
+Community context uses official geolocated Canadian place names as points. Distance is measured from each point to the nearest mapped gain geometry; no population is assigned. Agricultural context uses B.C. Agricultural Land Reserve polygons. The resulting 36.65 ha overlap means mapped gain intersects legally designated ALR land; it is not a crop map or evidence of agricultural loss.
+
+### Evidence consolidation and claims discipline
+
+Official warnings and impact reports establish the date, broader affected region, evacuation and road-interruption context. They are kept separate from pixel-level evidence. Spatial patterns may be described as *broadly consistent with* the reported Lower Fraser / Fraser Valley event, but wider regional reporting is not transferred to a particular AOI feature without an exact official geometry or asset record.
+
+Supported claims are limited to observed/mapped quantities, temporal recession, measured spatial intersections and proximity, independent recovery-period agreement, and broad regional consistency. Unsupported claims include physical asset damage, bridge failure, flood depth, population affected, crop loss, climate attribution, full-event representativeness, universal use of the Folly Lake value, or complete OSM coverage.

@@ -1,0 +1,16 @@
+metric,value,unit_or_class
+AOI area,36.0,km²
+Semantic baseline water,971.88,ha
+Near-event total water,1026.8,ha
+Mapped event water gain,54.92,ha
+Recovery total water,993.52,ha
+Near-event to recovery mapped loss,35.44,ha
+Maximum local increase (G042),21.5,percentage points
+Cells above 5.88 pp context,2.0,cells
+Directly intersecting road ways,14.0,ways
+Direct road intersection length,0.3457434178260874,km
+Direct bridge-tagged intersections,1.0,ways
+Mapped gain intersecting ALR,36.64518044420364,ha
+Recovery RCM/Sentinel-2 F1,0.79,score
+Recovery RCM/Sentinel-2 IoU,0.653,score
+Recovery classification,,recovering with localized residual/persistent expansion

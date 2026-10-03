@@ -208,3 +208,44 @@ These reports establish event timing, affected communities, evacuations, and reg
 - Caveat: completeness and tagging vary; geometric intersection means potential exposure only, not proven damage
 
 No credentials, raw satellite scenes, extracted EGS archives, or road snapshots are stored in Git. The notebook downloads only public products or reads AOI windows at run time.
+
+## Phase 5 impact and context data
+
+### OpenStreetMap roads and bridges
+
+- Source: OpenStreetMap contributors through the Overpass API
+- Query: ways tagged `highway` within the Phase 4 WGS84 query envelope; geometries are then reprojected and clipped to the exact EPSG:32610 AOI
+- Attributes retained: OSM ID, name, reference, highway, bridge, surface, and access
+- Licence: Open Database Licence (ODbL); attribution to OpenStreetMap contributors is required
+- Use: line intersection and 50/100/250 m proximity context
+- Caveat: coverage and tagging are not guaranteed complete; spatial overlap does not establish damage or closure
+
+The refined exact-AOI clip contains 232 ways, compared with the 238 ways returned within the slightly larger WGS84 query envelope in Phase 4. Both workflows identify the same 14 directly intersecting ways and approximately 0.346 km of line overlap.
+
+### Official geolocated place names
+
+- Dataset: Geolocated placenames in Canada
+- Open Government record: <https://open.canada.ca/data/en/dataset/fe945388-1dd9-4a4a-9a1e-5c552579a28c>
+- CSV endpoint: <https://ised-isde.canada.ca/app/scr/sittibc/web/api/openData/MAG_EXO.CSV>
+- Publisher/lineage: Innovation, Science and Economic Development Canada; names and coordinates sourced from NRCan's Canadian Geographical Names Database and CIRNAC
+- Licence: Open Government Licence — Canada
+- Use: named point context and minimum distance to mapped flood gain
+- Caveat: points are not settlement boundaries or population surfaces
+
+### B.C. Agricultural Land Reserve
+
+- Dataset record: <https://catalogue.data.gov.bc.ca/dataset/92e17599-ac8a-47c8-877c-107768cb373c>
+- ArcGIS layer: <https://delivery.maps.gov.bc.ca/arcgis/rest/services/whse/bcgw_pub_whse_legal_admin_boundaries/MapServer/23>
+- Publisher: Government of British Columbia
+- Use: intersection of mapped flood gain with ALR-designated polygons
+- Result: 36.65 ha, or 66.7% of mapped gain, intersects ALR designation
+- Caveat: the ALR is a legal land designation, not observed crop cover; overlap does not prove agricultural damage or loss
+
+### Additional official impact reports
+
+- City of Abbotsford, 11 December 2025, Highway 1 closure and evacuation orders: <https://www.abbotsford.ca/city-hall/news-media/highway-1-closed-between-sumas-way-and-no-3-road-and-evacuation-orders>
+- Fraser Valley Regional District / EmergencyInfoBC, 10 December 2025, Wilson Road evacuation order: <https://www.emergencyinfobc.gov.bc.ca/app/uploads/sites/893/2025/12/2025-12-10-Evacuation-ORDER-and-ALERT-Wilson-Road-Area.pdf>
+
+Together with the Phase 4 official sources, these establish the wider event timeline and impact context. They are not used as exact pixel or asset labels.
+
+Phase 5 stores only small derived CSV/GeoJSON handoff files and four PNG maps. Public source downloads and caches remain in the system temporary directory; no credentials or raw satellite archives are stored in Git.
