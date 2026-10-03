@@ -131,3 +131,80 @@ Only public COG byte ranges for the AOI are read. No full Sentinel-2 tile is dow
 - Mean local incidence angle spans 27.97080°–27.98475° and mean gamma-to-sigma ratio spans 0.878532–0.878701 across dates.
 - Sentinel-2 continuous reflectance is processed at 10 m. Categorical SCL uses nearest-neighbour resampling, and the final water/non-water/unknown class uses mode aggregation onto the native RCM 20 m grid.
 - The authoritative vector, Sentinel-2 arrays, and RCM arrays remain remote/in-memory. No large data artifacts were added to Git.
+
+## Phase 4 event data — December 2025 Lower Fraser flood
+
+### NRCan Emergency Geomatics Service flood products
+
+- Public archive: <https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/>
+- Product information: <https://natural-resources.canada.ca/science-data/science-research/floods-river-ice-break>
+- Product guide: <https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/EGS_FGP_Geodatabases/Flood_Inondation/EGS_FloodExtent_ProductGuide.pdf>
+- Access: anonymous public ZIP download; extracted only in the system temporary directory during notebook execution
+- Licence/credit: Government of Canada Open Government Licence terms apply; products are credited as derived from RCM imagery by Natural Resources Canada
+- Role: main event-period RCM-derived flood sequence
+
+| Acquisition UTC | Platform | Beam | Polarization | Orbit | Source resolution | Confidence |
+| --- | --- | --- | --- | --- | ---: | --- |
+| 2025-12-12 14:08:24 | RCM-1 | 5M22 | HH-HV | descending | 5 m | Moderate |
+| 2025-12-14 14:24:23 | RCM-1 | 16M9 | HH-HV | descending | 16 m | Moderate |
+| 2025-12-15 01:50:37 | RCM-3 | SC30MB | HH-HV | ascending | 30 m | Moderate |
+| 2025-12-16 14:08:35 | RCM-2 | 5M22 | HH-HV | descending | 5 m | Moderate |
+| 2025-12-17 14:16:34 | RCM-2 | 16M16 | HH-HV | descending | 16 m | Moderate |
+| 2025-12-19 01:50:14 | RCM-1 | SC30MB | HH-HV | ascending | 30 m | Moderate |
+| 2025-12-21 14:16:46 | RCM-3 | 16M16 | HH-HV | descending | 16 m | Moderate |
+
+Class 1 permanent water and class 2 open-water flood are used. Product footprints define validity. EGS products are operational best-effort flood maps and are not optimized for every urban, forested, or vegetated setting.
+
+### Public RCM CEOS-ARD brackets
+
+- Catalogue/API: <https://www.eodms-sgdot.nrcan-rncan.gc.ca/search>
+- Collection: `rcm-ard`
+- Access: anonymous public Cloud-Optimized GeoTIFF byte-range reads
+- Role: actual RCM pre-event and post-event observations; not substituted for EGS semantic classes
+- Common metadata: RCM3, relative orbit 166, ascending, Medium Resolution 30 m, CH/CV/XC, CEOS-ARD representation
+
+Pre-event, 2025-11-08 01:42:39 UTC:
+
+- `cc0e02e8-8d8e-439f-ae81-9173f232fb89`
+- `fd241276-682d-4a1b-872c-aaedd88c4a05`
+
+Post-event, 2026-01-07 01:42:38 UTC:
+
+- `16ebbe33-a94e-49b5-b8e8-3bac29612416`
+- `b5e0a452-3c67-4a0c-97c6-14d51a9e3c55`
+
+Two adjacent records are mosaicked per date. The `rr`, `data_mask`, `local_inc_angle`, and `gamma_to_sigma_ratio` assets are read. Valid coverage is 96.26% before and 95.81% after; the mutually valid fixed-threshold water areas are 756.84 ha and 727.24 ha. These values are conditional on the Phase 3 CEOS-ARD classifier and are not directly interchangeable with the EGS semantic-area series.
+
+### Sentinel supporting data
+
+Sentinel-2 Collection 1 Level-2A:
+
+- STAC: <https://earth-search.aws.element84.com/v1>
+- Pre-event item: `S2B_T10UEV_20251202T190649_L2A`, acquired 2025-12-02 19:10:52 UTC, scene cloud 35.78%
+- Recovery item: `S2C_T10UEV_20251227T191058_L2A`, acquired 2025-12-27 19:11:08 UTC, scene cloud 5.13%
+- Assets: B03 green and B08 NIR at 10 m; SCL at 20 m
+- CRS: source UTM tile is read from asset metadata; categorical results are aggregated to the fixed EPSG:32610 20 m grid
+- Access: anonymous public COG byte ranges
+- Role: independent optical recovery-period validation and a supporting before/recovery change mask
+
+Sentinel-1 GRD metadata screening found 11 IW VV/VH records intersecting the AOI from 1–28 December 2025. Earth Search supplies Level-1 measurement assets with requester-pays access and calibration/noise XML. They were not forced into the quantitative workflow because a reproducible anonymous calibrated route was unavailable. The coverage result remains documented rather than silently omitted.
+
+### Official event and historical context
+
+- EmergencyInfoBC Fraser Valley East flood warning, updated 2025-12-10: <https://www.emergencyinfobc.gov.bc.ca/event/floodwatch-fraservalley-09122025/>
+- City of Abbotsford event summary, 2025-12-23: <https://www.abbotsford.ca/council/your-council-community/blog/abbotsford-shows-resilience-and-compassion-face-disaster>
+- Province of British Columbia road update, 2025-12-13: <https://news.gov.bc.ca/releases/2025TT0126-001250>
+- Province of British Columbia flood update, 2025-12-14: <https://news.gov.bc.ca/releases/2025EMCR0057-001253>
+- Fraser Valley Regional District atmospheric-river update, 2025-12-20: <https://www.fvrd.ca/EN/meta/news/news-archives/2025/atmospheric-river-update-saturday-dec-20.html?media=contrast>
+
+These reports establish event timing, affected communities, evacuations, and regional infrastructure impacts. They are contextual validation and are not used as pixel-level labels.
+
+### Infrastructure context
+
+- Source: OpenStreetMap contributors via the Overpass API
+- Query: all ways tagged `highway` in the fixed AOI, with tags and geometry
+- Licence: Open Database Licence (ODbL); attribution to OpenStreetMap contributors is required
+- Role: preliminary road and bridge intersection screening
+- Caveat: completeness and tagging vary; geometric intersection means potential exposure only, not proven damage
+
+No credentials, raw satellite scenes, extracted EGS archives, or road snapshots are stored in Git. The notebook downloads only public products or reads AOI windows at run time.

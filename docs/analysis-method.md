@@ -186,3 +186,55 @@ For the primary RCM/Sentinel comparison, TP = 1,522, FP = 239, FN = 157, and TN 
 The RCM series is technically suitable to continue as a **conditional relative-change baseline**: grids are exactly aligned in the tested AOI, supplied quality masking is available, geometry-support layers are stable, and the same-day independent EO comparison shows coherent lake-interior agreement.
 
 It is not reliable enough for small absolute-shoreline claims. Phase 4 must preserve the native common grid, exclude all data-mask codes other than 1, retain the fixed RR rule, track platform, and flag only changes clearly larger than the Phase 2 stability/sensitivity envelope. Additional cloud-free optical dates are needed before interpreting a temporal signal. Folly Lake remains a control/calibration site, and no climate or causal claim is supported.
+
+## Phase 4 real-event change-detection method
+
+### Event feasibility and selection
+
+Candidate cases were screened in order of scientific and access feasibility rather than visual drama:
+
+1. The 21–23 July 2023 Nova Scotia flood was tested first. The official event was suitable, but no public `rcm-ard` or `RCMImageProducts` record intersected the tested Halifax, Hants, Lunenburg, and Queens impact AOIs in the June–August screening window. The case was rejected rather than forced.
+2. The May 2025 Central Ottawa River freshet had same-platform/orbit RCM observations and official NRCan flood polygons. It was rejected because no tested grid cell rose above the 5.88 percentage-point control-site context and RCM gain had zero overlap with the official flood class in the strict common area.
+3. The December 2025 Fraser Valley / Lower Fraser flood was selected. It provides seven openly downloadable NRCan Emergency Geomatics Service RCM-derived flood products, public CEOS-ARD observations bracketing the event, independent Sentinel-2 coverage, official flood/impact reporting, and an infrastructure layer.
+
+The fixed 6 km × 6 km Chilliwack-area AOI is EPSG:32610 bounds `(563960, 5443240, 569960, 5449240)`, approximately WGS84 `(-122.123101, 49.138657, -122.039809, 49.191968)`. It was chosen from the strict intersection of all seven EGS footprints and the two public ARD mosaics. The AOI is a compact evidence-chain study area, not a claim about the location of maximum event impact.
+
+### Event imagery preprocessing
+
+The main event sequence uses NRCan EGS categorical vectors acquired from 12 to 21 December 2025. Flood, permanent-water, and footprint shapefiles are clipped to the AOI, reprojected to EPSG:32610, and rasterized on a fixed 20 m grid using pixel-centre semantics. Class 1 represents permanent water and class 2 represents open-water flood. Footprints define valid pixels. The seven inputs have Moderate product confidence and mixed 5, 16, and 30 m source resolutions, which remain explicit metadata.
+
+Two public CEOS-ARD mosaics provide real pre/post RCM observations: 8 November 2025 and 7 January 2026, both RCM3 relative orbit 166 ascending. Only `data_mask == 1` is valid. RR, local-incidence angle, and gamma/sigma ratio are continuous and are bilinearly reprojected to the fixed 20 m grid; the categorical data mask uses nearest-neighbour. The Phase 3 rule `RR < -17.314 dB` plus seeded 8-connectivity is applied only to this matching CEOS-ARD representation. It is not transferred to EGS classes or Level-1 imagery.
+
+Sentinel-2 B03/B08 reflectance uses STAC scale/offset and native 10 m NDWI. SCL classes 0, 1, 3, 8, 9, 10, and 11 are invalid. SCL is moved to 10 m with nearest-neighbour, and the water/non-water/unknown class is aggregated to 20 m with mode. The 2 December image is the optical pre-event support; the 27 December image is the recovery-period comparison. Cloud-obstructed event-window scenes are not forced into the analysis.
+
+### Change and grid logic
+
+The comparable EGS semantic masks are:
+
+- pre-event semantic baseline: permanent water from the first EGS product;
+- near-event water: permanent water plus 12 December open-water flood;
+- recovery water: permanent water plus 21 December open-water flood.
+
+The semantic baseline is not mislabelled as a dated RCM acquisition; the actual 8 November ARD observation is displayed separately. Pixel changes are classified as persistent non-water, persistent water, water gain, water loss, or invalid/unknown. Water gain is the primary event signal.
+
+A fixed 1 km grid provides a local denominator of up to 2,500 20 m cells. Each cell records valid count/percentage, baseline, near-event and recovery water ratios, percentage-point differences, changed area, benchmark status, and temporal class. The grid size was selected for local interpretability and shoreline-noise suppression, not to maximize apparent change.
+
+### Normal versus anomaly
+
+Three distinct concepts govern Phase 4 interpretation:
+
+1. **Method/sensor benchmark.** Folly Lake is a relatively stable control site. Its 3.20% coefficient of variation, 5.88% maximum single-date deviation, and 4.88% same-day RCM/Sentinel area difference describe variability observed in this workflow. They are contextual checks from another landscape, not formal significance levels or universal flood thresholds.
+2. **Site-specific normal baseline.** A real-event baseline should preferably be estimated within the fixed event AOI from multiple seasonally and radiometrically comparable pre-event observations. For a river/floodplain, this means characterizing where water is normally present inside the AOI rather than estimating a river's total area. The already-discovered Lower Fraser data provide only one pre-event RCM-ARD acquisition and one pre-event Sentinel-2 observation. Neither is semantically interchangeable with the EGS event classes, so a defensible multi-date water-frequency baseline is not constructed. The current provisional local baseline remains the EGS permanent-water class.
+3. **Event anomaly.** An anomaly is EGS flood water mapped outside that local permanent-water baseline. Interpretation combines the size of the local deviation, spatial concentration and continuity, recession or persistence, independent EO/official-source agreement, and impact context. No single percentage decides whether a flood is significant.
+
+The 1 km table therefore labels the binary EGS baseline without arbitrary probability cutoffs: a cell is normally dry only when its baseline ratio is 0%, permanent-water only when it is 100%, and otherwise mixed. Its anomaly field states whether mapped gain is absent, lies within the Folly Lake control context, or is above that context while still requiring corroboration. Temporal classification is based on the observed event-to-recovery trajectory, not on crossing 5.88%.
+
+### Uncertainty, temporal behaviour, and validation
+
+The Folly Lake CV 3.20%, maximum single-date deviation 5.88%, and same-day RCM/Sentinel area difference 4.88% remain empirical feasibility context rather than formal confidence limits. The event AOI gained 54.92 ha from the EGS semantic baseline, about 13.2 times the approximately 4.16 ha absolute maximum deviation implied at the 70.76 ha control median. The AOI-wide relative increase is 5.65%, close to the 5.88% control value, while two local grid cells are above 5.88 percentage points (maximum 21.50 points). Those two cells are stronger candidates for attention, not automatically significant detections. Interpretation emphasizes spatial coherence, local magnitude, the official timeline, temporal evolution, and multi-source evidence rather than a single cutoff.
+
+Open-water flood area declined from 54.92 ha on 12 December to 21.64 ha on 21 December. The event is classified as **recovering with localized residual/persistent expansion**. It is not treated as a long-term environmental trend.
+
+The recovery-period RCM water mask (21 December) is compared with Sentinel-2 NDWI (27 December) on mutually valid cells. RCM is the prediction for metric direction. Precision is 0.663, recall 0.978, F1 0.790, and IoU 0.653. The 6.2-day timing offset, recession, cloud/SCL exclusions, resolution, mixed shoreline cells, vegetation, and different SAR/optical physics are plausible disagreement causes.
+
+OpenStreetMap road ways are intersected with the near-event water-gain geometry. Fourteen ways intersect over 0.346 km, including one bridge-tagged way. These are described only as **intersecting** or **potentially exposed**; satellite overlap is not proof of physical damage, closure, depth, or traffic impact.

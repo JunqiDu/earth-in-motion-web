@@ -20,5 +20,9 @@ data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/phase5/
+!data/processed/phase5/*.csv
+!data/processed/phase5/*.geojson
+!data/processed/phase5/*.json
 data/output/*
 !data/output/.gitkeep

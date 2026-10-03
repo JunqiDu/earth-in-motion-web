@@ -17,8 +17,7 @@ This project is being developed for Mission Accepted Space Hackathon 2026, Chall
 ```text
 .
 ├── app.py              # Minimal Streamlit entry point
-├── analysis/           # Reusable analysis modules
-├── notebooks/          # Exploratory notebooks
+├── notebooks/          # Executed discovery, validation, and change-analysis notebooks
 ├── data/               # Local raw, processed, and output data
 ├── docs/               # Planning and technical documentation
 └── assets/             # Static project assets
@@ -63,4 +62,4 @@ Raw and processed satellite data, along with generated outputs, are intentionall
 
 ## Status
 
-Initial setup / development. Satellite analysis and the final dashboard have not yet been implemented.
+Phases 1–4 of the satellite analysis are complete for the current prototype. The selected case is the December 2025 Fraser Valley / Lower Fraser flood; the Streamlit application remains a placeholder. Analysis currently lives truthfully in the notebooks—no reusable Python package has been introduced yet.
