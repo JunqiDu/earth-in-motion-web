@@ -15,3 +15,10 @@
 - Use the official **EODMS STAC API** for discovery. Query `RCMImageProducts` for broad Level-1 availability and `rcm-ard` for directly readable public CEOS-ARD assets.
 - Use **windowed HTTP reads from Cloud-Optimized GeoTIFFs** for feasibility so that no complete satellite scene needs to be downloaded.
 - Defer authenticated Level-1 downloads. Product ZIP assets require an EODMS bearer token, while the public ARD path is sufficient for the current phase.
+
+## 2026-10-03 — Phase 2 provisional water-measurement baseline
+
+- Use **RR** as the working Phase 3 backscatter asset because it produced stronger reference-date water/land separation and lower eight-date area variability than RL at Folly Lake.
+- Use a **provisional RR threshold of -17.31 dB**, derived as the midpoint between the reference water-sample upper quartile and land-sample lower quartile. This is an exploratory threshold, not a validated universal value.
+- Retain only **8-connected thresholded components intersecting a fixed interior-water seed** within the documented analysis rectangle. This suppresses unrelated dark patches while keeping the rule reproducible and explainable.
+- Treat the Phase 2 area series as a stability test only. Phase 3 preprocessing/alignment and independent reference validation remain required before interpreting change.

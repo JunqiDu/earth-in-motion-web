@@ -87,3 +87,13 @@ No full scene or large raw file was downloaded; only remote metadata, HTTP heade
 ## Supporting datasets
 
 No supporting analysis dataset has been selected or downloaded. The Folly Lake inventory and official place-name information are used only to validate the temporary AOI.
+
+## Phase 2 confirmed asset details
+
+- All eight independent acquisitions expose readable public `rr`, `rl`, and `local_inc_angle` Cloud-Optimized GeoTIFF assets.
+- The selected windows use EPSG:32620 and an identical 20 m grid over the fixed Phase 2 analysis rectangle.
+- All eight acquisitions report relative orbit 37, descending orbit, right-looking acquisition, Level-2 MLC processing, and CEOS ARD `NRB - POL`.
+- Platforms represented are RCM2 and RCM3.
+- Mean local incidence angle over the analysis rectangle is approximately 27.971°–27.985° across the eight dates.
+- The 2025-10-26 and 2025-11-07 searches each return two overlapping catalogue records for one satellite/orbit acquisition. Phase 2 retains one deterministic item per acquisition and does not count the duplicates as separate dates.
+- All selected RR and RL windows were read remotely without credentials. No complete satellite scene was downloaded.
