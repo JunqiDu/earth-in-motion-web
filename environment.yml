@@ -1,0 +1,22 @@
+name: space-hackathon-2026
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - jupyterlab
+  - ipykernel
+  - numpy
+  - pandas
+  - matplotlib
+  - rasterio
+  - rioxarray
+  - xarray
+  - geopandas
+  - shapely
+  - pyproj
+  - pystac-client
+  - stackstac
+  - streamlit
+  - plotly
+  - folium
+  - streamlit-folium
