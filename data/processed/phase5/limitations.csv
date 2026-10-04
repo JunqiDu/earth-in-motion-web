@@ -4,6 +4,8 @@ limitation
 "The seven products mix 5/16/30 m sources, beam modes, orbit directions, Gamma/Sigma representations and HH/HV classifier channels."
 The common 20 m grid standardizes spatial accounting but does not normalize sensor or product response.
 The acquisition sequence is discrete and non-monotonic; no daily interpolation or satellite-derived flood peak is claimed.
+"Regional WaterOffice unit values support two hydrologic pulse windows separated by an inter-pulse low, but gauges do not validate individual pixels or provide a same-contract pre-event EGS flood frame."
+"OBS01 follows the first selected Chilliwack flow maximum, while OBS05 is close to the second selected maximum; these are stage alignments, not satellite peak claims."
 The OBS02→OBS03 jump has mixed hydrologic and observational causes; the contribution ratio is unresolved.
 Mission and Chilliwack gauges provide regional context only; the inside-AOI Cannor station lacks December 2025 daily data.
 "Folly Lake values are empirical method-variability context, not universal thresholds or significance tests."

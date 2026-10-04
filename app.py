@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -11,16 +12,16 @@ import pandas as pd
 import plotly.graph_objects as go
 import pydeck as pdk
 import streamlit as st
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data" / "processed" / "phase5"
+PHASE4_DIR = BASE_DIR / "data" / "processed" / "phase4"
 MANIFEST_FILE = DATA_DIR / "phase6_handoff.json"
 
 TABLE_FILES = {
     "metrics": "final_case_metrics.csv",
-    "timeline": "temporal_series.csv",
-    "trajectory": "event_trajectory.csv",
     "priority": "priority_grid_impact.csv",
     "roads": "road_exposure.csv",
     "bridges": "bridge_exposure.csv",
@@ -35,6 +36,14 @@ VECTOR_FILES = {
     "priority_grids": "priority_grids.geojson",
     "roads": "exposed_roads.geojson",
     "alr": "alr_gain_overlap.geojson",
+}
+PHASE4_FILES = {
+    "frames": "egs_open_water_flood_frames.geojson",
+    "reference": "egs_permanent_water_reference.geojson",
+    "observations": "event_observations.csv",
+    "alignment": "rcm_stage_alignment.csv",
+    "hydrology": "event_hydrology_unit_values.csv",
+    "hydrologic_stages": "hydrologic_stage_summary.csv",
 }
 
 NAV_ITEMS = ("Overview", "Detect", "Map", "Monitor", "Impact", "Evidence & Method")
@@ -155,6 +164,8 @@ st.markdown(
     .legend-item {{ display: inline-flex; align-items: center; gap: .35rem; }}
     .legend-swatch {{ width: .85rem; height: .65rem; border-radius: .15rem; display: inline-block; }}
     .north-arrow {{ color: var(--eim-muted); font-weight: 700; white-space: nowrap; }}
+    .player-status {{ display: inline-block; padding: .22rem .6rem; border-radius: 999px; background: var(--eim-surface-alt); border: 1px solid var(--eim-border); color: var(--eim-muted); font-weight: 700; font-size: .83rem; }}
+    .player-readout {{ padding: .75rem .9rem; border: 1px solid var(--eim-border); border-radius: .65rem; background: var(--eim-surface-alt); color: var(--eim-text); margin: .45rem 0 .65rem 0; }}
     @media (max-width: 700px) {{
         .block-container {{ padding-left: 1rem; padding-right: 1rem; }} .eim-hero h1 {{ font-size: 1.9rem; }}
         [data-testid="stMetric"] {{ min-height: 96px; padding: .65rem .75rem; }} .workflow-step {{ min-height: auto; margin-bottom: .6rem; }}
@@ -166,16 +177,28 @@ st.markdown(
 
 
 def _expected_paths() -> list[Path]:
-    return [DATA_DIR / name for name in TABLE_FILES.values()] + [DATA_DIR / name for name in VECTOR_FILES.values()] + [MANIFEST_FILE]
+    return (
+        [DATA_DIR / name for name in TABLE_FILES.values()]
+        + [DATA_DIR / name for name in VECTOR_FILES.values()]
+        + [PHASE4_DIR / name for name in PHASE4_FILES.values()]
+        + [MANIFEST_FILE]
+    )
+
+
+def _file_signature(paths: list[Path]) -> tuple[tuple[str, int, int], ...]:
+    """Make cached file reads refresh whenever a local handoff artifact changes."""
+    return tuple((str(path), path.stat().st_mtime_ns, path.stat().st_size) for path in paths)
 
 
 @st.cache_data(show_spinner=False)
-def load_tables() -> dict[str, pd.DataFrame]:
+def load_tables(signature: tuple[tuple[str, int, int], ...]) -> dict[str, pd.DataFrame]:
+    del signature
     return {key: pd.read_csv(DATA_DIR / filename) for key, filename in TABLE_FILES.items()}
 
 
 @st.cache_data(show_spinner=False)
-def load_vectors() -> dict[str, gpd.GeoDataFrame]:
+def load_vectors(signature: tuple[tuple[str, int, int], ...]) -> dict[str, gpd.GeoDataFrame]:
+    del signature
     vectors = {key: gpd.read_file(DATA_DIR / filename) for key, filename in VECTOR_FILES.items()}
     for name, frame in vectors.items():
         if frame.crs is None or frame.crs.to_epsg() != 32610:
@@ -184,8 +207,79 @@ def load_vectors() -> dict[str, gpd.GeoDataFrame]:
 
 
 @st.cache_data(show_spinner=False)
-def load_manifest() -> dict[str, Any]:
+def load_manifest(signature: tuple[tuple[str, int, int], ...]) -> dict[str, Any]:
+    del signature
     return json.loads(MANIFEST_FILE.read_text(encoding="utf-8"))
+
+
+@st.cache_data(show_spinner=False)
+def load_acquisition_data(signature: tuple[tuple[str, int, int], ...]) -> dict[str, Any]:
+    """Load canonical Phase 4 observations, hydrology, and map geometries."""
+    del signature
+    frames = gpd.read_file(PHASE4_DIR / PHASE4_FILES["frames"])
+    reference = gpd.read_file(PHASE4_DIR / PHASE4_FILES["reference"])
+    observations = pd.read_csv(PHASE4_DIR / PHASE4_FILES["observations"])
+    alignment = pd.read_csv(PHASE4_DIR / PHASE4_FILES["alignment"])
+    hydrology = pd.read_csv(PHASE4_DIR / PHASE4_FILES["hydrology"])
+    hydrologic_stages = pd.read_csv(PHASE4_DIR / PHASE4_FILES["hydrologic_stages"])
+    hydrology["timestamp_utc"] = pd.to_datetime(hydrology["timestamp_utc"], utc=True)
+    for column in ("start_utc", "end_utc", "anchor_timestamp_utc"):
+        hydrologic_stages[column] = pd.to_datetime(hydrologic_stages[column], utc=True)
+    for name, frame in {"frames": frames, "reference": reference}.items():
+        if frame.crs is None or frame.crs.to_epsg() != 32610:
+            raise ValueError(f"{name} must use EPSG:32610; found {frame.crs}")
+    return {
+        "frames": frames,
+        "reference": reference,
+        "observations": observations,
+        "alignment": alignment,
+        "hydrology": hydrology,
+        "hydrologic_stages": hydrologic_stages,
+    }
+
+
+def _require_columns(frame: pd.DataFrame, required: set[str], label: str) -> None:
+    missing = sorted(required.difference(frame.columns))
+    if missing:
+        raise ValueError(f"{label} is missing required fields: {', '.join(missing)}")
+
+
+def build_temporal_contract(acquisition: dict[str, Any]) -> pd.DataFrame:
+    """Build one canonical seven-row Dashboard view from Phase 4 source-of-truth files."""
+    observations = acquisition["observations"].copy()
+    alignment = acquisition["alignment"].copy()
+    _require_columns(
+        observations,
+        {
+            "observation_id", "timestamp_utc", "platform", "beam_mode", "source_resolution_m",
+            "orbit_direction", "swath_radiometry", "classifier_channel", "confidence",
+            "egs_open_water_flood_ha", "fixed_reference_total_water_ha",
+        },
+        "Phase 4 event_observations.csv",
+    )
+    _require_columns(
+        alignment,
+        {"observation_id", "stage_id", "stage_label", "observation_role", "caveat"},
+        "Phase 4 rcm_stage_alignment.csv",
+    )
+    alignment_fields = [
+        "observation_id", "stage_id", "stage_label", "observation_role",
+        "stage_anchor_timestamp_utc", "offset_to_stage_anchor_hours", "caveat",
+    ]
+    available_alignment_fields = [field for field in alignment_fields if field in alignment.columns]
+    trajectory = observations.merge(
+        alignment[available_alignment_fields],
+        on="observation_id",
+        how="left",
+        validate="one_to_one",
+    ).rename(columns={"egs_open_water_flood_ha": "flood_outside_baseline_ha"})
+    trajectory["timestamp_utc"] = pd.to_datetime(trajectory["timestamp_utc"], utc=True)
+    trajectory = trajectory.sort_values("timestamp_utc").reset_index(drop=True)
+    if len(trajectory) != 7 or trajectory["observation_id"].nunique() != 7:
+        raise ValueError("The Phase 4 temporal contract must contain seven unique observations.")
+    if trajectory[["stage_id", "stage_label", "observation_role", "caveat"]].isna().any().any():
+        raise ValueError("Every Phase 4 observation must have a hydrologic-stage alignment record.")
+    return trajectory
 
 
 def metric_number(metrics: pd.DataFrame, name: str) -> float:
@@ -211,7 +305,8 @@ def render_metric_rows(items: list[tuple[str, str, str | None]]) -> None:
 
 
 def _feature_collection(frame: gpd.GeoDataFrame) -> dict[str, Any]:
-    return json.loads(frame.to_json())
+    # Phase 4 frame metadata includes pandas timestamps; GeoJSON properties must be JSON-safe.
+    return json.loads(frame.to_json(default=str))
 
 
 def _road_label(row: pd.Series) -> str:
@@ -560,12 +655,183 @@ def render_map(prepared: dict[str, Any], preset_name: str, key: str, *, active_l
             st.caption("Rendered coordinates: WGS84 / EPSG:4326. Analytical layers and reported areas use EPSG:32610.")
 
 
+def prepare_acquisition_frames(acquisition: dict[str, Any]) -> dict[str, gpd.GeoDataFrame]:
+    """Decorate the seven Phase 4 EGS frames for the local, discrete-step player."""
+    trajectory = acquisition["trajectory"].copy()
+    frames = acquisition["frames"].merge(
+        trajectory[
+            [
+                "observation_id", "timestamp_utc", "platform", "beam_mode", "source_resolution_m",
+                "orbit_direction", "swath_radiometry", "classifier_channel", "confidence",
+                "flood_outside_baseline_ha", "stage_id", "stage_label", "observation_role", "caveat",
+            ]
+        ],
+        on="observation_id",
+        how="left",
+        suffixes=("_frame", ""),
+    ).sort_values("timestamp_utc")
+    frames["tooltip"] = frames.apply(
+        lambda row: _tooltip(
+            f"{row.observation_id} · EGS open-water flood class",
+            [
+                f"Acquired: {pd.Timestamp(row.timestamp_utc).strftime('%d %b %Y %H:%M UTC')}",
+                f"Mapped area: {row.flood_outside_baseline_ha:.2f} ha",
+                f"Stage: {row.stage_label}",
+                f"Platform / beam: {row.platform} · {row.beam_mode}",
+                f"Resolution / orbit: {row.source_resolution_m:.0f} m · {row.orbit_direction}",
+                f"Role: {row.observation_role}",
+            ],
+        ),
+        axis=1,
+    )
+    reference = acquisition["reference"].copy()
+    reference["tooltip"] = _tooltip(
+        "Fixed EGS permanent-water reference",
+        [
+            "OBS01 product class 1 used for fixed semantic accounting.",
+            "It is not an independently observed pre-event normal-water surface.",
+        ],
+    )
+    return {"frames": frames.to_crs(4326), "reference": reference.to_crs(4326)}
+
+
+def build_acquisition_deck(
+    prepared: dict[str, Any],
+    acquisition: dict[str, gpd.GeoDataFrame],
+    frame_index: int,
+    *,
+    show_reference: bool,
+    show_context: bool,
+) -> pdk.Deck:
+    """Build a local north-up deck for one observed acquisition, never an interpolated frame."""
+    frame = acquisition["frames"].iloc[[frame_index]]
+    layers: list[pdk.Layer] = []
+    if show_reference:
+        layers.append(_geojson_layer(acquisition["reference"], fill=[105, 132, 145, 42], line=[105, 132, 145, 205], width=1))
+    if show_context:
+        layers.extend(build_map_layers(prepared, {"priority_grids", "hotspot_grids", "direct_roads"}))
+    layers.append(_geojson_layer(frame, fill=COLORS["gain"] + [145], line=COLORS["gain"] + [255], width=3))
+    return pdk.Deck(
+        layers=layers,
+        views=[pdk.View(type="MapView", controller={"dragPan": True, "doubleClickZoom": True, "touchZoom": True, "scrollZoom": False})],
+        map_style="",
+        map_provider=None,
+        initial_view_state=_map_view_state(prepared),
+        height=555,
+        tooltip={"html": "{tooltip}", "style": {"backgroundColor": THEME["surface_alt"], "color": THEME["text"], "fontSize": "12px"}},
+    )
+
+
+@st.fragment
+def _render_acquisition_player_fragment(prepared: dict[str, Any], frame_data: dict[str, gpd.GeoDataFrame]) -> None:
+    """Advance one observed frame per fragment rerun with one shared scrubber."""
+    frames = frame_data["frames"].reset_index(drop=True)
+    count = len(frames)
+    index_key = "acquisition-player-index"
+    playing_key = "acquisition-player-playing"
+    scrubber_key = "acquisition-player-scrubber"
+    if index_key not in st.session_state:
+        st.session_state[index_key] = 0
+    if playing_key not in st.session_state:
+        st.session_state[playing_key] = False
+
+    current_index = min(max(int(st.session_state[index_key]), 0), count - 1)
+    playing = bool(st.session_state[playing_key])
+    completed = playing and current_index >= count - 1
+    if completed:
+        playing = False
+        st.session_state[playing_key] = False
+
+    play_column, reset_column, layer_column, scrubber_column = st.columns([1.25, 1.15, 1.2, 4.4], vertical_alignment="bottom")
+    with play_column:
+        play_once = st.button(
+            "▶ Play one pass",
+            key="acquisition-player-play",
+            use_container_width=True,
+            disabled=playing,
+            help="Always plays OBS01 through OBS07 once, then pauses at OBS07.",
+        )
+    with reset_column:
+        reset = st.button("Reset to OBS01", key="acquisition-player-reset", use_container_width=True, disabled=playing)
+
+    if play_once:
+        current_index = 0
+        playing = True
+        st.session_state[index_key] = 0
+        st.session_state[playing_key] = True
+    elif reset:
+        current_index = 0
+        playing = False
+        st.session_state[index_key] = 0
+        st.session_state[playing_key] = False
+
+    with layer_column:
+        with st.popover("Map layers", use_container_width=True):
+            context_enabled = st.checkbox("Priority grids and direct roads", value=True, key="acquisition-player-context")
+            reference_enabled = st.checkbox("Fixed semantic water reference", value=False, key="acquisition-player-reference")
+
+    options = list(range(count))
+    labels = [f"{row.observation_id} · {pd.Timestamp(row.timestamp_utc).strftime('%d %b %H:%M UTC')}" for row in frames.itertuples()]
+    if playing or play_once or reset or completed or scrubber_key not in st.session_state:
+        st.session_state[scrubber_key] = current_index
+    with scrubber_column:
+        selected_index = st.select_slider(
+            "Observed RCM frame",
+            options=options,
+            format_func=lambda index: labels[index],
+            key=scrubber_key,
+            disabled=playing,
+            help="Drag to any real acquisition. Playback advances through these seven observed frames only.",
+        )
+    if not playing:
+        current_index = selected_index
+        st.session_state[index_key] = current_index
+
+    status = f"Playing {current_index + 1} of {count}" if playing else f"Paused at {current_index + 1} of {count}"
+    row = frames.iloc[current_index]
+    timestamp = pd.Timestamp(row.timestamp_utc).strftime("%d %b %Y · %H:%M UTC")
+    st.markdown(
+        f'<div class="player-readout"><span class="player-status">{status}</span> '
+        f'<strong>{row.observation_id} · {row.stage_label}</strong> · {timestamp}<br>'
+        f'<strong>{row.flood_outside_baseline_ha:.2f} ha</strong> mapped EGS open-water flood class · '
+        f'{row.platform} · {row.beam_mode} · {row.source_resolution_m:.0f} m · {row.observation_role}</div>',
+        unsafe_allow_html=True,
+    )
+
+    legend = '<div class="map-legend"><span class="legend-item"><span class="legend-swatch" style="background:#D55E00"></span>Current EGS open-water flood class</span>'
+    if reference_enabled:
+        legend += '<span class="legend-item"><span class="legend-swatch" style="background:#698491"></span>Fixed semantic water reference</span>'
+    if context_enabled:
+        legend += '<span class="legend-item"><span class="legend-swatch" style="background:#E69F00"></span>Priority grids</span><span class="legend-item"><span class="legend-swatch" style="background:#4D5860"></span>Direct road intersections</span>'
+    legend += '<span class="north-arrow">N ↑</span></div>'
+    st.markdown(legend, unsafe_allow_html=True)
+
+    deck = build_acquisition_deck(prepared, frame_data, current_index, show_reference=reference_enabled, show_context=context_enabled)
+    st.pydeck_chart(deck, width="stretch", height=555, key="acquisition-player-deck")
+    with st.expander("Current-frame interpretation"):
+        st.caption(row.caveat)
+
+    if playing and current_index < count - 1:
+        st.session_state[index_key] = current_index + 1
+        time.sleep(0.7)
+        run_context = get_script_run_ctx(suppress_warning=True)
+        if run_context is not None and run_context.fragment_ids_this_run:
+            st.rerun(scope="fragment")
+
+
+def render_acquisition_player(prepared: dict[str, Any], acquisition: dict[str, Any]) -> None:
+    """Render a deliberately finite, user-controlled seven-observation playback."""
+    st.subheader("Observed acquisition-step player")
+    st.caption("Seven locally stored RCM-derived EGS observations, beginning with OBS01 on 12 Dec. Drag the single timeline or play one complete pass; no daily frame or interpolated flood geometry is generated.")
+    _render_acquisition_player_fragment(prepared, prepare_acquisition_frames(acquisition))
+
+
 def render_workflow_summary() -> None:
     st.subheader("How this case was built")
     steps = [
         ("1 · Observe", "Seven NRCan EGS RCM observations, 12–21 Dec."),
         ("2 · Detect", "Map open water outside the local semantic baseline on a 20 m grid."),
-        ("3 · Compare", "Measure event gain, 1 km-grid change, and recovery."),
+        ("3 · Compare", "Measure initial-observation gain, 1 km-grid change, and the discrete acquisition sequence."),
         ("4 · Validate", "Check recovery-period agreement with Sentinel-2."),
         ("5 · Contextualize", "Overlay roads, bridge-tagged ways, ALR designation, and place points."),
     ]
@@ -578,7 +844,7 @@ def render_overview(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -
     metrics = tables["metrics"]
     gain = metric_number(metrics, "Mapped event water gain")
     local_increase = metric_number(metrics, "Maximum local increase (G042)")
-    recovery_loss = metric_number(metrics, "Near-event to recovery mapped loss")
+    gross_recession = metric_number(metrics, "Near-event to recovery mapped loss")
     roads = int(metric_number(metrics, "Directly intersecting road ways"))
     alr = metric_number(metrics, "Mapped gain intersecting ALR")
     alr_share = 100 * alr / gain
@@ -586,7 +852,7 @@ def render_overview(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -
     render_metric_rows([
         ("Mapped flood gain", f"{gain:.2f} ha", None),
         ("Largest 1 km-grid increase", f"+{local_increase:.2f} pp", None),
-        ("Water extent lost by recovery", f"{recovery_loss:.2f} ha", None),
+        ("Gross recession from initial footprint", f"{gross_recession:.2f} ha", None),
         ("Road ways intersecting mapped gain", f"{roads} ways", None),
         ("Gain overlapping ALR designation", f"{alr:.2f} ha", f"{alr_share:.1f}% of gain"),
     ])
@@ -664,66 +930,109 @@ def render_detect(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> 
     st.markdown('<div class="eim-callout"><strong>5.88 pp</strong> is an empirical control-site context from Folly Lake. It is not a universal flood threshold or a statistical significance test.</div>', unsafe_allow_html=True)
 
 
-def render_map_page(prepared: dict[str, Any]) -> None:
-    render_header("Map", "How do the local change, detection, infrastructure, and context layers relate spatially?")
-    st.caption("This is the complete local spatial explorer. No online basemap, tile service, or remote data query is requested.")
-    render_map(prepared, "exploration", "map-page")
+def render_map_page(prepared: dict[str, Any], acquisition: dict[str, Any]) -> None:
+    render_header("Map", "How did the mapped RCM-derived flood extent change across the seven observed acquisitions?")
+    render_acquisition_player(prepared, acquisition)
+    with st.expander("Open the full static layer explorer"):
+        st.caption("Optional: compare the change, infrastructure, designation, and place-context layers. All layers are local and no online basemap is requested.")
+        render_map(prepared, "exploration", "map-page")
 
 
-def _monitor_figure(trajectory: pd.DataFrame) -> go.Figure:
+def _monitor_figure(
+    trajectory: pd.DataFrame,
+    hydrology: pd.DataFrame,
+    hydrologic_stages: pd.DataFrame,
+) -> go.Figure:
+    """Combine continuous regional discharge and discrete RCM observations on one UTC axis."""
     dates = trajectory["timestamp_utc"]
     values = trajectory["flood_outside_baseline_ha"]
+    discharge = hydrology.loc[
+        hydrology["station_id"].eq("08MH001")
+        & hydrology["parameter"].eq("discharge_unit_value"),
+        ["timestamp_utc", "value"],
+    ].copy()
+    discharge = (
+        discharge.set_index("timestamp_utc")["value"]
+        .resample("1h")
+        .mean()
+        .rename("discharge_m3s")
+        .reset_index()
+    )
+    flow_stages = hydrologic_stages.loc[
+        hydrologic_stages["station_id"].eq("08MH001")
+        & hydrologic_stages["parameter"].eq("discharge_unit_value")
+        & hydrologic_stages["stage_id"].isin(["STAGE01", "STAGE02", "STAGE03"])
+    ].set_index("stage_id")
     figure = go.Figure()
+    figure.add_trace(go.Scatter(
+        x=discharge["timestamp_utc"],
+        y=discharge["discharge_m3s"],
+        mode="lines",
+        name="Chilliwack discharge · hourly mean",
+        line={"color": "#0072B2", "width": 2.2},
+        hovertemplate="<b>Regional gauge context</b><br>%{x|%d %b %Y %H:%M UTC}<br>Discharge: %{y:.1f} m³/s<extra></extra>",
+    ))
     figure.add_trace(go.Scatter(
         x=dates,
         y=values,
         mode="lines+markers",
-        name="Flood water outside baseline",
+        name="RCM-derived EGS open-water flood class",
         line={"color": "#D55E00", "width": 3, "dash": "dot"},
         marker={"size": 10, "color": "#D55E00"},
-        customdata=trajectory[["temporal_class", "platform", "beam_mode", "source_resolution_m"]],
-        hovertemplate="%{x|%d %b %Y %H:%M UTC}<br>Flood water: %{y:.2f} ha<br>Class: %{customdata[0]}<br>Platform: %{customdata[1]}<br>Beam: %{customdata[2]}<br>Source resolution: %{customdata[3]:.0f} m<extra></extra>",
+        yaxis="y2",
+        customdata=trajectory[["observation_id", "stage_label", "observation_role", "platform", "beam_mode", "source_resolution_m", "orbit_direction"]],
+        hovertemplate="<b>%{customdata[0]}</b> · %{x|%d %b %Y %H:%M UTC}<br>Mapped EGS open-water flood class: %{y:.2f} ha<br>Regional context: %{customdata[1]}<br>Role: %{customdata[2]}<br>Platform / beam: %{customdata[3]} · %{customdata[4]}<br>Resolution / orbit: %{customdata[5]:.0f} m · %{customdata[6]}<extra></extra>",
     ))
-    annotation_specs = [
-        (0, "Near-event"),
-        (1, "Early recession observations"),
-        (3, "Mid-recession observations"),
-        (6, "Recovery-period"),
-    ]
-    annotations = [
-        {"x": dates.iloc[index], "y": values.iloc[index], "text": label, "showarrow": True, "arrowhead": 2, "ax": 0, "ay": -34}
-        for index, label in annotation_specs
-    ]
+    annotations = []
+    stage_colors = {"STAGE01": "#D55E00", "STAGE02": "#7F8C8D", "STAGE03": "#009E73"}
+    for stage_id in ("STAGE01", "STAGE02", "STAGE03"):
+        if stage_id not in flow_stages.index:
+            continue
+        stage = flow_stages.loc[stage_id]
+        figure.add_vline(x=stage["anchor_timestamp_utc"], line_dash="dash", line_width=1.2, line_color=stage_colors[stage_id])
+        annotations.append({
+            "x": stage["anchor_timestamp_utc"], "y": float(stage["value"]), "yref": "y",
+            "text": f"{stage['stage_label']}<br>{float(stage['value']):.0f} m³/s",
+            "showarrow": True, "arrowhead": 2, "ax": 0, "ay": -38,
+        })
+    annotations.extend([
+        {"x": dates.iloc[0], "y": values.iloc[0], "yref": "y2", "text": "OBS01 · first available mapped frame", "showarrow": True, "arrowhead": 2, "ax": 35, "ay": -35},
+        {"x": dates.iloc[-1], "y": values.iloc[-1], "yref": "y2", "text": "OBS07 · lower endpoint", "showarrow": True, "arrowhead": 2, "ax": 0, "ay": -34},
+    ])
     figure.update_layout(
-        height=430,
-        margin={"l": 20, "r": 20, "t": 45, "b": 20},
-        hovermode="closest",
+        height=520,
+        margin={"l": 20, "r": 20, "t": 58, "b": 20},
+        hovermode="x unified",
         dragmode=False,
         annotations=annotations,
-        yaxis={"title": "Flood water outside semantic baseline (ha)", "fixedrange": True},
-        xaxis={"fixedrange": True, "range": [dates.iloc[0] - pd.Timedelta(hours=12), dates.iloc[-1] + pd.Timedelta(hours=12)]},
-        legend={"orientation": "h", "y": 1.14},
+        yaxis={"title": "Chilliwack discharge (m³/s)", "fixedrange": True, "rangemode": "tozero"},
+        yaxis2={
+            "title": "Mapped EGS open-water flood class (ha)", "fixedrange": True,
+            "overlaying": "y", "side": "right", "range": [0, 70], "showgrid": False,
+        },
+        xaxis={"title": "UTC time", "fixedrange": True, "range": [pd.Timestamp("2025-12-07T00:00:00Z"), pd.Timestamp("2025-12-23T00:00:00Z")]},
+        legend={"orientation": "h", "y": 1.10, "x": 0},
     )
     return figure
 
 
-def render_monitor(tables: dict[str, pd.DataFrame]) -> None:
-    render_header("Monitor", "How did the mapped event evolve across the seven local RCM observations?")
-    trajectory = tables["trajectory"].copy()
-    trajectory["timestamp_utc"] = pd.to_datetime(trajectory["timestamp_utc"], utc=True)
+def render_monitor(acquisition: dict[str, Any]) -> None:
+    trajectory = acquisition["trajectory"]
+    render_header("Monitor", "How did regional hydrology and the seven discrete RCM-derived observations align from 7–22 December?")
+    st.subheader("Regional hydrology and observed RCM response")
     st.plotly_chart(
-        _monitor_figure(trajectory),
+        _monitor_figure(trajectory, acquisition["hydrology"], acquisition["hydrologic_stages"]),
         width="stretch",
         theme="streamlit",
         config={"displaylogo": False, "displayModeBar": False, "scrollZoom": False, "doubleClick": False, "responsive": True},
     )
     render_metric_rows([
-        ("Near-event total water", "1,026.80 ha", None),
-        ("Recovery total water", "993.52 ha", None),
-        ("Mapped water loss", "35.44 ha", "recession"),
+        ("Fixed-reference total mapped water · OBS01", "1,026.80 ha", None),
+        ("Fixed-reference total mapped water · OBS07", "993.52 ha", None),
+        ("Gross recession from initial footprint", "35.44 ha", None),
     ])
-    st.success("Event classification: recovering flood with localized residual / persistent expansion.")
-    st.caption("The line connects observed acquisitions in temporal order; it is not a daily interpolation or a flood-peak estimate. Different source resolutions, viewing geometry, and changing water conditions contribute to non-monotonic intermediate values.")
+    st.info("The blue gauge record corroborates two regional hydrologic pulses. The orange RCM-derived series begins with the first available mapped frame on 12 Dec and provides seven discrete spatial observations; it does not measure a continuous pixel-level hydrograph or the exact timing of either peak.")
+    st.caption("The dotted line only connects observed acquisitions in order. It is not daily interpolation or a measured flood-peak estimate. The 35.44 ha gross recession is the portion of the OBS01 flood footprint absent at OBS07; the fixed-reference net endpoint decline is 33.28 ha. Different source resolutions, viewing geometry, radiometry, and changing water conditions contribute to non-monotonic intermediate values.")
 
 
 def _direct_roads_table(tables: dict[str, pd.DataFrame]) -> pd.DataFrame:
@@ -857,12 +1166,15 @@ if missing:
     st.stop()
 
 try:
-    tables = load_tables()
-    vectors = load_vectors()
-    manifest = load_manifest()
+    input_signature = _file_signature(_expected_paths())
+    tables = load_tables(input_signature)
+    vectors = load_vectors(input_signature)
+    manifest = load_manifest(input_signature)
+    acquisition_data = load_acquisition_data(input_signature)
+    acquisition_data["trajectory"] = build_temporal_contract(acquisition_data)
     map_data = _decorate_map_data(vectors, tables)
 except Exception as exc:
-    st.error("The local Phase 5 handoff could not be loaded.")
+    st.error("The local Phase 4/5 handoff could not be loaded.")
     st.exception(exc)
     st.stop()
 
@@ -881,9 +1193,9 @@ if section == "Overview":
 elif section == "Detect":
     render_detect(tables, map_data)
 elif section == "Map":
-    render_map_page(map_data)
+    render_map_page(map_data, acquisition_data)
 elif section == "Monitor":
-    render_monitor(tables)
+    render_monitor(acquisition_data)
 elif section == "Impact":
     render_impact(tables, map_data)
 else:

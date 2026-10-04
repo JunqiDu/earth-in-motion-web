@@ -42,12 +42,13 @@ The final dashboard separates its narrative responsibilities: Overview explains 
 - `data/processed/phase4/event_observations.csv` as the canonical seven-acquisition table
 - `egs_open_water_flood_frames.geojson`, `egs_permanent_water_reference.geojson`, and `endpoint_transition.geojson` as the temporal spatial contract
 - `acquisition_comparisons.csv` and `beam_family_comparisons.csv` for adjacent and like-beam QA
-- `event_hydrology.csv` for local, offline regional gauge context
+- `event_hydrology.csv` for compact daily regional gauge context
+- `event_hydrology_unit_values.csv`, `hydrologic_stage_summary.csv`, and `rcm_stage_alignment.csv` for the committed two-pulse regional hydrologic context and timestamp alignment
 - `temporal_audit.json` for definitions, missing fields, diagnosis, endpoint identities, and hashes
 
 - `final_case_metrics.csv` for the compact headline metrics
 - `temporal_series.csv` as a deprecated generated two-row compatibility view
-- `event_trajectory.csv` as a generated compatibility view for the current Monitor
+- `event_trajectory.csv` as a retained generated compatibility view; Map and Monitor now read the canonical Phase 4 temporal contract directly
 - `priority_grid_impact.csv` and `priority_grids.geojson` for explanatory grid content
 - `road_exposure.csv`, `bridge_exposure.csv`, and `exposed_roads.geojson` for infrastructure context
 - `community_proximity.csv` for named-place context

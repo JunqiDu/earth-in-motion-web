@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "analysis_crs": "EPSG:32610",
   "aoi_bounds_utm": [
     563960,
@@ -21,7 +21,8 @@
   "missing_fields": {
     "relative_orbit": "Unavailable in the supplied EGS Config XML; not inferred.",
     "incidence_angle": "Blank in the supplied EGS Config XML; not inferred.",
-    "cannor_winter_data": "08MF038 is the preferred inside-AOI station but has no December 2025 daily series in the selected service response."
+    "cannor_winter_data": "08MF038 is the preferred inside-AOI station but has no December 2025 daily series in the selected service response.",
+    "pre_event_same_contract_egs_frame": "No same-contract pre-event EGS open-water-flood frame is available in the selected seven-product record; WaterOffice provides regional background context only."
   },
   "endpoint_metrics_ha": {
     "initial_observation_open_water_flood": 54.92,
@@ -31,7 +32,20 @@
     "recovery_only": 2.16,
     "net_endpoint_decline": 33.28
   },
-  "interpretation": "The seven records are discrete acquisitions, not a continuous hydrograph. Regional gauges support a secondary hydrologic pulse, while sensor/product differences materially limit attribution of the OBS02-to-OBS03 jump.",
+  "event_structure": {
+    "classification": "two_hydrologic_pulses_supported_by_regional_gauge_context",
+    "primary_station": "08MH001 \u2014 Chilliwack River at Vedder Crossing",
+    "stages": [
+      "background context",
+      "first hydrologic pulse",
+      "inter-pulse low",
+      "second hydrologic pulse",
+      "later decline"
+    ],
+    "rcm_role": "Seven EGS products are discrete mapped acquisitions aligned to, but not substituted for, the station-stage context.",
+    "claim_boundary": "No satellite-derived flood peak, continuous pixel-level hydrograph, or quantified hydrologic-versus-observational contribution is claimed."
+  },
+  "interpretation": "Regional 5-minute station values support two hydrologic pulses separated by an inter-pulse low. The seven EGS records remain discrete acquisitions; the OBS02-to-OBS03 mapped jump has mixed hydrologic and observational causes with an unresolved contribution ratio.",
   "source_artifact_sha256": {
     "acquisition_comparisons.csv": "b6412a35e991c9bbb9857ceeac1bc994f403c436ba07e1fa6c9def59b619854b",
     "beam_family_comparisons.csv": "0736fa645372be544f940ca917c336eaa7eb0084c1bcd96bb325491a9e0624d9",
@@ -39,6 +53,9 @@
     "egs_permanent_water_reference.geojson": "d715c5cd9f2d4486b8a99c9251c2e995933bf9cabc5ae330e93a2af1f60b5713",
     "endpoint_transition.geojson": "bdb3b57c492490a29544dabd97468e6b6a60ecf8494d2dfbcdb1efe976fe340a",
     "event_hydrology.csv": "4dcb5f2437663b57f6fd29eafc5de14d7e69c8315420156bb7777c70e0c69973",
+    "event_hydrology_unit_values.csv": "2c82ddbd638924d7dab6b220d589279e0cebd6c79f4d90abfd9afdbb91ae537a",
+    "hydrologic_stage_summary.csv": "06a8f4e78be3cc37a535178d82824401d6759d9b99117188a02995286ebf4c16",
+    "rcm_stage_alignment.csv": "f6919d4ec813ad166bd38dd13885ae281bd81218636728a80dd33bfecf78c952",
     "event_observations.csv": "23e736a851923b2ff7cea3e4e3df52143974b84fad2b32aee4cf917420fb3e25"
   }
 }

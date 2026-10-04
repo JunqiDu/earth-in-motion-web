@@ -2,7 +2,7 @@
   "phase": 5,
   "status": "complete",
   "dashboard_phase": 6,
-  "schema_version": "2.0.0",
+  "schema_version": "2.1.0",
   "crs": "EPSG:32610",
   "event": "December 2025 Fraser Valley / Lower Fraser flood",
   "scientific_contract": "data/processed/phase4/temporal_audit.json",
@@ -38,7 +38,9 @@
     "limitations"
   ],
   "temporal_semantics": {
-    "sequence": "seven discrete acquisitions; no daily interpolation or satellite-derived peak",
+    "sequence": "seven discrete EGS acquisitions; no daily interpolation or satellite-derived peak",
+    "event_structure": "Two regional hydrologic pulse windows are supported by committed WaterOffice unit values; RCM frames are aligned discrete observations, not a continuous hydrograph.",
+    "stage_source": "data/processed/phase4/hydrologic_stage_summary.csv",
     "fixed_reference": "OBS01 EGS class 1 permanent water",
     "diagnosis": "mixed_hydrologic_and_observational",
     "gross_recession_ha": 35.44,
@@ -54,6 +56,9 @@
     "acquisition_comparisons.csv",
     "beam_family_comparisons.csv",
     "event_hydrology.csv",
+    "event_hydrology_unit_values.csv",
+    "hydrologic_stage_summary.csv",
+    "rcm_stage_alignment.csv",
     "event_observations.csv"
   ],
   "phase4_vectors": [

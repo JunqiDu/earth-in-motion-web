@@ -77,15 +77,15 @@ The dashboard follows one question per section:
 
 - **Overview:** what changed and how the result was produced at a high level;
 - **Detect:** where meaningful local water expansion occurred, including G042 and G015;
-- **Map:** the complete interactive, fully local spatial explorer;
-- **Monitor:** the current presentation of the seven discrete acquisitions; the committed Phase 4 contract is the scientific source of truth;
+- **Map:** a paused-by-default seven-step local acquisition player, followed by the complete interactive spatial explorer;
+- **Monitor:** the seven discrete acquisitions in regional two-pulse context; the committed Phase 4 contract is the scientific source of truth;
 - **Impact:** potential road, bridge-tagged-way, ALR-designation, and community context;
 - **Evidence & Method:** validation, official sources, limitations, and claim boundaries.
 
-Raw satellite data and general generated outputs are intentionally excluded from Git. `data/processed/phase4/event_observations.csv` and `temporal_audit.json` are the temporal source of truth. The Phase 5 `event_trajectory.csv` and `temporal_series.csv` files are generated compatibility views for the current dashboard, not independent scientific inputs. Four PNG maps remain under `assets/phase5/` as provenance exports and are not required at startup.
+Raw satellite data and general generated outputs are intentionally excluded from Git. `data/processed/phase4/event_observations.csv`, `rcm_stage_alignment.csv`, and the seven-frame GeoJSON are the Dashboard temporal source of truth. The Phase 5 `event_trajectory.csv` and `temporal_series.csv` files remain generated compatibility views, but Map and Monitor no longer depend on them at startup. Four PNG maps remain under `assets/phase5/` as provenance exports and are not required at startup.
 
-The common 20 m grid standardizes spatial accounting but does not normalize different RCM beam modes, source resolutions, viewing directions, radiometry, classifier channels, or independently processed EGS products. The seven observations are therefore an acquisition sequence—not a daily hydrograph, continuous interpolation, or measured flood peak. Endpoint change is reported as 35.44 ha gross recession from the initial footprint and 33.28 ha net decline, with 19.48 ha persistence and 2.16 ha final-only mapping.
+The common 20 m grid standardizes spatial accounting but does not normalize different RCM beam modes, source resolutions, viewing directions, radiometry, classifier channels, or independently processed EGS products. The seven observations are therefore an acquisition sequence—not a daily hydrograph, continuous interpolation, or measured flood peak. Committed WaterOffice 5-minute station values provide regional context for a first hydrologic pulse, an inter-pulse low, and a second hydrologic pulse; they do not validate individual pixels. Endpoint change is reported as 35.44 ha gross recession from the initial footprint and 33.28 ha net decline, with 19.48 ha persistence and 2.16 ha final-only mapping.
 
 ## Status
 
-Phases 1–5 and the current Phase 6 prototype are complete. The scientific handoff now distinguishes the canonical discrete-acquisition record from the current Dashboard compatibility layer. Intersections and proximity are described as potential exposure only; the project does not claim confirmed damage, flood depth, population impact, crop loss, a satellite-derived flood peak, or climate causation.
+Phases 1–5 and the current Phase 6 prototype are complete. The Map player is paused by default: drag its acquisition-progress control to inspect a stored observation, or click **Play one pass** to advance through OBS01–OBS07 exactly once and stop. It never interpolates dates or requests remote data. The scientific handoff distinguishes the canonical discrete-acquisition record from the Dashboard compatibility layer. Intersections and proximity are described as potential exposure only; the project does not claim confirmed damage, flood depth, population impact, crop loss, a satellite-derived flood peak, or climate causation.
