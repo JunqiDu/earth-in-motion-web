@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Phase 3B SNAP 14 graph template. Render this file with
+  analysis.rcm_preprocessing.render_snap_graph before invoking GPT.
+  The Python pipeline performs the final 30 m linear-power aggregation; this
+  graph only reads, calibrates, subsets, and terrain-corrects the RCM product.
+-->
+<graph id="phase3b_rcm_level1">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>${SOURCE_MANIFEST}</file>
+    </parameters>
+  </node>
+  <node id="Calibration">
+    <operator>Calibration</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <outputSigmaBand>true</outputSigmaBand>
+      <outputGammaBand>true</outputGammaBand>
+      <outputBetaBand>false</outputBetaBand>
+      <createGammaBand>true</createGammaBand>
+      <createBetaBand>false</createBetaBand>
+      <selectedPolarisations>HH,HV</selectedPolarisations>
+      <incidenceAngleForSigma0>Use incidence angle from source product</incidenceAngleForSigma0>
+      <incidenceAngleForGamma0>Use incidence angle from source product</incidenceAngleForGamma0>
+    </parameters>
+  </node>
+  <node id="Subset">
+    <operator>Subset</operator>
+    <sources><sourceProduct refid="Calibration"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <geoRegion>${AOI_WKT}</geoRegion>
+      <copyMetadata>true</copyMetadata>
+    </parameters>
+  </node>
+  <node id="TerrainCorrection">
+    <operator>Terrain-Correction</operator>
+    <sources><sourceProduct refid="Subset"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands>Gamma0_HH,Gamma0_HV</sourceBands>
+      <demName>${DEM_NAME}</demName>
+      <externalDEMFile>${DEM_FILE}</externalDEMFile>
+      <externalDEMNoDataValue>-32768</externalDEMNoDataValue>
+      <pixelSpacingInMeter>${INTERMEDIATE_PIXEL_SPACING_M}</pixelSpacingInMeter>
+      <mapProjection>${TARGET_CRS}</mapProjection>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="TerrainCorrection"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>${OUTPUT_PRODUCT}</file>
+      <formatName>GeoTIFF</formatName>
+    </parameters>
+  </node>
+</graph>

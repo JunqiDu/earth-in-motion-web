@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph id="phase3b_sigma_lut_qa">
+  <version>1.0</version>
+  <node id="Read"><operator>Read</operator><parameters class="com.bc.ceres.binding.dom.XppDomElement"><file>${SOURCE_MANIFEST}</file></parameters></node>
+  <node id="Calibration"><operator>Calibration</operator><sources><sourceProduct refid="Read"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <outputSigmaBand>true</outputSigmaBand><outputGammaBand>false</outputGammaBand>
+      <outputBetaBand>false</outputBetaBand><createGammaBand>false</createGammaBand>
+      <createBetaBand>false</createBetaBand><selectedPolarisations>${POLARIZATION}</selectedPolarisations>
+      <outputImageInComplex>false</outputImageInComplex><outputImageScaleInDb>false</outputImageScaleInDb>
+    </parameters>
+  </node>
+  <node id="Subset"><operator>Subset</operator><sources><sourceProduct refid="Calibration"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"><region>${PIXEL_REGION}</region><copyMetadata>true</copyMetadata></parameters>
+  </node>
+  <node id="BandSelect"><operator>BandSelect</operator><sources><sourceProduct refid="Subset"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"><sourceBands>Sigma0_${POLARIZATION}</sourceBands></parameters>
+  </node>
+  <node id="Write"><operator>Write</operator><sources><sourceProduct refid="BandSelect"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"><file>${OUTPUT_PRODUCT}</file><formatName>GeoTIFF</formatName></parameters>
+  </node>
+</graph>

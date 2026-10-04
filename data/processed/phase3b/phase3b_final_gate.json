@@ -1,0 +1,24 @@
+{
+  "status": "FAIL",
+  "final_gate_reason": "The only permitted pre-registered Lee refinement was completed, but strict LOODO metrics remain below the Phase 3B FAIL threshold. No Level-1 method is frozen and the remaining six scenes are not processed.",
+  "baseline_selected": {
+    "candidate": "C0_global_hh",
+    "representation": "Sigma0",
+    "median_iou": 0.10882352941176471,
+    "worst_iou": 0.026847290640394088
+  },
+  "lee_refinement": {
+    "completed": true,
+    "median_iou": 0.13993948562783662,
+    "worst_iou": 0.024260226283724977,
+    "median_iou_change": 0.03111595621607191,
+    "worst_iou_change": -0.002587064356669111,
+    "passes_filter_adoption_comparison": true,
+    "used_for_remaining_scenes": false
+  },
+  "calibration_lut_check": "pass_native_sigma_1e-5",
+  "phase4_phase5_dashboard_untouched": true,
+  "method_config_generated": false,
+  "full_11_scene_processing_started": false,
+  "created_utc": "2026-10-04T07:23:07.577782+00:00"
+}

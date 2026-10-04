@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph id="phase3b_calibration_smoke">
+  <version>1.0</version>
+  <node id="Read"><operator>Read</operator><sources/><parameters><file>${SOURCE_MANIFEST}</file></parameters></node>
+  <node id="Calibration">
+    <operator>Calibration</operator><sources><sourceProduct refid="Read"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <outputSigmaBand>true</outputSigmaBand><outputGammaBand>true</outputGammaBand><outputBetaBand>false</outputBetaBand><createGammaBand>true</createGammaBand><createBetaBand>false</createBetaBand>
+      <outputImageInComplex>false</outputImageInComplex><outputImageScaleInDb>false</outputImageScaleInDb>
+      <selectedPolarisations>HH,HV</selectedPolarisations>
+    </parameters>
+  </node>
+  <node id="Subset"><operator>Subset</operator><sources><sourceProduct refid="Calibration"/></sources><parameters><geoRegion>${AOI_WKT}</geoRegion><copyMetadata>true</copyMetadata></parameters></node>
+  <node id="Write"><operator>Write</operator><sources><sourceProduct refid="Subset"/></sources><parameters><formatName>BEAM-DIMAP</formatName><file>${OUTPUT_PRODUCT}</file></parameters></node>
+</graph>

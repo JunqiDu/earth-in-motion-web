@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph id="phase3b_calibration">
+  <version>1.0</version>
+  <node id="Read"><operator>Read</operator><parameters class="com.bc.ceres.binding.dom.XppDomElement"><file>${SOURCE_MANIFEST}</file></parameters></node>
+  <node id="Calibration"><operator>Calibration</operator><sources><sourceProduct refid="Read"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <outputSigmaBand>true</outputSigmaBand><outputGammaBand>true</outputGammaBand>
+      <outputBetaBand>false</outputBetaBand><createGammaBand>true</createGammaBand>
+      <createBetaBand>false</createBetaBand><selectedPolarisations>HH,HV</selectedPolarisations>
+      <outputImageInComplex>false</outputImageInComplex><outputImageScaleInDb>false</outputImageScaleInDb>
+    </parameters>
+  </node>
+  <node id="Subset"><operator>Subset</operator><sources><sourceProduct refid="Calibration"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"><geoRegion>${AOI_WKT}</geoRegion><copyMetadata>true</copyMetadata></parameters>
+  </node>
+  <node id="Write"><operator>Write</operator><sources><sourceProduct refid="Subset"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"><file>${OUTPUT_PRODUCT}</file><formatName>BEAM-DIMAP</formatName></parameters>
+  </node>
+</graph>

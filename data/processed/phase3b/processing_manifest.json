@@ -1,0 +1,63 @@
+{
+  "schema_version": "phase3b-pilot-1",
+  "created_utc": "2026-10-04T06:51:52.031362+00:00",
+  "source_root": "data/raw/rcm_level1",
+  "inventory_rows": 11,
+  "pilot_rows": 5,
+  "checksums_skipped": false,
+  "checksum_statuses": {
+    "ok": 11
+  },
+  "common_grid": {
+    "crs": "EPSG:32610",
+    "left": 563960.0,
+    "bottom": 5443240.0,
+    "right": 569960.0,
+    "top": 5449240.0,
+    "resolution": 30.0,
+    "width": 200,
+    "height": 200,
+    "bounds": [
+      563960.0,
+      5443240.0,
+      569960.0,
+      5449240.0
+    ],
+    "transform": [
+      30.0,
+      0.0,
+      563960.0,
+      0.0,
+      -30.0,
+      5449240.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "pixel_area_ha": 0.09
+  },
+  "snap_gpt": "/Applications/esa-snap/bin/gpt",
+  "snap_status": "available",
+  "phase4_phase5_untouched": true,
+  "snap_diagnostics": {
+    "path": "/Applications/esa-snap/bin/gpt",
+    "returncode": 0,
+    "diagnostics": "SNAP Release version 14.0.0\nSNAP home: /Applications/esa-snap/bin/..\nSNAP debug: null\nSNAP log level: null\nJava home: /Applications/esa-snap/.install4j/jre.bundle/Contents/Home\nJava version: 21.0.6\nProcessors: 18\nMax memory: 44.0 GB\nCache size: 512.0 MB\nTile parallelism: 18\nTile size: 512 x 512 pixels\n\nTo configure your gpt memory usage:\nEdit snap/bin/gpt.vmoptions\n\nTo configure your gpt cache size and parallelism:\nEdit .snap/etc/snap.properties or gpt -c ${cachesize-in-GB}G -q ${parallelism} \n\nINFO: org.esa.snap.core.gpf.operators.tooladapter.ToolAdapterIO: Initializing external tool adapters\nSLF4J: Failed to load class \"org.slf4j.impl.StaticLoggerBinder\".\nSLF4J: Defaulting to no-operation (NOP) logger implementation\nSLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.\nINFO: org.esa.snap.core.util.EngineVersionCheckActivator: Please check regularly for new updates for the best SNAP experience."
+  },
+  "snap_operators": {
+    "path": "/Applications/esa-snap/bin/gpt",
+    "operators": {
+      "Calibration": true,
+      "Terrain-Correction": true,
+      "RCM input format": true
+    },
+    "all_present": true,
+    "help_returncode": 0,
+    "iformat_returncode": 0
+  },
+  "pilot_preprocessed": true,
+  "pilot_validation_status": "FAIL",
+  "final_pilot_status": "FAIL",
+  "method_config_v1_generated": false,
+  "full_11_scene_processing_started": false
+}

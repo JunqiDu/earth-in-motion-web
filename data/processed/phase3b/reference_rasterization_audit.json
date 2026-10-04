@@ -1,0 +1,47 @@
+{
+  "grid_crs": "EPSG:32610",
+  "grid_shape": [
+    200,
+    200
+  ],
+  "pixel_rule": "pixel-centre (all_touched=false)",
+  "permanent_reference": {
+    "path": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase4/egs_permanent_water_reference.geojson",
+    "source_crs": "urn:ogc:def:crs:EPSG::32610",
+    "pixels": 10829,
+    "area_ha": 974.61,
+    "semantic": "fixed EGS semantic permanent-water reference; not normal or pre-event water"
+  },
+  "egs_open_water_frames": {
+    "path": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase4/egs_open_water_flood_frames.geojson",
+    "source_crs": "urn:ogc:def:crs:EPSG::32610",
+    "per_observation": {
+      "20251214T142421Z": {
+        "egs_observation_id": "OBS02",
+        "pixels": 213,
+        "area_ha": 19.169999999999998
+      },
+      "20251215T015036Z": {
+        "egs_observation_id": "OBS03",
+        "pixels": 563,
+        "area_ha": 50.669999999999995
+      },
+      "20251217T141634Z": {
+        "egs_observation_id": "OBS05",
+        "pixels": 414,
+        "area_ha": 37.26
+      },
+      "20251219T015011Z": {
+        "egs_observation_id": "OBS06",
+        "pixels": 323,
+        "area_ha": 29.07
+      },
+      "20251221T141646Z": {
+        "egs_observation_id": "OBS07",
+        "pixels": 228,
+        "area_ha": 20.52
+      }
+    }
+  },
+  "alignment_note": "Both Phase 4 reference GeoJSON files declare EPSG:32610, matching the fixed grid. Their semantic permanent-water geometry cannot be used as a same-date shoreline registration truth during a flood; a source-to-reference shoreline offset gate is therefore not claimed from this pilot."
+}

@@ -3,6 +3,7 @@ ipykernel
 numpy
 pandas
 matplotlib
+scipy
 rasterio
 rioxarray
 xarray

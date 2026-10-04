@@ -1,0 +1,69 @@
+{
+  "definitions": [
+    {
+      "candidate_id": "C0_global_hh",
+      "description": "one global Gamma0-HH threshold",
+      "use_hv": false
+    },
+    {
+      "candidate_id": "C1_group_hh",
+      "description": "one fixed HH threshold per mode group",
+      "use_hv": false
+    },
+    {
+      "candidate_id": "C2_group_hh_hv",
+      "description": "C1 plus a pooled group HV threshold where HV is >=3 dB above the conservative AOI noise floor",
+      "use_hv": true
+    }
+  ],
+  "representations": [
+    "Gamma0",
+    "Sigma0"
+  ],
+  "pilot_summary": [
+    {
+      "candidate_id": "C0_global_hh",
+      "representation": "Gamma0",
+      "iou_median": 0.08147853736089031,
+      "f1_median": 0.15067989709665564,
+      "area_bias_abs_median": 703.2863849765259
+    },
+    {
+      "candidate_id": "C0_global_hh",
+      "representation": "Sigma0",
+      "iou_median": 0.10882352941176471,
+      "f1_median": 0.19628647214854109,
+      "area_bias_abs_median": 553.5211267605634
+    },
+    {
+      "candidate_id": "C1_group_hh",
+      "representation": "Gamma0",
+      "iou_median": 0.06466698919529108,
+      "f1_median": 0.1214783398970009,
+      "area_bias_abs_median": 1394.6859903381644
+    },
+    {
+      "candidate_id": "C1_group_hh",
+      "representation": "Sigma0",
+      "iou_median": 0.05732211607015542,
+      "f1_median": 0.10842886041807148,
+      "area_bias_abs_median": 1482.0433436532508
+    },
+    {
+      "candidate_id": "C2_group_hh_hv",
+      "representation": "Gamma0",
+      "iou_median": 0.11958825310323948,
+      "f1_median": 0.21362898864250945,
+      "area_bias_abs_median": 693.2367149758454
+    },
+    {
+      "candidate_id": "C2_group_hh_hv",
+      "representation": "Sigma0",
+      "iou_median": 0.09875621890547263,
+      "f1_median": 0.1797600181118406,
+      "area_bias_abs_median": 866.9082125603866
+    }
+  ],
+  "selected_candidate": "C0_global_hh",
+  "selected_representation": "Sigma0"
+}

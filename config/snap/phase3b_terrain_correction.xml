@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph id="phase3b_terrain_correction">
+  <version>1.0</version>
+  <node id="Read"><operator>Read</operator><parameters class="com.bc.ceres.binding.dom.XppDomElement"><file>${SOURCE_PRODUCT}</file></parameters></node>
+  <node id="TerrainCorrection"><operator>Terrain-Correction</operator><sources><sourceProduct refid="Read"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands>Gamma0_HH,Gamma0_HV,Sigma0_HH,Sigma0_HV</sourceBands>
+      <demName>Copernicus 30m Global DEM</demName>
+      <externalDEMFile/><externalDEMNoDataValue>-32768</externalDEMNoDataValue>
+      <pixelSpacingInMeter>${INTERMEDIATE_PIXEL_SPACING_M}</pixelSpacingInMeter>
+      <mapProjection>EPSG:32610</mapProjection>
+      <saveSelectedSourceBand>true</saveSelectedSourceBand>
+      <saveGammaNought>true</saveGammaNought><saveSigmaNought>true</saveSigmaNought>
+      <incidenceAngleForSigma0>Use projected local incidence angle from DEM</incidenceAngleForSigma0>
+      <incidenceAngleForGamma0>Use projected local incidence angle from DEM</incidenceAngleForGamma0>
+    </parameters>
+  </node>
+  <node id="Write"><operator>Write</operator><sources><sourceProduct refid="TerrainCorrection"/></sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"><file>${OUTPUT_PRODUCT}</file><formatName>GeoTIFF</formatName></parameters>
+  </node>
+</graph>

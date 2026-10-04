@@ -1,0 +1,61 @@
+{
+  "status": "FAIL",
+  "selected_candidate": "C0_global_hh",
+  "selected_representation": "Sigma0",
+  "candidate_summary": [
+    {
+      "candidate_id": "C0_global_hh",
+      "representation": "Gamma0",
+      "iou_median": 0.09325153374233129,
+      "f1_median": 0.17059483726150393,
+      "area_bias_abs_median": 640.3755868544602
+    },
+    {
+      "candidate_id": "C0_global_hh",
+      "representation": "Sigma0",
+      "iou_median": 0.13993948562783662,
+      "f1_median": 0.24552090245520902,
+      "area_bias_abs_median": 356.3380281690141
+    },
+    {
+      "candidate_id": "C1_group_hh",
+      "representation": "Gamma0",
+      "iou_median": 0.05402499664023653,
+      "f1_median": 0.10251179395639425,
+      "area_bias_abs_median": 1694.4444444444446
+    },
+    {
+      "candidate_id": "C1_group_hh",
+      "representation": "Sigma0",
+      "iou_median": 0.045080279950596956,
+      "f1_median": 0.08627142012999803,
+      "area_bias_abs_median": 2026.7543859649122
+    },
+    {
+      "candidate_id": "C2_group_hh_hv",
+      "representation": "Gamma0",
+      "iou_median": 0.09170506912442396,
+      "f1_median": 0.16800337695230053,
+      "area_bias_abs_median": 944.4444444444445
+    },
+    {
+      "candidate_id": "C2_group_hh_hv",
+      "representation": "Sigma0",
+      "iou_median": 0.07077625570776255,
+      "f1_median": 0.13219616204690832,
+      "area_bias_abs_median": 1239.9122807017543
+    }
+  ],
+  "gate": {
+    "status": "FAIL",
+    "reason": "IoU below fail gate; systematic artifact review failed",
+    "macro_median_iou": 0.13993948562783662,
+    "macro_median_f1": 0.24552090245520902,
+    "median_abs_area_bias_pct": 356.3380281690141,
+    "scene_count": 5
+  },
+  "detailed_report": "refinement_report.json",
+  "method_config_generated": false,
+  "created_utc": "2026-10-04T07:22:20.940893+00:00",
+  "stop_reason": "Pilot does not meet the registered GO gate; Phase 4B/remaining scenes are not run."
+}

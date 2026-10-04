@@ -28,5 +28,13 @@ data/processed/*
 !data/processed/phase5/*.csv
 !data/processed/phase5/*.geojson
 !data/processed/phase5/*.json
+!data/processed/phase3b/
+!data/processed/phase3b/*.csv
+!data/processed/phase3b/*.geojson
+!data/processed/phase3b/*.json
+!data/processed/phase3b/masks/
+!data/processed/phase3b/masks/*.tif
+!data/processed/phase3b/masks/.gitkeep
+data/processed/phase3b/cache/
 data/output/*
 !data/output/.gitkeep

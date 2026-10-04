@@ -1,0 +1,17 @@
+{
+  "source": "ESA SNAP Copernicus 30m Global DEM",
+  "snap_dem_cache": "/Users/josephdum5pro/.snap/auxdata/dem/Copernicus 30m Global DEM",
+  "tiles": [
+    {
+      "path": "/Users/josephdum5pro/.snap/auxdata/dem/Copernicus 30m Global DEM/Copernicus_DSM_COG_10_N49_00_W122_00_DEM.tif",
+      "sha256": "b3db7418945ec29aa790c6acf1758f5b9a781b1f3647af3307221fd2df8a4f06",
+      "bytes": 42933214
+    },
+    {
+      "path": "/Users/josephdum5pro/.snap/auxdata/dem/Copernicus 30m Global DEM/Copernicus_DSM_COG_10_N49_00_W123_00_DEM.tif",
+      "sha256": "bf958587e4ea18408e64e4b5eab00c55557666d6a6d3842d61c0dc4d9752b410",
+      "bytes": 44222170
+    }
+  ],
+  "created_utc": "2026-10-04T06:51:54.757828+00:00"
+}
