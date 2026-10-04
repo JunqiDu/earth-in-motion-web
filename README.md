@@ -66,6 +66,40 @@ Then open <http://localhost:8501>. The dashboard reads only committed local proc
 
 ## Final workflow
 
+### Stage 1 — Research & Method Selection (Phase 3B frozen)
+
+We obtained 11 accessible RCM Level-1 GRD products, then calibrated and
+terrain-corrected the five acquisitions matched to NRCan EGS. Independent
+open-water classification progressed from SAR thresholds and a Lee comparison
+to multisource constraints and historical-label, scene-specific Random Forests.
+EGS class 2 was used for evaluation, never RF training. Final RF v2 achieved
+median IoU **0.353** against original EGS directly rasterized to 30 m (**0.409**
+against the legacy reference). It did not meet the unchanged GO gate:
+**FINAL EXPERIMENTAL FAIL**. Research is closed, not awaiting another refinement.
+The operational EGS extent remains the final prototype source; the Level-1
+methods and their failures remain auditable research evidence.
+
+In our accessible Level-1 dataset, the finest available RCM imagery was 16 m;
+ScanSAR products were 30 m. Some operational EGS timeline products used finer
+5 m acquisitions whose matching Level-1 data was not in our local research set.
+Resolution is one plausible contributor, not a proven explanation for the gap.
+
+See [final 3B record](docs/phase3b.md), [method research](docs/phase3b_method_research.md),
+and the finalized `notebooks/03b_level1_validation.ipynb`. To view the frozen
+summary without retraining or downloading:
+
+```bash
+python scripts/phase3b_final.py
+python scripts/phase3b_check_final.py
+```
+
+### Stage 2 — Translation & Impact Communication
+
+The selected RCM-derived EGS workflow communicates temporal flood evolution,
+regional hydrology, recovery, potential road/bridge-tagged-way exposure,
+ALR-designation overlap, community context, evidence and limitations. Phase 3B
+has not replaced Phase 4/5 or the Dashboard contracts.
+
 ```text
 Phase 1–4 research, validation, and temporal audit
     -> canonical Phase 4 observation contract

@@ -153,10 +153,17 @@ def aggregate_power_and_coverage(
     source_valid: np.ndarray | None = None,
     threshold: float = 0.95,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Average positive linear power and return power, coverage, and valid mask."""
+    """Average linear power; uncovered zeros must enter the coverage denominator.
+
+    An explicit validity mask defines source coverage, including finite zero
+    power when the source declares it valid. Without one, positive-power SAR
+    semantics are used. Final dB-ready cells must still have positive power.
+    """
     source = np.asarray(source, dtype="float32")
-    valid_source = np.isfinite(source) & (source > 0)
-    if source_valid is not None:
+    valid_source = np.isfinite(source) & (source >= 0)
+    if source_valid is None:
+        valid_source &= source > 0
+    else:
         valid_source &= np.asarray(source_valid, dtype=bool)
     weighted = np.where(valid_source, source, np.nan).astype("float32")
     coverage_src = valid_source.astype("float32")
@@ -167,8 +174,8 @@ def aggregate_power_and_coverage(
               src_nodata=np.nan, dst_nodata=np.nan)
     reproject(coverage_src, coverage, src_transform=source_transform, src_crs=source_crs,
               dst_transform=grid.transform, dst_crs=grid.crs, resampling=Resampling.average,
-              src_nodata=0, dst_nodata=0)
-    valid = (coverage >= threshold) & np.isfinite(power) & (power > 0)
+              src_nodata=None, dst_nodata=0)
+    valid = (coverage >= threshold - 1e-7) & np.isfinite(power) & (power > 0)
     power[~valid] = np.nan
     return power, coverage, valid
 

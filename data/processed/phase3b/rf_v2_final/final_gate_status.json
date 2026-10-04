@@ -1,0 +1,40 @@
+{
+  "additional_research_allowed": false,
+  "checks": {
+    "calibration_status": true,
+    "every_absolute_bias_le_50": true,
+    "every_f1_ge_052": false,
+    "every_iou_ge_035": false,
+    "every_mode_median_iou_ge_045": false,
+    "five_unique_scenes": true,
+    "geometry_status": false,
+    "median_absolute_bias_le_25": true,
+    "median_f1_ge_067": false,
+    "median_iou_ge_050": false,
+    "provenance_status": true,
+    "systematic_artifact_review": false
+  },
+  "failed_checks": [
+    "median_iou_ge_050",
+    "median_f1_ge_067",
+    "every_iou_ge_035",
+    "every_f1_ge_052",
+    "every_mode_median_iou_ge_045",
+    "geometry_status",
+    "systematic_artifact_review"
+  ],
+  "frozen": true,
+  "macro_median_f1": 0.5216426193118757,
+  "macro_median_iou": 0.35285285285285284,
+  "median_abs_area_bias_pct": 23.341523341523338,
+  "method_config_generated": false,
+  "per_mode_median_iou": {
+    "scansar30_asc": 0.3270288360649807,
+    "stripmap16_desc": 0.3800383877159309
+  },
+  "phase4b_promoted": false,
+  "reason": "median_iou_ge_050; median_f1_ge_067; every_iou_ge_035; every_f1_ge_052; every_mode_median_iou_ge_045; geometry_status; systematic_artifact_review",
+  "remaining_six_processed": false,
+  "scene_count": 5,
+  "status": "FINAL EXPERIMENTAL FAIL"
+}

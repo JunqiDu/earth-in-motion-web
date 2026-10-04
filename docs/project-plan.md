@@ -57,3 +57,10 @@ The final dashboard separates its narrative responsibilities: Overview explains 
 - `limitations.csv`, notebook-supported claims, and notebook-restricted claims for mandatory caveats
 - four PNG analytical maps in `assets/phase5/` retained as provenance exports; normal Dashboard startup renders local vectors dynamically
 - `phase6_handoff.json` as the machine-readable manifest
+# Phase 3B closure checkpoint — 2026-10-04
+
+Phase3B research/implementation is complete and frozen as **FINAL EXPERIMENTAL
+FAIL**, not a pending REFINE. The final five-scene policy and separate neighboring
+spatial check are archived; original GO thresholds remain unchanged. Level-1
+experiments do not replace the production EGS workflow. No remaining-six-scene
+processing or Phase4B work follows this closure. See [final record](phase3b.md).

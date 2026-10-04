@@ -1,0 +1,8 @@
+{
+  "eligible_FWA": 185,
+  "all_five_detected": 150,
+  "all_five_spread_le30": 71,
+  "strict_GEOMETRY_GATE_CERTIFIED": false,
+  "reference_limitations": "Noncontemporaneous FWA shorelines, 30 m historical label selection and SAR radiometric transitions cannot establish absolute positional truth. ECCC is a training prior, not fresh independent classifier validation.",
+  "no_raster_shift": true
+}

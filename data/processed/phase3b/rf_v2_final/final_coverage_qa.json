@@ -1,0 +1,237 @@
+{
+  "current_five_performance_explained_by_bug": false,
+  "fix": "uncovered source zeros retained in average denominator; explicit mask defines zero-power coverage",
+  "scenes": [
+    {
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "minimum_hh_coverage": 1.0,
+      "minimum_hv_coverage": 1.0,
+      "native_geometry": {
+        "crs": "EPSG:32610",
+        "native_pixel_size_m": 16.0,
+        "native_shape": [
+          851,
+          854
+        ]
+      },
+      "observation_id": "20251214T142421Z",
+      "previous_common_valid_unchanged": true,
+      "rf_v1_probability_max_abs_difference": 0.0,
+      "source_tc_sha256": "72049c87e8e0641a1e0f381bd249af436662f70eb96edee0887c48c99e1d266d",
+      "valid_pct": 100.0,
+      "valid_pixels": 40000
+    },
+    {
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "minimum_hh_coverage": 1.0,
+      "minimum_hv_coverage": 1.0,
+      "native_geometry": {
+        "crs": "EPSG:32610",
+        "native_pixel_size_m": 30.0,
+        "native_shape": [
+          468,
+          470
+        ]
+      },
+      "observation_id": "20251215T015036Z",
+      "previous_common_valid_unchanged": true,
+      "rf_v1_probability_max_abs_difference": 0.0,
+      "source_tc_sha256": "128221d064eb2dc4de77fa1ed8730d259caa1b4fc1f6bca4a178a9b5bc9a90bc",
+      "valid_pct": 100.0,
+      "valid_pixels": 40000
+    },
+    {
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "minimum_hh_coverage": 1.0,
+      "minimum_hv_coverage": 1.0,
+      "native_geometry": {
+        "crs": "EPSG:32610",
+        "native_pixel_size_m": 16.0,
+        "native_shape": [
+          796,
+          707
+        ]
+      },
+      "observation_id": "20251217T141634Z",
+      "previous_common_valid_unchanged": true,
+      "rf_v1_probability_max_abs_difference": 0.0,
+      "source_tc_sha256": "025182f4fb6985f806c652e92b0d4a4eabc61ebf135a670a3fa956d84e5245fe",
+      "valid_pct": 100.0,
+      "valid_pixels": 40000
+    },
+    {
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "minimum_hh_coverage": 1.0,
+      "minimum_hv_coverage": 1.0,
+      "native_geometry": {
+        "crs": "EPSG:32610",
+        "native_pixel_size_m": 30.0,
+        "native_shape": [
+          468,
+          470
+        ]
+      },
+      "observation_id": "20251219T015011Z",
+      "previous_common_valid_unchanged": true,
+      "rf_v1_probability_max_abs_difference": 0.0,
+      "source_tc_sha256": "7243d9cef8e37dc736af9127792be5228fe825c92f64088f189bdff7e32e65d3",
+      "valid_pct": 100.0,
+      "valid_pixels": 40000
+    },
+    {
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "minimum_hh_coverage": 1.0,
+      "minimum_hv_coverage": 1.0,
+      "native_geometry": {
+        "crs": "EPSG:32610",
+        "native_pixel_size_m": 16.0,
+        "native_shape": [
+          797,
+          709
+        ]
+      },
+      "observation_id": "20251221T141646Z",
+      "previous_common_valid_unchanged": true,
+      "rf_v1_probability_max_abs_difference": 0.0,
+      "source_tc_sha256": "f8cb9cc4cf65a3c3689026a3f14fafa4cd15061840c0bd04be25c614d33e4be5",
+      "valid_pct": 100.0,
+      "valid_pixels": 40000
+    }
+  ],
+  "threshold": 0.95
+}

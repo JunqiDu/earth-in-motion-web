@@ -1,0 +1,8 @@
+{
+  "grid_status": "pass",
+  "no_raster_shift": true,
+  "source": "docs/phase3b_method_research.md",
+  "static_FWA_QA": "median offsets 9/21/9/24/9m, P95 52.5/60/54/51/51m; historical shores and radiometric edges, not event ground truth",
+  "status": "not_absolute_geometry_certification",
+  "systematic_artifact_review": "not_certified"
+}

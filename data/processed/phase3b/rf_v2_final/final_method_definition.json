@@ -1,0 +1,113 @@
+{
+  "additional_iterations_allowed": false,
+  "cleanup_order": "semantic permanent-water subtraction, terrain policy, component cleanup",
+  "connectivity": 8,
+  "dem_semantics": "Copernicus DSM, not bare-earth DTM",
+  "elevation_max_m": 5.0,
+  "exception_score": 0.9,
+  "features": [
+    "sigma0_hh_db",
+    "sigma0_hv_db",
+    "hh_minus_hv_db",
+    "local_hh_std_db"
+  ],
+  "fresh_grid": {
+    "bottom": 5444740,
+    "bounds": [
+      570110,
+      5444740,
+      571430,
+      5447740
+    ],
+    "crs": "EPSG:32610",
+    "height": 100,
+    "left": 570110,
+    "pixel_area_ha": 0.09,
+    "resolution": 30.0,
+    "right": 571430,
+    "top": 5447740,
+    "transform": [
+      30.0,
+      0.0,
+      570110.0,
+      0.0,
+      -30.0,
+      5447740.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "width": 44
+  },
+  "fresh_policy": "same RF trained on main AOI historical labels; no fresh-AOI training or tuning",
+  "frozen_utc": "2026-10-04T14:54:36.898941+00:00",
+  "grid": {
+    "bottom": 5443240.0,
+    "bounds": [
+      563960.0,
+      5443240.0,
+      569960.0,
+      5449240.0
+    ],
+    "crs": "EPSG:32610",
+    "height": 200,
+    "left": 563960.0,
+    "pixel_area_ha": 0.09,
+    "resolution": 30.0,
+    "right": 569960.0,
+    "top": 5449240.0,
+    "transform": [
+      30.0,
+      0.0,
+      563960.0,
+      0.0,
+      -30.0,
+      5449240.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "width": 200
+  },
+  "hydro_distance_max_m": 60.0,
+  "legacy_reference": "Phase4 20m-vectorized reference center-rasterized to 30m; comparison only",
+  "method_id": "phase3b_rf_v2_final",
+  "min_component_pixels": 4,
+  "parameter_search": false,
+  "permanent_reference": "fixed initial-product EGS semantic class 1, not normal or observed pre-event water",
+  "policy_frozen": true,
+  "policy_sha256": "7d4598986aec0ffb93aa927fdf66c95e73a7c9b3bb8e4288b824c21690cc178f",
+  "primary_reference": "original EGS class 2 reprojected once, center-rasterized once to 30 m",
+  "probability_threshold": 0.5,
+  "reason_bits": {
+    "cleanup_removed": 32,
+    "normal_component": 8,
+    "normal_terrain": 1,
+    "permanent_subtraction": 64,
+    "small_component_retained": 16,
+    "terrain_exception": 2,
+    "terrain_rejected": 4
+  },
+  "rf_parameters": {
+    "class_weight": "balanced_subsample",
+    "max_depth": 12,
+    "max_features": "sqrt",
+    "min_samples_leaf": 5,
+    "n_estimators": 200,
+    "random_state": 20261004
+  },
+  "schema_version": "phase3b-final-1",
+  "small_exception": "mean score >= 0.90 AND ALL component pixels hydro distance <= 60 m",
+  "source_of_truth": false,
+  "terrain_exception": "high-confidence hydrography-proximal terrain exception; not hydraulic-connectivity proof",
+  "training": {
+    "EGS_used_for_training": false,
+    "balanced": true,
+    "block_pixels": 20,
+    "cap_per_class_per_block": 40,
+    "frequency_years": "1984-2023",
+    "land": "frequency == 0",
+    "uncertain": "1-79 excluded",
+    "water": "frequency >= 80, nodata excluded"
+  }
+}

@@ -77,3 +77,11 @@
 - Separate endpoint quantities: 35.44 ha is **gross recession from the OBS01 footprint**, 19.48 ha persists, 2.16 ha is mapped only at OBS07, and 33.28 ha is the net endpoint decline. Never present 35.44 ha as the arithmetic difference between 1,026.80 and 993.52 ha.
 - Retain WaterOffice Mission and Chilliwack 5-minute unit values as an offline regional stage-context snapshot, alongside the compact daily compatibility table. They support the first pulse, inter-pulse low, and second pulse timing, but do not validate individual pixels. The preferred inside-AOI Cannor station lacks December 2025 daily data in the selected source.
 - Preserve the existing endpoint hotspots and potential-exposure results. Each Phase 5 geometry must identify OBS01 as its source snapshot and retain the damage/crop/population claim boundaries.
+# Phase 3B final closure — 2026-10-04
+
+The fixed RF v2 final evaluation is **FINAL EXPERIMENTAL FAIL**. Primary original
+EGS direct-center reference median IoU is0.353; legacy reference0.409. The
+pre-registered accuracy/mode gates are unchanged and fail. Research is frozen;
+no new feature search, RF v3/v4, method_config or remaining-six/Phase4B promotion.
+Existing EGS Phase4/5 and Dashboard remain unchanged. Detailed authoritative
+record: [Phase3B closure](phase3b.md), [research record](phase3b_method_research.md).

@@ -56,5 +56,30 @@ data/processed/*
 !data/processed/phase3b/rf_v1/probabilities/
 !data/processed/phase3b/rf_v1/probabilities/*.tif
 data/processed/phase3b/cache/
+# Final 3B audit: compact reproducibility evidence, not native SAR intermediates.
+!data/processed/phase3b/references/
+!data/processed/phase3b/references/**/
+!data/processed/phase3b/references/**/*.geojson
+!data/processed/phase3b/rf_v2_final/
+!data/processed/phase3b/rf_v2_final/*.csv
+!data/processed/phase3b/rf_v2_final/*.json
+!data/processed/phase3b/rf_v2_final/masks/
+!data/processed/phase3b/rf_v2_final/masks/*.tif
+!data/processed/phase3b/rf_v2_final/qa/
+!data/processed/phase3b/rf_v2_final/qa/*.json
+!data/processed/phase3b/rf_v2_final/qa/*.csv
+!data/processed/phase3b/rf_v2_final/qa/*.tif
+!data/processed/phase3b/rf_v2_final/qa/*.png
+!data/processed/phase3b/rf_v2_final/sources/
+!data/processed/phase3b/rf_v2_final/sources/**/
+!data/processed/phase3b/rf_v2_final/sources/**/*.json
+!data/processed/phase3b/rf_v2_final/sources/**/*.geojson
+# Float probability rasters can be regenerated; final run manifest records hashes.
+data/processed/phase3b/rf_v2_final/probabilities/
+# Keep raw/licensed/heavy sources and scratch material local.
+*.tmp
+*.log
+data/processed/phase3b/**/snap/
+data/processed/phase3b/**/scratch/
 data/output/*
 !data/output/.gitkeep

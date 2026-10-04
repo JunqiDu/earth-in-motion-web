@@ -85,10 +85,11 @@ def evaluate_gate(metrics: Iterable[dict[str, Any]] | Any, qa: dict[str, Any] | 
     f1s = np.array([float(row["f1"]) for row in rows])
     biases = np.abs(np.array([float(row.get("area_bias_pct", 0.0)) for row in rows]))
     median_iou, median_f1 = float(np.median(ious)), float(np.median(f1s))
+    mode_medians = {mode: float(np.median([r["iou"] for r in rows if r.get("mode_group") == mode])) for mode in mode_groups}
     reasons = []
     if median_iou < 0.35 or (ious < 0.25).sum() >= 2:
         status = "FAIL"; reasons.append("IoU below fail gate")
-    elif median_iou < 0.50 or median_f1 < 0.67 or (ious < 0.35).any() or (f1s < 0.52).any() or float(np.median(biases)) > 25 or (biases > 50).any():
+    elif median_iou < 0.50 or median_f1 < 0.67 or (ious < 0.35).any() or (f1s < 0.52).any() or float(np.median(biases)) > 25 or (biases > 50).any() or any(value < 0.45 for value in mode_medians.values()):
         status = "REFINE"; reasons.append("pilot does not yet meet GO thresholds")
     else:
         status = "GO"
@@ -98,4 +99,4 @@ def evaluate_gate(metrics: Iterable[dict[str, Any]] | Any, qa: dict[str, Any] | 
         status = "FAIL"; reasons.append("calibration gate failed")
     if qa and qa.get("systematic_artifact_review") not in (None, "pass", "passed"):
         status = "FAIL"; reasons.append("systematic artifact review failed")
-    return {"status": status, "reason": "; ".join(reasons) or "all registered gates passed", "macro_median_iou": median_iou, "macro_median_f1": median_f1, "median_abs_area_bias_pct": float(np.median(biases)), "scene_count": len(rows)}
+    return {"status": status, "reason": "; ".join(reasons) or "all registered gates passed", "macro_median_iou": median_iou, "macro_median_f1": median_f1, "median_abs_area_bias_pct": float(np.median(biases)), "scene_count": len(rows), "per_mode_median_iou": mode_medians}

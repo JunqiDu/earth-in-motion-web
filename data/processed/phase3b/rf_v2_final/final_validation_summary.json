@@ -1,0 +1,174 @@
+{
+  "fresh_aoi": {
+    "ancillary_hashes": {
+      "data/processed/phase3b/rf_v2_final/sources/fresh_neighbor/lakes.geojson": "fc1009298630949eb2b0b976184f660206bd3c704f5eb1ce97e975ea7216be24",
+      "data/processed/phase3b/rf_v2_final/sources/fresh_neighbor/rivers.geojson": "d7c2929afc9c79d79a8fe0c29fd933f005c589f1d2b4e6ed413053ef203825b8",
+      "data/processed/phase3b/rf_v2_final/sources/fresh_neighbor/streams.geojson": "a69cd9968d5491794a2c2381f438f4d97ed507105ebc0c38ba65f744f2081bbb"
+    },
+    "distinct_from_main_gate": true,
+    "grid": {
+      "bottom": 5444740,
+      "bounds": [
+        570110,
+        5444740,
+        571430,
+        5447740
+      ],
+      "crs": "EPSG:32610",
+      "height": 100,
+      "left": 570110,
+      "pixel_area_ha": 0.09,
+      "resolution": 30.0,
+      "right": 571430,
+      "top": 5447740,
+      "transform": [
+        30.0,
+        0.0,
+        570110.0,
+        0.0,
+        -30.0,
+        5447740.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "width": 44
+    },
+    "limits": "neighboring same-event spatial holdout; EGS is not independent sensor truth; historical main-AOI training only",
+    "metrics": [
+      {
+        "area_bias_ha": -3.6899999999999995,
+        "area_bias_pct": -47.67441860465116,
+        "boundary_f1_30m": 0.6831210191082803,
+        "boundary_f1_60m": 0.735042735042735,
+        "components_detected_25pct": 6,
+        "components_detected_any": 7,
+        "evaluation_pixels": 4394,
+        "f1": 0.6564885496183206,
+        "false_negative_area_ha": 3.8699999999999997,
+        "false_positive_area_ha": 0.18,
+        "fn_pixels": 43,
+        "fp_pixels": 2,
+        "iou": 0.48863636363636365,
+        "object_detection_rate_25pct": 0.35294117647058826,
+        "observation_id": "20251215T015036Z",
+        "precision": 0.9555555555555556,
+        "predicted_area_ha": 4.05,
+        "recall": 0.5,
+        "reference_area_ha": 7.739999999999999,
+        "reference_components": 17,
+        "reference_id": "primary_raw_egs_reference",
+        "tn_pixels": 4306,
+        "tp_pixels": 43,
+        "valid_pct": 99.86363636363636,
+        "valid_pixels": 4394
+      },
+      {
+        "area_bias_ha": -1.5300000000000002,
+        "area_bias_pct": -26.562500000000007,
+        "boundary_f1_30m": 0.7422680412371134,
+        "boundary_f1_60m": 0.8038277511961722,
+        "components_detected_25pct": 3,
+        "components_detected_any": 4,
+        "evaluation_pixels": 4393,
+        "f1": 0.7027027027027027,
+        "false_negative_area_ha": 2.25,
+        "false_positive_area_ha": 0.72,
+        "fn_pixels": 25,
+        "fp_pixels": 8,
+        "iou": 0.5416666666666666,
+        "object_detection_rate_25pct": 0.375,
+        "observation_id": "20251219T015011Z",
+        "precision": 0.8297872340425532,
+        "predicted_area_ha": 4.2299999999999995,
+        "recall": 0.609375,
+        "reference_area_ha": 5.76,
+        "reference_components": 8,
+        "reference_id": "primary_raw_egs_reference",
+        "tn_pixels": 4321,
+        "tp_pixels": 39,
+        "valid_pct": 99.8409090909091,
+        "valid_pixels": 4393
+      }
+    ],
+    "policy_hash": "7d4598986aec0ffb93aa927fdf66c95e73a7c9b3bb8e4288b824c21690cc178f",
+    "retuned": false,
+    "status": "COMPLETED_NO_RETUNING",
+    "training_on_fresh_AOI": false
+  },
+  "legacy_phase4_reference": {
+    "macro": {
+      "median_abs_area_bias_pct": 24.637681159420293,
+      "median_f1": 0.5806451612903226,
+      "median_iou": 0.4090909090909091,
+      "median_precision": 0.6264591439688716,
+      "median_recall": 0.5241545893719807,
+      "worst_date_iou": 0.3347107438016529
+    },
+    "micro": {
+      "f1": 0.5737905695039803,
+      "fn_pixels": 804,
+      "fp_pixels": 588,
+      "iou": 0.40231859167024475,
+      "precision": 0.6144262295081967,
+      "recall": 0.5381964388282596,
+      "tn_pixels": 197671,
+      "tp_pixels": 937
+    },
+    "per_mode_group": {
+      "scansar30_asc": {
+        "median_f1": 0.5410965744532108,
+        "median_iou": 0.371900826446281,
+        "scene_count": 2
+      },
+      "stripmap16_desc": {
+        "median_f1": 0.5977961432506887,
+        "median_iou": 0.4263261296660118,
+        "scene_count": 3
+      }
+    },
+    "total_fn_ha": 72.36,
+    "total_fp_ha": 52.92
+  },
+  "method_id": "phase3b_rf_v2_final",
+  "no_method_config": true,
+  "primary_raw_egs_reference": {
+    "macro": {
+      "median_abs_area_bias_pct": 23.341523341523338,
+      "median_f1": 0.5216426193118757,
+      "median_iou": 0.35285285285285284,
+      "median_precision": 0.5680933852140078,
+      "median_recall": 0.4864864864864865,
+      "worst_date_iou": 0.30120481927710846
+    },
+    "micro": {
+      "f1": 0.5205479452054794,
+      "fn_pixels": 905,
+      "fp_pixels": 670,
+      "iou": 0.35185185185185186,
+      "precision": 0.5606557377049181,
+      "recall": 0.48579545454545453,
+      "tn_pixels": 197570,
+      "tp_pixels": 855
+    },
+    "per_mode_group": {
+      "scansar30_asc": {
+        "median_f1": 0.49230279113741937,
+        "median_iou": 0.3270288360649807,
+        "scene_count": 2
+      },
+      "stripmap16_desc": {
+        "median_f1": 0.5507649513212796,
+        "median_iou": 0.3800383877159309,
+        "scene_count": 3
+      }
+    },
+    "total_fn_ha": 81.45,
+    "total_fp_ha": 60.3
+  },
+  "remaining_six_processed": false,
+  "research_frozen": true,
+  "same_event_adaptive_research_caveat": true,
+  "scientific_conclusion": "Phase 3B final experimental Level-1 method did not meet the pre-registered operational GO gate. The method is retained as validated research evidence, while the existing EGS workflow remains the production source for the prototype.",
+  "status": "FINAL EXPERIMENTAL FAIL"
+}

@@ -1,0 +1,465 @@
+{
+  "fresh_initial_reference": {
+    "class_semantics": {
+      "1": "EGS semantic permanent water",
+      "2": "EGS satellite-visible open-water flood"
+    },
+    "grid": {
+      "bottom": 5444740,
+      "bounds": [
+        570110,
+        5444740,
+        571430,
+        5447740
+      ],
+      "crs": "EPSG:32610",
+      "height": 100,
+      "left": 570110,
+      "pixel_area_ha": 0.09,
+      "resolution": 30.0,
+      "right": 571430,
+      "top": 5447740,
+      "transform": [
+        30.0,
+        0.0,
+        570110.0,
+        0.0,
+        -30.0,
+        5447740.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "width": 44
+    },
+    "phase4_intermediate_used": false,
+    "product": "Flood_CAN_BC_LowerFraser_20251212_140824",
+    "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+    "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/fresh_neighbor/initial_semantic_reference.geojson",
+    "snapshot_sha256": "17a981d34aa244fc148d33e94ea754828846755711f6e68fc072ffcf5c5ab1c7",
+    "source_crs": "EPSG:4326",
+    "source_files": {
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.dbf": "c92317ad07daebc6f716f7b0f6309bec2ecca84b87b45eec9bdd60cfb3524018",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.kmz": "ab85688034b89d17e01392255e7e821888f0e8b3b93b7df0945f581497fc7bfd",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.pdf": "1f3ca3aad8f427b073dd52b6a8e1219ae923ce3937eae020b7880f5a9962591c",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.shp": "c68aa9505e1a3e7b7b724fabb5a3549e8c50a00afce12199844df5f293b31981",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.shx": "b819331aabb4ee210fe9680a9fc0c16bdb8a82e78923bc723dba246fc0a5ac0d",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Flood_CAN_BC_LowerFraser_20251212_140824.xml": "77e358877b71bb90b875dc30d27111a91938f0a56862fbc7ff4b2351c79fabbc",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Footprint_CAN_BC_LowerFraser_20251212_140824.dbf": "200f2de64db45e7ca447281119f7be495007dcf7fa645f95ab9586423c953125",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Footprint_CAN_BC_LowerFraser_20251212_140824.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Footprint_CAN_BC_LowerFraser_20251212_140824.shp": "cc7739c844bc042f7a842f8e8cdc4ca089b1df49272072fb462d7a572e6dd7f6",
+      "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251212_140824/Footprint_CAN_BC_LowerFraser_20251212_140824.shx": "c4a6f5067a124124bfb650e41a2a9212f425638d6eec1cea4a5382c2c970f352"
+    },
+    "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251212_140824.zip",
+    "target_crs": "EPSG:32610",
+    "timestamp_utc": "2025-12-12 14:08:24+00:00"
+  },
+  "fresh_neighbor": {
+    "20251215T015036Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5444740,
+        "bounds": [
+          570110,
+          5444740,
+          571430,
+          5447740
+        ],
+        "crs": "EPSG:32610",
+        "height": 100,
+        "left": 570110,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 571430,
+        "top": 5447740,
+        "transform": [
+          30.0,
+          0.0,
+          570110.0,
+          0.0,
+          -30.0,
+          5447740.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 44
+      },
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251215_015037",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/fresh_neighbor/20251215T015036Z.geojson",
+      "snapshot_sha256": "6a4a2a0120376c37f47c69aa8ec2e77a0b669e53be2e1ba4349c4d399fa92863",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.dbf": "a7e0a83e6f0b63ea075c41138b63255e174b035f4bf780d9b0936da0193b79d8",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.kmz": "1faaad91350f449a94349ba642ebb60342086d1083ea877bc854c89dfa33e027",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.pdf": "4f23404fe1d6cf518b81a47e4802ad2a0fda4b14a25677870ed6f5dd00d3842c",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.shp": "eb2da7f6f069b07642949395309ce125e49fb3d184c62142349c1af9b62b5a42",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.shx": "519ea18399018ee59522763c177d11cb748e315c57c771dccc55eba16ede45b4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.xml": "35dd5da6e3aa59c21a6fa3745843cdb8a034259de1e22c483edb971158bd0b16",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.dbf": "408593d919c9f27664d8fcbe53f14348d245d8642dd52123c109960176fab762",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.shp": "3734913a79389bcd5dee01e35be5a1c2f4448876a2735b21e2cd46fddf626c54",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.shx": "af29af8f20f8fabe1638c0324d259fa36986e0f6432936a0a37150809f9b35d7"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251215_015037.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-15 01:50:37+00:00"
+    },
+    "20251219T015011Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5444740,
+        "bounds": [
+          570110,
+          5444740,
+          571430,
+          5447740
+        ],
+        "crs": "EPSG:32610",
+        "height": 100,
+        "left": 570110,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 571430,
+        "top": 5447740,
+        "transform": [
+          30.0,
+          0.0,
+          570110.0,
+          0.0,
+          -30.0,
+          5447740.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 44
+      },
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251219_015014",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/fresh_neighbor/20251219T015011Z.geojson",
+      "snapshot_sha256": "d33dbfb6f053d4818c3ae2373c403d701c33128e4cb2821205d7c093334174de",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.dbf": "604c557994c45d8e677315c3029344bc12259b2e27b7534ca6eb5f0cc2b36355",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.kmz": "258e43c147be9f577b0ee45e2142d4dbdd50372d0fbbd86d64b359fa844901fe",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.pdf": "ed10e18cf71e47c5a52cebac1aa35d30a46c391e56a780405227e8c879824276",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.shp": "3285ec06fc5276028b552b2c51413f0de3acc397262be63b9f392545a32b7a48",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.shx": "07640d11425201712b921b2189dcc599ffac760eb40ccb8511ca7275b7ee0cbd",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.xml": "c23b43cde5e8e336bf16e2e9af08929e45d541a8da798980bfc5a8f09d434c52",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.dbf": "a1f3b3037967284039b02b7f9851721ce6bf54dcb34db651909b40f48fa8e7b5",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.shp": "f690b9af049d32eca32d741cb3445d0e43080a79a742e986956c85dfbc68b6dd",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.shx": "37bf5323fdc8d83d065b0ff2212ed317bcf06e8eccb44294b878c77783aec03f"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251219_015014.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-19 01:50:14+00:00"
+    }
+  },
+  "legacy_phase4_reference": {
+    "contract": "20m center -> vector -> 30m center; comparison only",
+    "path": "data/processed/phase4/egs_open_water_flood_frames.geojson",
+    "sha256": "0725239752a71323fa4311b20da79e6b5885cdf241115cc572b1130351d770f0"
+  },
+  "primary_raw_egs_reference": {
+    "20251214T142421Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "grid_sha256": "54c296532ff479ee5b6fbcda399b31176e302fcb7fcc52d122be9526f4c23d17",
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251214_142423",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/raw_egs_30m/20251214T142421Z.geojson",
+      "snapshot_sha256": "7ffdba2890548a7d834d559e1f112658c426c995b75accbaad6e32288284adb1",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.dbf": "2caf29bdb9143bada122fada7f61e9f2d9ab545e742e46fa39bd6ff24a202c6c",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.kmz": "42da588259fdb4a8484856e095eb319bfe5324564c2c36f0a1ee0c3b31092ecd",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.pdf": "3de47cde429034baf6b8669510a781bd94528a36552eab3590a024655607c945",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.shp": "be02ead1905255729ac0c892755d8c36101b9b53cb544ae7c198e73be39101c3",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.shx": "aa2cc23ce4e573adc8baa350edaa32269e63546e0af6b61f45cbe19adca5e22b",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Flood_CAN_BC_LowerFraser_20251214_142423.xml": "bb41587812fcb862a5e651c818097b6c3686de533b2cc3f07438634258ddad21",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Footprint_CAN_BC_LowerFraser_20251214_142423.dbf": "1fc82821b4274e8cfc4818cbcc07391e0902c6c265963b9df2720362488799d9",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Footprint_CAN_BC_LowerFraser_20251214_142423.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Footprint_CAN_BC_LowerFraser_20251214_142423.shp": "349e248742ed1da467518d59534ca9f4373862e2b81d370a658eac22e6724044",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251214_142423/Footprint_CAN_BC_LowerFraser_20251214_142423.shx": "8959f14f5f9531b48730e8ad55e9f5f8459eea16225610c3d6b1479a9a57f7ed"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251214_142423.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-14 14:24:23+00:00"
+    },
+    "20251215T015036Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "grid_sha256": "54c296532ff479ee5b6fbcda399b31176e302fcb7fcc52d122be9526f4c23d17",
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251215_015037",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/raw_egs_30m/20251215T015036Z.geojson",
+      "snapshot_sha256": "fd98d639bb394e1da6b14e4e7b6d2237f14be2af7c04c3335cedd1b1f2fdacf9",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.dbf": "a7e0a83e6f0b63ea075c41138b63255e174b035f4bf780d9b0936da0193b79d8",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.kmz": "1faaad91350f449a94349ba642ebb60342086d1083ea877bc854c89dfa33e027",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.pdf": "4f23404fe1d6cf518b81a47e4802ad2a0fda4b14a25677870ed6f5dd00d3842c",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.shp": "eb2da7f6f069b07642949395309ce125e49fb3d184c62142349c1af9b62b5a42",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.shx": "519ea18399018ee59522763c177d11cb748e315c57c771dccc55eba16ede45b4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Flood_CAN_BC_LowerFraser_20251215_015037.xml": "35dd5da6e3aa59c21a6fa3745843cdb8a034259de1e22c483edb971158bd0b16",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.dbf": "408593d919c9f27664d8fcbe53f14348d245d8642dd52123c109960176fab762",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.shp": "3734913a79389bcd5dee01e35be5a1c2f4448876a2735b21e2cd46fddf626c54",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251215_015037/Footprint_CAN_BC_LowerFraser_20251215_015037.shx": "af29af8f20f8fabe1638c0324d259fa36986e0f6432936a0a37150809f9b35d7"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251215_015037.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-15 01:50:37+00:00"
+    },
+    "20251217T141634Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "grid_sha256": "54c296532ff479ee5b6fbcda399b31176e302fcb7fcc52d122be9526f4c23d17",
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251217_141634",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/raw_egs_30m/20251217T141634Z.geojson",
+      "snapshot_sha256": "dda385a06a90ecf2caa4dc5837f41e823ee7e8b345b859b106dcbf8c57432919",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.dbf": "f4e17a93625881b0c83e4e42437c89f254c0223453b924fa8754f38d9f20041e",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.kmz": "08688493d029f9879d0486c93de388f8161e72e69667ef5175a9a7f071302c77",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.pdf": "42aa49bca2dd31f679d0eac90f48c5f26ba9ab9cfcf3e4e1faecc86143dff5f4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.shp": "96032a44c95f554be639294a1941d08fbf9337baf3c6798eb512408c8a6314e4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.shx": "9a7a81dfa0b4b2c3f50d907272ccf63cb91f9231c6f368bbb14ec4e22d3a3594",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Flood_CAN_BC_LowerFraser_20251217_141634.xml": "191f5fe280fec4fc5252b681d02527bc4f89218866c3b986063bf19ab1b59af7",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Footprint_CAN_BC_LowerFraser_20251217_141634.dbf": "9efe40b014daed4d13dcbeaf74192311fd640a7c7701d7a59f12ac6ef54611a7",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Footprint_CAN_BC_LowerFraser_20251217_141634.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Footprint_CAN_BC_LowerFraser_20251217_141634.shp": "d42932255cb149afaf2abcdcad6033670c04d6b8a291146535859432c699e005",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251217_141634/Footprint_CAN_BC_LowerFraser_20251217_141634.shx": "7868018540f690e01ab2f0324ddf9f7282e331e49e8a84025deadc144af4a184"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251217_141634.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-17 14:16:34+00:00"
+    },
+    "20251219T015011Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "grid_sha256": "54c296532ff479ee5b6fbcda399b31176e302fcb7fcc52d122be9526f4c23d17",
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251219_015014",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/raw_egs_30m/20251219T015011Z.geojson",
+      "snapshot_sha256": "5a567639d710191041d74bc1ea12d401bbeea51640718acce548ac2e0f6eb3dc",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.dbf": "604c557994c45d8e677315c3029344bc12259b2e27b7534ca6eb5f0cc2b36355",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.kmz": "258e43c147be9f577b0ee45e2142d4dbdd50372d0fbbd86d64b359fa844901fe",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.pdf": "ed10e18cf71e47c5a52cebac1aa35d30a46c391e56a780405227e8c879824276",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.shp": "3285ec06fc5276028b552b2c51413f0de3acc397262be63b9f392545a32b7a48",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.shx": "07640d11425201712b921b2189dcc599ffac760eb40ccb8511ca7275b7ee0cbd",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Flood_CAN_BC_LowerFraser_20251219_015014.xml": "c23b43cde5e8e336bf16e2e9af08929e45d541a8da798980bfc5a8f09d434c52",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.dbf": "a1f3b3037967284039b02b7f9851721ce6bf54dcb34db651909b40f48fa8e7b5",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.shp": "f690b9af049d32eca32d741cb3445d0e43080a79a742e986956c85dfbc68b6dd",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251219_015014/Footprint_CAN_BC_LowerFraser_20251219_015014.shx": "37bf5323fdc8d83d065b0ff2212ed317bcf06e8eccb44294b878c77783aec03f"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251219_015014.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-19 01:50:14+00:00"
+    },
+    "20251221T141646Z": {
+      "class_semantics": {
+        "1": "EGS semantic permanent water",
+        "2": "EGS satellite-visible open-water flood"
+      },
+      "grid": {
+        "bottom": 5443240.0,
+        "bounds": [
+          563960.0,
+          5443240.0,
+          569960.0,
+          5449240.0
+        ],
+        "crs": "EPSG:32610",
+        "height": 200,
+        "left": 563960.0,
+        "pixel_area_ha": 0.09,
+        "resolution": 30.0,
+        "right": 569960.0,
+        "top": 5449240.0,
+        "transform": [
+          30.0,
+          0.0,
+          563960.0,
+          0.0,
+          -30.0,
+          5449240.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "width": 200
+      },
+      "grid_sha256": "54c296532ff479ee5b6fbcda399b31176e302fcb7fcc52d122be9526f4c23d17",
+      "phase4_intermediate_used": false,
+      "product": "Flood_CAN_BC_LowerFraser_20251221_141646",
+      "rasterization": "center, all_touched=False; one reprojection, one rasterization",
+      "snapshot": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/references/raw_egs_30m/20251221T141646Z.geojson",
+      "snapshot_sha256": "d62ba5822fbc71349105da964ac53e5f24b79a5f13565ac8424d252ce75cc672",
+      "source_crs": "EPSG:4326",
+      "source_files": {
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.dbf": "ba967951f2af1afed0684ec6c87a3f39a915fb7cc3ec7372b5d2d51396f06d6a",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.kmz": "7361530025ed0aab3229c2fa3c8c9ff77b2e877ee02ab42377812b175df33acc",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.pdf": "bbebea92de06a50989104bfc2dc8eddc887e9bd9d5986382a6139b59f0447385",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.shp": "c87929b3e8398a4acd33ccedb47c15ad5f6a3627cf394f878c30572559fb4aa0",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.shx": "fbb137001ea578ccaf70988c3379c1d6f97aa372d0e97b57b7ab602a9dfd4d53",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Flood_CAN_BC_LowerFraser_20251221_141646.xml": "54f225df0908ab159bf58eb9602758c6dd8113d2eb7b6ca463c3657405a237fc",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Footprint_CAN_BC_LowerFraser_20251221_141646.dbf": "9ee60496f85aadb7395fd321706ecccbf24e51cd6b3ce567c3a9c9e495f98f68",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Footprint_CAN_BC_LowerFraser_20251221_141646.prj": "a02a27b1d1982c8516d83398e85a3c8b1aef1713c13ef4d84d7bde17430c07c4",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Footprint_CAN_BC_LowerFraser_20251221_141646.shp": "d8c1734675b5827fa099630797eca8997cbaccb33e91d82920281515a2ea9ac1",
+        "/var/folders/fz/c0zrt59s5x7ggbk5hw3hrzbw0000gn/T/earth-in-motion-phase4-egs/Flood_CAN_BC_LowerFraser_20251221_141646/Footprint_CAN_BC_LowerFraser_20251221_141646.shx": "69fb6f2aefe0c7b8f888ca65e1a7b5cf7f1bceaaa1e5187b09dc8df9bf0d886d"
+      },
+      "source_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/Flood_CAN_BC_LowerFraser_20251221_141646.zip",
+      "target_crs": "EPSG:32610",
+      "timestamp_utc": "2025-12-21 14:16:46+00:00"
+    }
+  },
+  "schema_version": "phase3b-references-1"
+}
