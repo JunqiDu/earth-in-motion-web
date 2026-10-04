@@ -1,3 +1,4 @@
+import json
 import numpy as np
 from pathlib import Path
 import rasterio
@@ -12,7 +13,10 @@ from analysis.phase3b_diagnostics import lut_gain_at_columns
 from analysis.rcm_preprocessing import CommonGrid, calibrate_dn_power, power_to_db
 from analysis.validation import confusion_metrics, evaluate_gate
 from analysis.water_classification import MethodConfig, classify_scene, otsu_threshold
+from analysis.historical_water import HistoricalWaterLabels, training_labels
+from analysis.rf_classification import make_features, local_standard_deviation, spatial_block_samples
 from scripts.phase3b_multisource import _fit_fold_constraints
+from scripts.phase3b_rf import PILOT_IDS, _select_outer_parameters
 
 
 def test_common_grid_contract():
@@ -171,3 +175,62 @@ def test_fold_parameter_selection_is_training_only_and_reproducible():
     assert first == second
     assert first["elevation_max_m"] in {3.0, 5.0, 7.0, 10.0}
     assert first["cropland_extra_darkness_db"] in {2.0, 3.0, 4.0}
+
+
+def test_historical_frequency_label_contract_and_nodata():
+    frequency = np.array([[0, 80, 100], [1, 79, 255]], dtype=np.uint8)
+    valid = frequency != 255
+    labels = HistoricalWaterLabels(
+        frequency=frequency,
+        stable_land=valid & (frequency == 0),
+        stable_water=valid & (frequency >= 80),
+        uncertain=valid & (frequency >= 1) & (frequency <= 79),
+        valid=valid,
+        provenance={},
+    )
+    land, water, eligible = training_labels(labels)
+    assert land.tolist() == [[True, False, False], [False, False, False]]
+    assert water.tolist() == [[False, True, True], [False, False, False]]
+    assert not eligible[1, 0] and not eligible[1, 1] and not labels.valid[1, 2]
+
+
+def test_rf_features_and_texture_are_grid_aligned():
+    hh = np.arange(25, dtype="float32").reshape(5, 5)
+    hv = hh - 3
+    valid = np.ones((5, 5), dtype=bool)
+    features, names = make_features(hh, hv, valid)
+    assert features.shape == (5, 5, 4)
+    assert names == ("sigma0_hh_db", "sigma0_hv_db", "hh_minus_hv_db", "local_hh_std_db")
+    assert np.allclose(features[..., 2], 3.0)
+    assert np.isfinite(local_standard_deviation(hh, valid)).all()
+
+
+def test_spatial_block_sampler_is_balanced_and_reproducible():
+    features = np.zeros((40, 40, 4), dtype="float32")
+    land = np.zeros((40, 40), dtype=bool); land[:20, :] = True
+    water = np.zeros((40, 40), dtype=bool); water[20:, :] = True
+    valid = np.ones((40, 40), dtype=bool)
+    first = spatial_block_samples(features, land, water, valid, random_state=123)
+    second = spatial_block_samples(features, land, water, valid, random_state=123)
+    assert first.diagnostics["land_samples"] == first.diagnostics["water_samples"]
+    np.testing.assert_array_equal(first.X, second.X)
+    np.testing.assert_array_equal(first.y, second.y)
+
+
+def test_rf_outer_selection_excludes_heldout_scene_from_parameter_choice():
+    predictions = {}
+    for index, scene_id in enumerate(PILOT_IDS):
+        valid = np.ones((20, 20), dtype=bool)
+        raw_flood = np.zeros((20, 20), dtype=bool)
+        raw_flood[index : index + 2, :4] = True
+        egs = np.zeros((20, 20), dtype=bool)
+        egs[index : index + 2, :4] = True
+        predictions[scene_id] = {
+            "raw_flood": raw_flood,
+            "valid": valid,
+            "elevation": np.zeros((20, 20), dtype="float32"),
+            "egs": egs,
+        }
+    _, candidates = _select_outer_parameters(PILOT_IDS, predictions, PILOT_IDS[0])
+    for candidate in candidates:
+        assert PILOT_IDS[0] not in json.loads(candidate["training_observation_ids"])

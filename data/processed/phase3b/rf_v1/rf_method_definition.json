@@ -1,0 +1,58 @@
+{
+  "schema_version": "phase3b-rf-v1-experimental-1",
+  "method_id": "phase3b_rf_v1",
+  "status": "FAIL",
+  "source_of_truth": false,
+  "training_prior": "Canadian Dynamic Surface Water Maps 1984-2023; stable land frequency==0 and stable water frequency>=80; 1-79 and 255 excluded",
+  "validation_labels": "EGS class-2 only after prediction; never used for training",
+  "fixed_semantic_reference": "data/processed/phase4/egs_permanent_water_reference.geojson; event-product semantic subtraction/reference, not hydrologic baseline",
+  "representation": "raw calibrated Sigma0 HH/HV on fixed 30m grid",
+  "features": [
+    "sigma0_hh_db",
+    "sigma0_hv_db",
+    "hh_minus_hv_db",
+    "local_hh_std_db"
+  ],
+  "rf_parameters": {
+    "n_estimators": 200,
+    "max_depth": 12,
+    "min_samples_leaf": 5,
+    "max_features": "sqrt",
+    "class_weight": "balanced_subsample",
+    "random_state": 20261004,
+    "probability_threshold": 0.5
+  },
+  "spatial_sampling": {
+    "block_size_pixels": 20,
+    "max_per_class_per_block": 40,
+    "class_balanced": true
+  },
+  "outer_selection": {
+    "elevation_candidates_m": [
+      "none",
+      3,
+      5,
+      7,
+      10
+    ],
+    "cleanup_candidates_pixels": [
+      2,
+      4
+    ],
+    "held_out_scene_not_used_for_selection": true
+  },
+  "excluded_from_v1": [
+    "hard urban mask",
+    "cropland rule",
+    "hydrography cutoff",
+    "flooded vegetation region growing",
+    "multi-temporal features",
+    "JRC primary labels",
+    "30m mode filter",
+    "1ha MMU"
+  ],
+  "remaining_six_processed": false,
+  "method_config_v1_generated": false,
+  "phase4_phase5_dashboard_untouched": true,
+  "created_utc": "2026-10-04T12:48:07.529235+00:00"
+}

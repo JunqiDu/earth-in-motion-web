@@ -132,3 +132,44 @@ untouched.
 The first local run may need permission for SNAP to create its own
 `~/.snap/var/cache/temp` files. This is an environment/cache permission issue;
 it does not change the scientific processing contract.
+
+## RF v1 research-backed refinement
+
+The next method is isolated under `data/processed/phase3b/rf_v1/`. It uses the
+Canadian Dynamic Surface Water Maps of Canada (1984–2023) as a training prior:
+frequency `0` is stable land, frequency `>=80` is stable water, and `1–79` or
+`255` are excluded. EGS class-2 is never a training label; it is used only for
+the five-scene held-out evaluation. The fixed EGS class-1 geometry remains the
+semantic permanent-water subtraction/reference.
+
+Run it after the existing pilot caches are available:
+
+```bash
+conda activate space-hackathon-2026
+python scripts/phase3b_rf.py
+```
+
+The runner uses raw calibrated Sigma0 HH/HV, HH−HV, and 3×3 HH texture,
+spatial 20×20-pixel balanced samples, one RF per acquisition, and an outer
+selection of only the registered elevation (`none/3/5/7/10 m`) and component
+cleanup (`2/4 pixels`) options. It writes probabilities, water/flood/valid
+masks, training counts, feature importance, FP/FN diagnostics, fold choices,
+and an auditable summary without overwriting Simple SAR, Lee, Multisource v1,
+Phase 4/5, or Dashboard outputs.
+
+The original Phase 3B GO gate is unchanged. A non-GO RF result remains an
+experimental refinement: no `method_config_v1.json`, no remaining-six-scene
+processing, and no Phase 4B handoff are permitted. The Canadian raster is an
+AOI-only extract of the public dataset and its URL, access date, source hash,
+CRS, and frequency counts are recorded in
+`rf_v1/historical_water_provenance.json`.
+
+The first formal RF v1 run remains **FAIL** under the unchanged gate: across
+the five registered scenes its median IoU is `0.333`, median F1 is `0.500`,
+worst-scene IoU is `0.321`, and median absolute area bias is `19.7%`.  The
+method improves area calibration relative to the earlier single-threshold
+experiments, and its total false-positive area is `44.01 ha` (about 63.1%
+lower than Multisource v1's `119.43 ha`), but its detection accuracy is still
+below the registered GO boundary.  The visual systematic-artifact review is recorded separately as
+`pending_manual_review`; it is not conflated with the numeric FAIL.  These
+results are research evidence only, not a new source of truth.

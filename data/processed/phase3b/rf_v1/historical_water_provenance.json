@@ -1,0 +1,62 @@
+{
+  "access_date": "2026-10-04",
+  "counts": {
+    "stable_land": 27990,
+    "stable_water": 7619,
+    "uncertain": 4391,
+    "valid": 40000
+  },
+  "dataset": "Dynamic Surface Water Maps of Canada",
+  "frequency_semantics": {
+    "0": "stable land",
+    "1-79": "uncertain/seasonal",
+    "255": "nodata",
+    ">=80": "stable water"
+  },
+  "grid": {
+    "bottom": 5443240.0,
+    "bounds": [
+      563960.0,
+      5443240.0,
+      569960.0,
+      5449240.0
+    ],
+    "crs": "EPSG:32610",
+    "height": 200,
+    "left": 563960.0,
+    "pixel_area_ha": 0.09,
+    "resolution": 30.0,
+    "right": 569960.0,
+    "top": 5449240.0,
+    "transform": [
+      30.0,
+      0.0,
+      563960.0,
+      0.0,
+      -30.0,
+      5449240.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "width": 200
+  },
+  "provider": "Environment and Climate Change Canada",
+  "reprojection": "nearest-neighbour to EPSG:32610 30 m 200x200 grid",
+  "source_metadata": {
+    "source_crs": "EPSG:3979",
+    "source_nodata": 255.0,
+    "source_resolution_m": [
+      30.0,
+      30.0
+    ],
+    "source_shape": [
+      266,
+      266
+    ]
+  },
+  "source_path": "/Users/josephdum5pro/Documents/Dalhousie University/Computer Science/2026-9 Fall/2026 Space Hackathon/earth-in-motion-web/data/processed/phase3b/rf_v1/sources/dsw-1984-2023-frequency_lower_fraser.tif",
+  "source_sha256": "6cc5d5fdc158a9d4c211839fcb074050cc6fa59716285eddc55c6cb1897c3512",
+  "source_url": "https://datacube-prod-data-public.s3.ca-central-1.amazonaws.com/store/water/dynamic-surface-water/dynamic-surface-water-compilation/dsw-1984-2023-frequency.tif",
+  "source_year_range": "1984-2023"
+}

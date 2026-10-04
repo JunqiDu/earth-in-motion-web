@@ -66,5 +66,12 @@
     "method_config_v1_generated": false,
     "remaining_six_processed": false,
     "phase4_phase5_dashboard_untouched": true
+  },
+  "rf_v1": {
+    "status": "FAIL",
+    "path": "data/processed/phase3b/rf_v1/rf_validation_summary.json",
+    "method_config_v1_generated": false,
+    "remaining_six_processed": false,
+    "phase4_phase5_dashboard_untouched": true
   }
 }

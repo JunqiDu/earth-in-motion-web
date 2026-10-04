@@ -1,0 +1,6 @@
+observation_id,diagnostic,value,pixels,unit
+20251214T142421Z,settlement_fp_pct,10.869565217391305,138,percent_of_fp
+20251215T015036Z,settlement_fp_pct,7.462686567164179,67,percent_of_fp
+20251217T141634Z,settlement_fp_pct,9.210526315789474,76,percent_of_fp
+20251219T015011Z,settlement_fp_pct,13.333333333333334,135,percent_of_fp
+20251221T141646Z,settlement_fp_pct,15.068493150684931,73,percent_of_fp
