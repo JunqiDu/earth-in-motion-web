@@ -18,7 +18,15 @@ from streamlit.runtime.scriptrunner import get_script_run_ctx
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data" / "processed" / "phase5"
 PHASE4_DIR = BASE_DIR / "data" / "processed" / "phase4"
+RESEARCH_DIR = BASE_DIR / "data" / "processed" / "phase3b" / "rf_v2_final"
 MANIFEST_FILE = DATA_DIR / "phase6_handoff.json"
+RESEARCH_FILES = {
+    "summary": "final_validation_summary.json",
+    "gate": "final_gate_status.json",
+    "comparison": "method_comparison.csv",
+    "per_scene": "final_validation_metrics_raw_egs.csv",
+    "fresh": "fresh_aoi_summary.json",
+}
 
 TABLE_FILES = {
     "metrics": "final_case_metrics.csv",
@@ -46,8 +54,9 @@ PHASE4_FILES = {
     "hydrologic_stages": "hydrologic_stage_summary.csv",
 }
 
-NAV_ITEMS = ("Overview", "Detect", "Map", "Monitor", "Impact", "Evidence & Method")
-VALIDATION_METRICS = {"Precision": 0.663, "Recall": 0.978, "F1": 0.790, "IoU": 0.653}
+NAV_ITEMS = ("Overview", "Map", "Monitor", "Impact", "Detect", "Research & Method", "Evidence & Sources")
+# CARTO's OpenStreetMap-based context restores roads, rivers and place labels.
+# Scientific overlays remain local; the contextual basemap requires internet.
 
 PALETTES = {
     "light": {
@@ -72,7 +81,7 @@ COLORS = {
 }
 
 LAYER_META = {
-    "gain": {"label": "Mapped flood gain", "group": "Observed change", "color": COLORS["gain"]},
+    "gain": {"label": "Initial EGS flood · 12 Dec", "group": "Observed change", "color": COLORS["gain"]},
     "gain_zones": {"label": "Flood-gain zones", "group": "Observed change", "color": COLORS["gain"]},
     "priority_grids": {"label": "Retained priority grids", "group": "Detection", "color": COLORS["priority"]},
     "grid_ids": {"label": "All retained grid IDs", "group": "Detection", "color": COLORS["priority"]},
@@ -181,6 +190,9 @@ def _expected_paths() -> list[Path]:
         [DATA_DIR / name for name in TABLE_FILES.values()]
         + [DATA_DIR / name for name in VECTOR_FILES.values()]
         + [PHASE4_DIR / name for name in PHASE4_FILES.values()]
+        + [RESEARCH_DIR / name for name in RESEARCH_FILES.values()]
+        + [PHASE4_DIR / "recovery_validation.json", PHASE4_DIR / "temporal_audit.json"]
+        + [BASE_DIR / "data/processed/phase3b/level1_inventory.csv"]
         + [MANIFEST_FILE]
     )
 
@@ -213,6 +225,22 @@ def load_manifest(signature: tuple[tuple[str, int, int], ...]) -> dict[str, Any]
 
 
 @st.cache_data(show_spinner=False)
+def load_research(signature: tuple[tuple[str, int, int], ...]) -> dict[str, Any]:
+    """Read compact frozen evidence only; never import or run a classifier."""
+    del signature
+    result = {
+        key: pd.read_csv(RESEARCH_DIR / name) if name.endswith(".csv") else json.loads((RESEARCH_DIR / name).read_text())
+        for key, name in RESEARCH_FILES.items()
+    }
+    result["inventory"] = pd.read_csv(BASE_DIR / "data/processed/phase3b/level1_inventory.csv")
+    if result["gate"]["status"] != "FINAL EXPERIMENTAL FAIL" or not result["gate"]["frozen"]:
+        raise ValueError("Expected frozen experimental method-selection evidence.")
+    if result["gate"]["phase4b_promoted"] or result["gate"]["remaining_six_processed"]:
+        raise ValueError("Dashboard must retain EGS as its production source.")
+    return result
+
+
+@st.cache_data(show_spinner=False)
 def load_acquisition_data(signature: tuple[tuple[str, int, int], ...]) -> dict[str, Any]:
     """Load canonical Phase 4 observations, hydrology, and map geometries."""
     del signature
@@ -235,6 +263,8 @@ def load_acquisition_data(signature: tuple[tuple[str, int, int], ...]) -> dict[s
         "alignment": alignment,
         "hydrology": hydrology,
         "hydrologic_stages": hydrologic_stages,
+        "audit": json.loads((PHASE4_DIR / "temporal_audit.json").read_text()),
+        "recovery": json.loads((PHASE4_DIR / "recovery_validation.json").read_text()),
     }
 
 
@@ -319,10 +349,13 @@ def _tooltip(title: str, lines: list[str]) -> str:
     return f"<b>{title}</b><br>" + "<br>".join(lines)
 
 
-def _decorate_map_data(vectors: dict[str, gpd.GeoDataFrame], tables: dict[str, pd.DataFrame]) -> dict[str, Any]:
+@st.cache_data(show_spinner=False)
+def _decorate_map_data(signature: tuple, _vectors: dict[str, gpd.GeoDataFrame], _tables: dict[str, pd.DataFrame]) -> dict[str, Any]:
     """Prepare small local layer subsets and tooltip text without changing source files."""
+    del signature  # Cache invalidates on file mtime/size, not unhashable geometry objects.
+    vectors, tables = _vectors, _tables
     metrics = tables["metrics"]
-    gain_ha = metric_number(metrics, "Mapped event water gain")
+    gain_ha = metric_number(metrics, "Initial-observation open-water flood extent")
     alr_ha = metric_number(metrics, "Mapped gain intersecting ALR")
     priority = tables["priority"]
 
@@ -359,7 +392,7 @@ def _decorate_map_data(vectors: dict[str, gpd.GeoDataFrame], tables: dict[str, p
     )
 
     gain = vectors["gain"].copy()
-    gain["tooltip"] = _tooltip("Mapped flood gain", [f"Area: {gain_ha:.2f} ha", "Water mapped outside the local semantic baseline."])
+    gain["tooltip"] = _tooltip("Initial EGS open-water flood · 12 Dec", [f"Area: {gain_ha:.2f} ha", "Outside the fixed EGS semantic permanent-water reference; not a measured peak."])
 
     alr = vectors["alr"].copy()
     alr["tooltip"] = _tooltip(
@@ -425,7 +458,7 @@ def _decorate_map_data(vectors: dict[str, gpd.GeoDataFrame], tables: dict[str, p
         marker = gpd.GeoDataFrame(
             {
                 "label": ["BC 7 bridge-tagged way"],
-                "tooltip": [_tooltip("BC 7 bridge-tagged way", ["Direct mapped geometric overlap: 8.72 m", "Potential exposure only; no structural damage is inferred."])],
+                "tooltip": [_tooltip("BC 7 bridge-tagged way", [f"Direct mapped geometric overlap: {direct_bridge.iloc[0].flood_intersection_m:.2f} m", "Potential exposure only; no structural damage is inferred."])],
             },
             geometry=[location],
             crs=roads.crs,
@@ -502,8 +535,8 @@ def _text_layer(records: list[dict[str, Any]], color: list[int], *, size: int = 
         get_text="label",
         get_size=size,
         get_color=color,
-        get_text_anchor="middle",
-        get_alignment_baseline="center",
+        get_text_anchor='"middle"',
+        get_alignment_baseline='"center"',
     )
 
 
@@ -570,8 +603,8 @@ def build_local_deck(prepared: dict[str, Any], preset_name: str, active_layers: 
     return pdk.Deck(
         layers=build_map_layers(prepared, active_layers),
         views=[pdk.View(type="MapView", controller=controller)],
-        map_style="",
-        map_provider=None,
+        map_style=THEME_NAME,
+        map_provider="carto",
         initial_view_state=_map_view_state(prepared),
         height=MAP_PRESETS[preset_name]["height"],
         tooltip={"html": "{tooltip}", "style": {"backgroundColor": THEME["surface_alt"], "color": THEME["text"], "fontSize": "12px"}},
@@ -655,8 +688,11 @@ def render_map(prepared: dict[str, Any], preset_name: str, key: str, *, active_l
             st.caption("Rendered coordinates: WGS84 / EPSG:4326. Analytical layers and reported areas use EPSG:32610.")
 
 
-def prepare_acquisition_frames(acquisition: dict[str, Any]) -> dict[str, gpd.GeoDataFrame]:
+@st.cache_data(show_spinner=False)
+def prepare_acquisition_frames(signature: tuple, _acquisition: dict[str, Any]) -> dict[str, gpd.GeoDataFrame]:
     """Decorate the seven Phase 4 EGS frames for the local, discrete-step player."""
+    del signature
+    acquisition = _acquisition
     trajectory = acquisition["trajectory"].copy()
     frames = acquisition["frames"].merge(
         trajectory[
@@ -676,17 +712,17 @@ def prepare_acquisition_frames(acquisition: dict[str, Any]) -> dict[str, gpd.Geo
             [
                 f"Acquired: {pd.Timestamp(row.timestamp_utc).strftime('%d %b %Y %H:%M UTC')}",
                 f"Mapped area: {row.flood_outside_baseline_ha:.2f} ha",
-                f"Stage: {row.stage_label}",
+                f"Regional gauge context: {row.stage_label}",
                 f"Platform / beam: {row.platform} · {row.beam_mode}",
                 f"Resolution / orbit: {row.source_resolution_m:.0f} m · {row.orbit_direction}",
-                f"Role: {row.observation_role}",
+                f"Gauge-relative role: {row.observation_role}",
             ],
         ),
         axis=1,
     )
     reference = acquisition["reference"].copy()
     reference["tooltip"] = _tooltip(
-        "Fixed EGS permanent-water reference",
+        "Fixed EGS semantic permanent-water reference",
         [
             "OBS01 product class 1 used for fixed semantic accounting.",
             "It is not an independently observed pre-event normal-water surface.",
@@ -714,8 +750,8 @@ def build_acquisition_deck(
     return pdk.Deck(
         layers=layers,
         views=[pdk.View(type="MapView", controller={"dragPan": True, "doubleClickZoom": True, "touchZoom": True, "scrollZoom": False})],
-        map_style="",
-        map_provider=None,
+        map_style=THEME_NAME,
+        map_provider="carto",
         initial_view_state=_map_view_state(prepared),
         height=555,
         tooltip={"html": "{tooltip}", "style": {"backgroundColor": THEME["surface_alt"], "color": THEME["text"], "fontSize": "12px"}},
@@ -767,8 +803,8 @@ def _render_acquisition_player_fragment(prepared: dict[str, Any], frame_data: di
 
     with layer_column:
         with st.popover("Map layers", use_container_width=True):
-            context_enabled = st.checkbox("Priority grids and direct roads", value=True, key="acquisition-player-context")
-            reference_enabled = st.checkbox("Fixed semantic water reference", value=False, key="acquisition-player-reference")
+            context_enabled = st.checkbox("12 Dec hotspot and road context", value=True, key="acquisition-player-context")
+            reference_enabled = st.checkbox("Fixed EGS semantic water reference", value=False, key="acquisition-player-reference")
 
     options = list(range(count))
     labels = [f"{row.observation_id} · {pd.Timestamp(row.timestamp_utc).strftime('%d %b %H:%M UTC')}" for row in frames.itertuples()]
@@ -792,9 +828,9 @@ def _render_acquisition_player_fragment(prepared: dict[str, Any], frame_data: di
     timestamp = pd.Timestamp(row.timestamp_utc).strftime("%d %b %Y · %H:%M UTC")
     st.markdown(
         f'<div class="player-readout"><span class="player-status">{status}</span> '
-        f'<strong>{row.observation_id} · {row.stage_label}</strong> · {timestamp}<br>'
+        f'<strong>{row.observation_id}</strong> · {timestamp} · Regional context: {row.stage_label}<br>'
         f'<strong>{row.flood_outside_baseline_ha:.2f} ha</strong> mapped EGS open-water flood class · '
-        f'{row.platform} · {row.beam_mode} · {row.source_resolution_m:.0f} m · {row.observation_role}</div>',
+        f'{row.platform} · {row.beam_mode} · {row.source_resolution_m:.0f} m · Gauge-relative role: {row.observation_role}</div>',
         unsafe_allow_html=True,
     )
 
@@ -802,12 +838,14 @@ def _render_acquisition_player_fragment(prepared: dict[str, Any], frame_data: di
     if reference_enabled:
         legend += '<span class="legend-item"><span class="legend-swatch" style="background:#698491"></span>Fixed semantic water reference</span>'
     if context_enabled:
-        legend += '<span class="legend-item"><span class="legend-swatch" style="background:#E69F00"></span>Priority grids</span><span class="legend-item"><span class="legend-swatch" style="background:#4D5860"></span>Direct road intersections</span>'
+        legend += '<span class="legend-item"><span class="legend-swatch" style="background:#E69F00"></span>12 Dec priority grids</span><span class="legend-item"><span class="legend-swatch" style="background:#4D5860"></span>12 Dec road intersections</span>'
     legend += '<span class="north-arrow">N ↑</span></div>'
     st.markdown(legend, unsafe_allow_html=True)
 
     deck = build_acquisition_deck(prepared, frame_data, current_index, show_reference=reference_enabled, show_context=context_enabled)
     st.pydeck_chart(deck, width="stretch", height=555, key="acquisition-player-deck")
+    if context_enabled:
+        st.caption("Context overlays retain the 12 Dec snapshot. Road exposure is not recalculated for the selected frame.")
     with st.expander("Current-frame interpretation"):
         st.caption(row.caveat)
 
@@ -823,49 +861,133 @@ def render_acquisition_player(prepared: dict[str, Any], acquisition: dict[str, A
     """Render a deliberately finite, user-controlled seven-observation playback."""
     st.subheader("Observed acquisition-step player")
     st.caption("Seven locally stored RCM-derived EGS observations, beginning with OBS01 on 12 Dec. Drag the single timeline or play one complete pass; no daily frame or interpolated flood geometry is generated.")
-    _render_acquisition_player_fragment(prepared, prepare_acquisition_frames(acquisition))
+    _render_acquisition_player_fragment(prepared, prepare_acquisition_frames(acquisition["signature"], acquisition))
 
 
-def render_workflow_summary() -> None:
-    st.subheader("How this case was built")
-    steps = [
-        ("1 · Observe", "Seven NRCan EGS RCM observations, 12–21 Dec."),
-        ("2 · Detect", "Map open water outside the local semantic baseline on a 20 m grid."),
-        ("3 · Compare", "Measure initial-observation gain, 1 km-grid change, and the discrete acquisition sequence."),
-        ("4 · Validate", "Check recovery-period agreement with Sentinel-2."),
-        ("5 · Contextualize", "Overlay roads, bridge-tagged ways, ALR designation, and place points."),
-    ]
-    for column, (title, text) in zip(st.columns(5), steps):
-        column.markdown(f'<div class="workflow-step"><strong>{title}</strong><br><span class="small-note">{text}</span></div>', unsafe_allow_html=True)
-    st.caption("See Evidence & Method for validation details, assumptions, and limitations.")
+def _method_progression(research: dict[str, Any], reference_id: str) -> go.Figure:
+    """Never connect method scores evaluated against different references."""
+    names = {
+        "simple_sar_c0_sigma0": "Simple SAR", "lee_refined_sar_c0_sigma0": "Lee SAR",
+        "multisource_v1": "Multisource", "phase3b_rf_v1": "RF v1", "phase3b_rf_v2_final": "Final RF v2",
+    }
+    comparison = research["comparison"].loc[lambda f: f.reference_id.eq(reference_id)].copy()
+    figure = go.Figure(go.Bar(
+        x=comparison.median_iou, y=comparison.method.map(names), orientation="h",
+        text=comparison.median_iou.map(lambda value: f"{value:.3f}"), textposition="outside",
+        cliponaxis=False, marker_color="#0072B2",
+        hovertemplate="%{y}<br>Frozen median IoU: %{x:.3f}<extra></extra>",
+    ))
+    if reference_id == "primary_raw_egs_reference":
+        figure.add_vline(x=.50, line_dash="dash", line_color="#D55E00",
+                         annotation_text="Median IoU GO target · 0.50", annotation_position="top left")
+    figure.update_layout(
+        height=220 if len(comparison) == 2 else 310, dragmode=False, showlegend=False,
+        margin={"l": 10, "r": 40, "t": 35, "b": 20},
+        xaxis={"title": "Median IoU · five matched scenes", "range": [0, .65], "fixedrange": True},
+        yaxis={"autorange": "reversed", "fixedrange": True},
+    )
+    return figure
 
 
-def render_overview(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> None:
+def render_workflow_summary(research: dict[str, Any]) -> None:
+    left, right = st.columns(2)
+    with left:
+        st.markdown("#### 1 · Research & Method Selection")
+        st.write("We independently processed RCM Level-1, tested SAR and multisource methods, and validated an EGS-inspired Random Forest.")
+        primary = research["comparison"].loc[lambda f: f.reference_id.eq("primary_raw_egs_reference")].set_index("method")
+        st.markdown(f"**Primary-reference median IoU: RF v1 {primary.loc['phase3b_rf_v1', 'median_iou']:.3f} → final RF v2 {primary.loc['phase3b_rf_v2_final', 'median_iou']:.3f}**")
+        st.caption("The experimental workflow did not meet the pre-registered operational GO gate. Operational source selected: NRCan EGS.")
+    with right:
+        st.markdown("#### 2 · Translation & Impact Communication")
+        st.write("Operational EGS extent → discrete event evolution + official hydrology → potential road, bridge and ALR exposure → evidence and limitations.")
+        st.caption("Explore Map, Monitor and Impact for the event; Research & Method explains source selection. Evidence & Sources records recovery evidence and claim boundaries.")
+
+
+def render_overview(tables: dict[str, pd.DataFrame], prepared: dict[str, Any], research: dict[str, Any]) -> None:
     metrics = tables["metrics"]
-    gain = metric_number(metrics, "Mapped event water gain")
+    gain = metric_number(metrics, "Initial-observation open-water flood extent")
     local_increase = metric_number(metrics, "Maximum local increase (G042)")
-    gross_recession = metric_number(metrics, "Near-event to recovery mapped loss")
+    gross_recession = metric_number(metrics, "Gross recession from initial-observation footprint")
     roads = int(metric_number(metrics, "Directly intersecting road ways"))
     alr = metric_number(metrics, "Mapped gain intersecting ALR")
     alr_share = 100 * alr / gain
-    st.markdown('<div class="eim-hero"><div class="eyebrow">December 2025 · Fraser Valley / Lower Fraser flood</div><h1>Earth in Motion</h1><p>Tracking flood evolution in the Lower Fraser using RCM and supporting Earth observation data</p><span class="status-pill">Recovering flood · localized residual expansion remains</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="eim-hero"><div class="eyebrow">December 2025 · Fraser Valley / Lower Fraser, BC</div><h1>Earth in Motion</h1><p>From independent RCM flood-detection research to understandable event and potential-exposure evidence.</p><span class="status-pill">Lower final mapped extent · localized persistence and redistribution</span></div>', unsafe_allow_html=True)
+    render_workflow_summary(research)
+    st.subheader("Event and exposure at a glance")
     render_metric_rows([
-        ("Mapped flood gain", f"{gain:.2f} ha", None),
+        ("Initial mapped open-water flood · 12 Dec", f"{gain:.2f} ha", None),
         ("Largest 1 km-grid increase", f"+{local_increase:.2f} pp", None),
         ("Gross recession from initial footprint", f"{gross_recession:.2f} ha", None),
         ("Road ways intersecting mapped gain", f"{roads} ways", None),
         ("Gain overlapping ALR designation", f"{alr:.2f} ha", f"{alr_share:.1f}% of gain"),
     ])
-    st.caption("Potential exposure only. ALR overlap indicates land designation, not crop loss.")
-    render_workflow_summary()
+    st.caption("Flood extent: NRCan EGS. Exposure overlays use the 12 Dec snapshot only. ALR overlap indicates land designation, not crop loss. Recovery was independently checked with later Sentinel-2 imagery.")
     st.subheader("Event overview")
     render_map(prepared, "overview", "overview-map")
-    st.caption("The overview map shows mapped gain and the two strongest retained hotspots, G042 and G015.")
+    st.caption("Initial EGS flood snapshot and the two grids above the empirical method-variability context: G042 and G015. No satellite peak is claimed.")
+
+
+def render_research(research: dict[str, Any]) -> None:
+    render_header("Research & Method", "What did we test independently, and why did the prototype retain operational EGS flood extent?")
+    summary, gate = research["summary"], research["gate"]
+    primary = summary["primary_raw_egs_reference"]["macro"]
+    st.info("Experimental method retained · Operational source: NRCan EGS. The Level-1 workflow improved, but did not meet the project's pre-registered GO criteria across scenes, sensor modes and QA checks.")
+    st.subheader("Independent RCM work")
+    inventory = research["inventory"]
+    st.caption(f"{len(inventory)} local Level-1 GRD products inventoried; {gate['scene_count']} matched scenes processed and validated. Remaining six were not promoted to production.")
+    st.markdown("**RCM Level-1 → SNAP calibration → terrain correction → simple SAR → multisource constraints → scene-specific RF → validation & failure analysis → bounded final refinement → source selection**")
+    st.caption("HH/HV calibrated imagery and independent historical water-frequency training priors underpin our classifier. EGS class 2 is the validation reference, not an RF training label.")
+    st.subheader("Comparable primary-reference results")
+    st.plotly_chart(_method_progression(research, "primary_raw_egs_reference"), width="stretch", theme="streamlit", config={"displayModeBar": False, "scrollZoom": False, "doubleClick": False})
+    render_metric_rows([
+        ("Final RF · primary median IoU", f"{primary['median_iou']:.3f}", None),
+        ("Final RF · primary median F1", f"{primary['median_f1']:.3f}", None),
+        ("Median absolute area bias", f"{primary['median_abs_area_bias_pct']:.2f}%", None),
+    ])
+    st.caption("Five matched dates: 14, 15, 17, 19 and 21 Dec. Primary reference: original EGS flood vectors rasterized once at 30 m. Scores are overlap with EGS, not independent ground-truth accuracy.")
+    with st.expander("Earlier methods and the legacy reference"):
+        st.plotly_chart(_method_progression(research, "legacy_phase4_reference"), width="stretch", theme="streamlit", config={"displayModeBar": False, "scrollZoom": False, "doubleClick": False})
+        st.write("These historical results use the legacy Phase 4-derived reference: original vectors → 20 m sampling → vectorization → 30 m sampling. Simple SAR, Lee and Multisource have no comparable primary-reference score in the frozen report.")
+        st.caption("Do not join the legacy 0.333 RF v1 score to the primary 0.353 final score. Legacy final RF v2 is 0.409; primary RF v1 is 0.296. Representation differences are not algorithmic improvement.")
+    with st.expander("Operational GO criteria and final checks"):
+        mode = summary["primary_raw_egs_reference"]["per_mode_group"]
+        st.dataframe(pd.DataFrame([
+            ("Median IoU", "≥ 0.50", f"{primary['median_iou']:.3f}", gate['checks']['median_iou_ge_050']),
+            ("Median F1", "≥ 0.67", f"{primary['median_f1']:.3f}", gate['checks']['median_f1_ge_067']),
+            ("Every scene IoU / F1", "≥ 0.35 / ≥ 0.52", "Not all scenes meet both", gate['checks']['every_iou_ge_035'] and gate['checks']['every_f1_ge_052']),
+            ("Each mode-group median IoU", "≥ 0.45", f"Stripmap {mode['stripmap16_desc']['median_iou']:.3f}; ScanSAR {mode['scansar30_asc']['median_iou']:.3f}", gate['checks']['every_mode_median_iou_ge_045']),
+            ("Median / every absolute area bias", "≤ 25% / ≤ 50%", "Both bias checks pass", gate['checks']['median_absolute_bias_le_25'] and gate['checks']['every_absolute_bias_le_50']),
+            ("Geometry and systematic-artifact QA", "Both certified", "Not certified", gate['checks']['geometry_status'] and gate['checks']['systematic_artifact_review']),
+        ], columns=["Criterion", "Required", "Frozen result", "Met"]), hide_index=True, width="stretch")
+        st.caption(f"Frozen status: {gate['status']}. Calibration and provenance checks passed; missing QA is not treated as passing. This is a project-specific acceptance gate, not an absolute judgement that the research has no value.")
+        per_scene = research["per_scene"][["timestamp_utc", "mode_group", "precision", "recall", "f1", "iou", "area_bias_pct"]].copy()
+        per_scene.columns = ["UTC acquisition", "Mode group", "Precision", "Recall", "F1", "IoU", "Area bias (%)"]
+        st.dataframe(per_scene, hide_index=True, width="stretch", column_config={name: st.column_config.NumberColumn(format="%.3f") for name in ["Precision", "Recall", "F1", "IoU"]})
+    st.subheader("Fresh spatial holdout · supporting evidence")
+    fresh = research["fresh"]
+    render_metric_rows([(f"Neighboring area · {pd.Timestamp(row['observation_id'][:8]).strftime('%d %b')} IoU", f"{row['iou']:.3f}", None) for row in fresh["metrics"]])
+    st.caption("Same event, neighboring area; no fresh-area training or retuning. These results do not replace the formal five-scene validation or establish cross-event performance.")
+    st.subheader("Why EGS was selected")
+    st.write("The independent experiment did not meet the original operational gate. The prototype therefore retains NRCan's operational RCM-derived EGS extent for temporal analysis and potential-exposure communication; experimental RF masks do not enter those maps.")
+    with st.expander("Access, resolution and research limitations"):
+        st.write("In our accessible Level-1 dataset, the finest available RCM imagery was 16 m. Some operational EGS products were derived from finer 5 m acquisitions not present in our local Level-1 research set.")
+        st.caption("Finer imagery, filtering, processing choices, ancillary information, vectorization, operational QA and manual review may contribute to the remaining gap. Their separate contributions are unresolved; 5 m data alone is not an explanation.")
+        for limitation in (
+            "Only five matched Level-1 / EGS scenes, all from the same event; repeated same-event research limits independent generalization.",
+            "No true same-mode pre-event RCM baseline. Fixed EGS semantic water subtraction is not observed normal water.",
+            "Accessible inputs were 16/30 m; the Level-1 scientific grid is 30 m. Production EGS accounting is 20 m, not a mixed-grid classifier result.",
+            "Historical water-frequency labels are training priors, not event truth. Terrain context includes a DSM, not a water-level model; hydrographic proximity is not hydraulic connectivity.",
+            "EGS includes operational post-processing and manual QA and is a reference product, not independent sensor ground truth.",
+            "Raw original-vector and legacy derived-reference representations differ; scores must be compared within one reference.",
+            "Concurrent Sentinel-2 validation was strongly cloud-limited. Later recovery total-water agreement cannot certify earlier flood classification.",
+            "The fresh neighboring holdout is spatial and same-event, not cross-event validation.",
+        ):
+            st.markdown(f"- {limitation}")
 
 
 def _hotspot_comparison(priority: pd.DataFrame) -> go.Figure:
-    stage_labels = ["Baseline", "Near-event", "Recovery"]
-    stage_dates = ["Reference class", "12 Dec", "21 Dec"]
+    stage_labels = ["Fixed semantic reference", "Initial observation", "Final observation"]
+    stage_dates = ["12 Dec EGS class 1", "12 Dec", "21 Dec"]
     figure = go.Figure()
     for grid_id, color in (("G042", "#D55E00"), ("G015", "#0072B2")):
         row = priority.loc[priority["grid_id"].eq(grid_id)].iloc[0]
@@ -878,7 +1000,7 @@ def _hotspot_comparison(priority: pd.DataFrame) -> go.Figure:
             line={"color": color, "width": 3},
             marker={"size": 10, "color": color},
             customdata=[[stage_dates[index], value - values[0]] for index, value in enumerate(values)],
-            hovertemplate="<b>%{fullData.name}</b><br>%{x} · %{customdata[0]}<br>Water coverage: %{y:.2f}%<br>Change from baseline: %{customdata[1]:+.2f} pp<extra></extra>",
+            hovertemplate="<b>%{fullData.name}</b><br>%{x} · %{customdata[0]}<br>Total mapped water coverage: %{y:.2f}%<br>Increase from fixed reference: %{customdata[1]:+.2f} pp<extra></extra>",
         ))
     figure.update_layout(
         height=360,
@@ -894,23 +1016,25 @@ def _hotspot_comparison(priority: pd.DataFrame) -> go.Figure:
 
 def render_detect(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> None:
     render_header("Detect", "Where did meaningful water expansion occur?")
+    st.caption("Production extent: NRCan EGS, not our experimental RF detector. Research & Method explains the independent Level-1 experiment and source-selection decision.")
     priority = tables["priority"].copy()
     g042 = priority.loc[priority["grid_id"].eq("G042")].iloc[0]
     g015 = priority.loc[priority["grid_id"].eq("G015")].iloc[0]
-    st.write("G042 is the strongest observed expansion; G015 is the second retained grid above the Folly Lake empirical control-site context.")
+    st.write("G042 has the largest observed local increase; G015 is the other grid above the Folly Lake empirical method-variability context.")
     render_metric_rows([
         ("G042 increase", f"+{g042.event_minus_baseline_pp:.2f} pp", None),
         ("G015 increase", f"+{g015.event_minus_baseline_pp:.2f} pp", None),
-        ("Cells above empirical context", "2", None),
+        ("Cells above empirical context", str(int(metric_number(tables['metrics'], 'Cells above 5.88 pp context'))), None),
     ])
     st.subheader("Retained change hotspots")
     render_map(prepared, "detection", "detect-map")
     st.subheader("Local water-coverage comparison")
+    st.caption("Fixed EGS class-1 semantic reference, followed by reference + flood coverage on 12 and 21 Dec. The reference is not a pre-event water observation.")
     st.plotly_chart(_hotspot_comparison(priority), width="stretch", theme="streamlit", config={"displaylogo": False, "displayModeBar": False, "scrollZoom": False, "doubleClick": False, "responsive": True})
     st.subheader("Retained relevant grids")
     display_columns = {
-        "grid_id": "Grid", "baseline_water_ratio_pct": "Baseline (%)", "event_water_ratio_pct": "Near-event (%)",
-        "recovery_water_ratio_pct": "Recovery (%)", "event_minus_baseline_pp": "Increase (pp)",
+        "grid_id": "Grid", "baseline_water_ratio_pct": "Fixed reference (%)", "event_water_ratio_pct": "12 Dec total water (%)",
+        "recovery_water_ratio_pct": "21 Dec total water (%)", "event_minus_baseline_pp": "Increase (pp)",
         "event_gain_area_ha": "Gain (ha)", "interpretation": "Interpretation",
     }
     display = priority[list(display_columns)].rename(columns=display_columns)
@@ -919,22 +1043,24 @@ def render_detect(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> 
         hide_index=True,
         width="stretch",
         column_config={
-            "Baseline (%)": st.column_config.NumberColumn(format="%.2f%%"),
-            "Near-event (%)": st.column_config.NumberColumn(format="%.2f%%"),
-            "Recovery (%)": st.column_config.NumberColumn(format="%.2f%%"),
+            "Fixed reference (%)": st.column_config.NumberColumn(format="%.2f%%"),
+            "12 Dec total water (%)": st.column_config.NumberColumn(format="%.2f%%"),
+            "21 Dec total water (%)": st.column_config.NumberColumn(format="%.2f%%"),
             "Increase (pp)": st.column_config.NumberColumn(format="%.2f pp"),
             "Gain (ha)": st.column_config.NumberColumn(format="%.2f ha"),
             "Interpretation": st.column_config.TextColumn(width="large"),
         },
     )
-    st.markdown('<div class="eim-callout"><strong>5.88 pp</strong> is an empirical control-site context from Folly Lake. It is not a universal flood threshold or a statistical significance test.</div>', unsafe_allow_html=True)
+    st.caption("Nine gain-bearing grids form an inspection shortlist: increase > 5.88 pp OR a direct road/bridge overlap. Order is observed increase, then gain area—not a composite risk score.")
+    st.markdown('<div class="eim-callout"><strong>5.88 pp</strong> is empirical method-variability context from Folly Lake, not a universal flood threshold or statistical significance test.</div>', unsafe_allow_html=True)
 
 
 def render_map_page(prepared: dict[str, Any], acquisition: dict[str, Any]) -> None:
     render_header("Map", "How did the mapped RCM-derived flood extent change across the seven observed acquisitions?")
+    st.caption("Flood extent: local NRCan EGS · seven discrete acquisitions. Context basemap: CARTO / OpenStreetMap (internet required). Experimental Level-1 masks are not used here.")
     render_acquisition_player(prepared, acquisition)
     with st.expander("Open the full static layer explorer"):
-        st.caption("Optional: compare the change, infrastructure, designation, and place-context layers. All layers are local and no online basemap is requested.")
+        st.caption("Optional: compare local change, infrastructure, designation, and place-context layers over the CARTO / OpenStreetMap basemap.")
         render_map(prepared, "exploration", "map-page")
 
 
@@ -1016,9 +1142,10 @@ def _monitor_figure(
     return figure
 
 
-def render_monitor(acquisition: dict[str, Any]) -> None:
+def render_monitor(acquisition: dict[str, Any], tables: dict[str, pd.DataFrame]) -> None:
     trajectory = acquisition["trajectory"]
     render_header("Monitor", "How did regional hydrology and the seven discrete RCM-derived observations align from 7–22 December?")
+    st.caption("Hydrology: official WaterOffice snapshot. Flood extent: NRCan EGS. Hydrology provides continuous event context; satellite flood maps are discrete observations.")
     st.subheader("Regional hydrology and observed RCM response")
     st.plotly_chart(
         _monitor_figure(trajectory, acquisition["hydrology"], acquisition["hydrologic_stages"]),
@@ -1026,18 +1153,26 @@ def render_monitor(acquisition: dict[str, Any]) -> None:
         theme="streamlit",
         config={"displaylogo": False, "displayModeBar": False, "scrollZoom": False, "doubleClick": False, "responsive": True},
     )
+    metrics = tables["metrics"]
+    initial = metric_number(metrics, "Initial fixed-reference total mapped water")
+    final = metric_number(metrics, "Final fixed-reference total mapped water")
+    gross = metric_number(metrics, "Gross recession from initial-observation footprint")
+    net = metric_number(metrics, "Net endpoint decline in fixed-reference total mapped water")
     render_metric_rows([
-        ("Fixed-reference total mapped water · OBS01", "1,026.80 ha", None),
-        ("Fixed-reference total mapped water · OBS07", "993.52 ha", None),
-        ("Gross recession from initial footprint", "35.44 ha", None),
+        ("Fixed-reference total water · 12 Dec", f"{initial:,.2f} ha", None),
+        ("Fixed-reference total water · 21 Dec", f"{final:,.2f} ha", None),
+        ("Net endpoint decline", f"{net:.2f} ha", None),
     ])
-    st.info("The blue gauge record corroborates two regional hydrologic pulses. The orange RCM-derived series begins with the first available mapped frame on 12 Dec and provides seven discrete spatial observations; it does not measure a continuous pixel-level hydrograph or the exact timing of either peak.")
-    st.caption("The dotted line only connects observed acquisitions in order. It is not daily interpolation or a measured flood-peak estimate. The 35.44 ha gross recession is the portion of the OBS01 flood footprint absent at OBS07; the fixed-reference net endpoint decline is 33.28 ha. Different source resolutions, viewing geometry, radiometry, and changing water conditions contribute to non-monotonic intermediate values.")
+    st.info("The blue gauge record documents two regional hydrologic pulses. The orange series starts on 12 Dec and shows seven discrete mapped observations—not a continuous pixel-level hydrograph or satellite-measured peaks. The two y axes use different units; curve heights are not directly comparable.")
+    st.caption(f"Gross recession from the initial footprint is {gross:.2f} ha; this differs from the {net:.2f} ha net decline because {metric_number(metrics, 'Final-observation flood outside initial footprint'):.2f} ha appears only in the final footprint. The dotted connection means acquisition order, not daily interpolation.")
+    with st.expander("Why the satellite sequence is variable"):
+        st.write("The 14→15 Dec jump has mixed hydrologic and observational causes; their contributions remain unresolved. Beam, orbit, source resolution, radiometry and independent product processing vary. A 20 m accounting grid does not eliminate these differences.")
+        st.caption("Blue values are hourly means of the committed five-minute gauge record; stage anchors refer to unit-value extrema. Gauge observations are regional context, not pixel classification truth.")
 
 
 def _direct_roads_table(tables: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    roads = tables["roads"].loc[lambda frame: frame["direct_intersection"] & frame["name"].notna()].copy()
-    roads["Road"] = roads["name"] + roads["ref"].fillna("").map(lambda value: f" / {value}" if value else "")
+    roads = tables["roads"].loc[lambda frame: frame["direct_intersection"]].copy()
+    roads["Road"] = roads.apply(_road_label, axis=1)
     return roads[["Road", "osm_id", "highway", "flood_intersection_m", "bridge"]].rename(
         columns={"osm_id": "OSM way", "highway": "Class", "flood_intersection_m": "Intersection (m)", "bridge": "Bridge tag"}
     )
@@ -1045,11 +1180,16 @@ def _direct_roads_table(tables: dict[str, pd.DataFrame]) -> pd.DataFrame:
 
 def render_impact(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> None:
     render_header("Impact", "What assets or designated land could overlap the mapped water expansion?")
+    metrics = tables["metrics"]
+    alr = metric_number(metrics, "Mapped gain intersecting ALR")
+    gain = metric_number(metrics, "Initial-observation open-water flood extent")
+    alr_share = alr / gain
+    st.caption(f"12 Dec EGS initial-observation snapshot only · OSM snapshot: {len(tables['roads'])} AOI-clipped ways · BC ALR designation · official place points. Potential exposure, not confirmed damage or closure.")
     render_metric_rows([
-        ("Directly intersecting road ways", "14 ways", None),
-        ("Direct road overlap", "0.346 km", None),
-        ("Direct bridge-tagged way", "1 way", "Potential exposure only"),
-        ("Mapped gain overlapping ALR designation", "36.65 ha", "66.7% of gain"),
+        ("Directly intersecting road ways", f"{int(metric_number(metrics, 'Directly intersecting road ways'))} ways", None),
+        ("Direct road overlap", f"{metric_number(metrics, 'Direct road intersection length'):.3f} km", None),
+        ("Direct bridge-tagged way", f"{int(metric_number(metrics, 'Direct bridge-tagged intersections'))} way", "Potential exposure only"),
+        ("Mapped gain overlapping ALR designation", f"{alr:.2f} ha", f"{100 * alr_share:.1f}% of gain"),
     ])
     lens = st.segmented_control(
         "Impact lens",
@@ -1069,6 +1209,7 @@ def render_impact(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> 
             layers.update({"nearby_roads", "nearby_bridge"})
         render_map(prepared, "impact_infrastructure", "impact-infrastructure", active_layers=layers)
         st.caption("Grey lines are direct geometric intersections; teal highlights the bridge-tagged way. Neither overlap nor proximity confirms closure, damage, or flood depth.")
+        st.caption("Rows are OSM ways; repeated road names can identify different segments. Regional Highway 1 closure reporting is outside this compact AOI and is not a detected closure here.")
         st.dataframe(
             _direct_roads_table(tables),
             hide_index=True,
@@ -1090,9 +1231,9 @@ def render_impact(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> 
     elif lens == "Agricultural land":
         st.subheader("Agricultural Land Reserve designation context")
         render_map(prepared, "impact_agriculture", "impact-agriculture")
-        st.progress(0.667, text="66.7% of mapped flood gain overlaps ALR-designated land")
+        st.progress(alr_share, text=f"{100 * alr_share:.1f}% of initial mapped flood overlaps ALR-designated land")
         st.info("ALR is a land designation, not a crop map. This mapped overlap does not demonstrate crop loss or agricultural damage.")
-        st.caption("The blue layer is only the 36.65 ha portion of mapped gain that overlaps ALR designation; it is not the full ALR boundary.")
+        st.caption(f"BC ALR source: the blue layer is only the {alr:.2f} ha mapped overlap, not full ALR boundaries or active crop area.")
     else:
         st.subheader("Community geographic context")
         render_map(prepared, "impact_community", "impact-community")
@@ -1100,19 +1241,20 @@ def render_impact(tables: dict[str, pd.DataFrame], prepared: dict[str, Any]) -> 
         columns = st.columns(2)
         columns[0].metric("Nearest official place point", str(nearest["place_name"]))
         columns[1].metric("Distance to mapped gain", f"{nearest.distance_to_gain_m:.1f} m")
-        st.write("The place point lies inside the study AOI. It provides geographic context only; the analysis does not estimate population exposure.")
+        st.write(f"The nearest point is {'inside' if nearest.inside_aoi else 'outside'} the study AOI. Geographic context only; no population exposure estimate.")
         with st.expander("Other official place points"):
-            nearby = tables["communities"].head(5)[["place_name", "inside_aoi", "distance_to_gain_m"]].rename(columns={"place_name": "Official place point", "inside_aoi": "Inside AOI", "distance_to_gain_m": "Distance (m)"})
+            st.caption("25 retained nearest place points, not a complete settlement inventory.")
+            nearby = tables["communities"][["place_name", "inside_aoi", "distance_to_gain_m"]].rename(columns={"place_name": "Official place point", "inside_aoi": "Inside AOI", "distance_to_gain_m": "Distance (m)"})
             st.dataframe(nearby, hide_index=True, width="stretch", column_config={"Distance (m)": st.column_config.NumberColumn(format="%.1f m")})
 
 
 def render_method_details() -> None:
-    st.subheader("How the result was assessed")
+    st.subheader("How production evidence was translated")
     details = [
-        ("Observation source", "Seven NRCan EGS RCM-derived flood products provide the local 12–21 Dec event sequence."),
-        ("Semantic baseline and 20 m grid", "Open water is mapped outside a local semantic permanent-water baseline and compared on the fixed analytical grid."),
-        ("Temporal comparison", "The dashboard reports observed near-event, recession, and recovery conditions without interpolating between acquisitions."),
-        ("Independent recovery validation", "A Sentinel-2 recovery-period comparison supports interpretation while preserving its timing and sensor differences."),
+        ("Production source", "Seven operational NRCan EGS RCM-derived products provide the 12–21 Dec sequence. Research & Method explains why the independent Level-1 experiment was not promoted."),
+        ("Fixed semantic reference and 20 m accounting", "OBS01 product class 1 is the fixed EGS semantic permanent-water reference, not independently observed normal or pre-flood water. Production statistics use a 20 m grid; experimental Level-1 statistics use 30 m."),
+        ("Temporal comparison", "The variable acquisition sequence has a lower final mapped extent, with persistence and redistribution. No daily flood geometry or satellite peak is inferred; gauges provide regional context only."),
+        ("Later-state recovery evidence", "Sentinel-2 was acquired approximately 6.2 days after OBS07. Total mapped water is compared, not experimental RF or isolated flood-class accuracy."),
         ("Exposure overlays and claim boundaries", "Roads, bridge-tagged ways, ALR designation, and place points provide context only; they do not establish damage, crop loss, or population impact."),
     ]
     for title, body in details:
@@ -1120,29 +1262,32 @@ def render_method_details() -> None:
             st.write(body)
 
 
-def render_evidence(tables: dict[str, pd.DataFrame], manifest: dict[str, Any]) -> None:
-    render_header("Evidence & Method", "Why should this result be trusted, and what are its limitations?")
-    render_method_details()
+def render_evidence(tables: dict[str, pd.DataFrame], manifest: dict[str, Any], acquisition: dict[str, Any]) -> None:
+    render_header("Evidence & Sources", "What supports the production interpretation, and where are its claim boundaries?")
+    st.caption("Method selection is explained on Research & Method. This page records production evidence, later-state recovery comparison and source limitations.")
     evidence = tables["evidence"].rename(columns={"evidence_type": "Evidence", "source": "Source", "date": "Date", "observation": "Observation", "role": "Role", "limitation": "Limitation"})
     st.subheader("Evidence chain")
     st.dataframe(evidence[["Evidence", "Date", "Observation", "Role"]], hide_index=True, width="stretch", column_config={"Observation": st.column_config.TextColumn(width="large"), "Role": st.column_config.TextColumn(width="medium")})
     with st.expander("Full provenance table"):
         st.dataframe(evidence, hide_index=True, width="stretch")
-    st.subheader("Independent recovery-period comparison")
-    render_metric_rows([(name, f"{value:.3f}", None) for name, value in VALIDATION_METRICS.items()])
-    st.caption("The RCM and Sentinel-2 observations are approximately 6.2 days apart. Water recession, cloud masking, SAR/optical physics, spatial resolution, and mixed shoreline pixels contribute to disagreement; these are supportive, not perfect-agreement metrics.")
+    st.subheader("Later Sentinel-2 evidence · total-water comparison")
+    recovery = acquisition["recovery"]
+    comparison_metrics = recovery["metrics"]
+    render_metric_rows([(label, f"{comparison_metrics[key]:.3f}", None) for label, key in [("Precision", "precision"), ("Recall", "recall"), ("F1", "F1"), ("IoU", "IoU")]])
+    st.caption(f"21 Dec EGS fixed-reference total water (class 1 reference + class 2 flood) versus 27 Dec Sentinel-2: {recovery['temporal_offset_days']:.2f} days later. Not same-day validation, flood-classifier accuracy or RF validation. Timing, SAR/optical physics, cloud masking and shoreline pixels affect agreement.")
+    render_method_details()
     with st.expander("Limitations and interpretation"):
         for limitation in tables["limitations"]["limitation"]:
             st.markdown(f"- {limitation}")
-        st.markdown("- The mixed 5 m, 16 m, and 30 m EGS source resolutions are normalized to a 20 m analytical grid.")
-        st.markdown("- The Folly Lake 5.88 pp value is empirical control-site context only, not a universal threshold.")
+        st.markdown("- A common 20 m grid standardizes accounting, not the mixed 5/16/30 m acquisitions or sensor responses.")
+        st.markdown("- The Folly Lake 5.88 pp value is empirical method-variability context only, not a universal threshold.")
         st.markdown("- The case does not support climate-causation claims.")
     claim_left, claim_right = st.columns(2)
     with claim_left:
         with st.expander("Supported claims"):
             st.markdown("""- RCM-derived products map water expansion inside the AOI.
-            - 54.92 ha of event-period water gain is mapped outside the semantic baseline.
-            - The extent recedes toward the recovery observation.
+            - The initial 12 Dec EGS snapshot maps open-water flood outside the fixed semantic reference.
+            - The variable sequence has a lower final mapped extent, not a monotonic recession.
             - Roads and ALR-designated land spatially overlap or lie near mapped gain.
             - The pattern is broadly consistent with official regional reporting.""")
     with claim_right:
@@ -1155,12 +1300,12 @@ def render_evidence(tables: dict[str, pd.DataFrame], manifest: dict[str, Any]) -
     st.subheader("Official sources")
     for row in tables["sources"].itertuples():
         st.markdown(f'<div class="source-card"><strong>{row.source}</strong> · {row.date}<br><span class="small-note">{row.documented_context}</span><br><a href="{row.url}" target="_blank">Open official source ↗</a></div>', unsafe_allow_html=True)
-    st.caption(f"Handoff status: Phase {manifest['phase']} {manifest['status']} · Working CRS: {manifest['crs']}")
+    st.caption(f"Sources are loaded from local snapshots; official links are optional. Production analytical CRS: {manifest['crs']}.")
 
 
 missing = [path for path in _expected_paths() if not path.is_file()]
 if missing:
-    st.error("The local Phase 5 handoff is incomplete. Restore the following files before starting the dashboard:")
+    st.error("The local production/research evidence is incomplete. Restore the following files before starting the dashboard:")
     for path in missing:
         st.code(str(path.relative_to(BASE_DIR)))
     st.stop()
@@ -1170,36 +1315,41 @@ try:
     tables = load_tables(input_signature)
     vectors = load_vectors(input_signature)
     manifest = load_manifest(input_signature)
+    research = load_research(input_signature)
     acquisition_data = load_acquisition_data(input_signature)
+    acquisition_data["signature"] = input_signature
     acquisition_data["trajectory"] = build_temporal_contract(acquisition_data)
-    map_data = _decorate_map_data(vectors, tables)
+    map_data = _decorate_map_data(input_signature, vectors, tables)
 except Exception as exc:
-    st.error("The local Phase 4/5 handoff could not be loaded.")
+    st.error("The local frozen research or production evidence could not be loaded.")
     st.exception(exc)
     st.stop()
 
 with st.sidebar:
     st.markdown("## 🛰️ Earth in Motion")
     st.caption("Lower Fraser flood case study")
+    st.caption("RCM research → EGS event evidence")
     section = st.radio("Navigate", NAV_ITEMS)
     st.divider()
     st.markdown("**December 2025**  ")
     st.caption("36 km² study area · EPSG:32610")
     st.markdown('<span class="status-pill">Local data ready</span>', unsafe_allow_html=True)
-    st.caption("No remote data requests at startup.")
+    st.caption("Analysis data stored locally. Context basemaps require internet.")
 
 if section == "Overview":
-    render_overview(tables, map_data)
+    render_overview(tables, map_data, research)
 elif section == "Detect":
     render_detect(tables, map_data)
 elif section == "Map":
     render_map_page(map_data, acquisition_data)
 elif section == "Monitor":
-    render_monitor(acquisition_data)
+    render_monitor(acquisition_data, tables)
 elif section == "Impact":
     render_impact(tables, map_data)
+elif section == "Research & Method":
+    render_research(research)
 else:
-    render_evidence(tables, manifest)
+    render_evidence(tables, manifest, acquisition_data)
 
 st.divider()
 st.caption("Earth in Motion · Mission Accepted Space Hackathon 2026 · Potential exposure is not confirmed damage")
