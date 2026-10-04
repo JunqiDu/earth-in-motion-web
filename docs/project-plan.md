@@ -1,4 +1,4 @@
-# Project Plan
+# Completed Project Scope
 
 ## Goal
 
@@ -10,15 +10,14 @@ Use RADARSAT Constellation Mission (RCM) Earth observation data to detect, map, 
 - **Map:** present the location and spatial extent of detected change.
 - **Monitor:** support repeatable comparison of conditions over time.
 
-## Planned workflow
+## Final two-stage workflow
 
 ```text
-EODMS / RCM
-    -> Jupyter exploration
-    -> preprocessing
-    -> change analysis
-    -> processed outputs
-    -> Streamlit web prototype
+RCM Level-1 research and independent method evaluation
+    -> frozen source-selection decision: retain operational EGS
+    -> audited discrete acquisitions and regional hydrology
+    -> snapshot-based potential-exposure outputs
+    -> final seven-page Streamlit prototype
 ```
 
 ## Current scope
@@ -27,7 +26,7 @@ Phases 1–5 are complete. The final prototype case is the **December 2025 Frase
 
 The current scientific result is a **lower final mapped extent after a variable seven-acquisition sequence, with localized persistence and redistribution**. Regional hydrology and acquisition/product differences both contribute to the non-monotonic record. This is not a daily flood trajectory, measured event peak, or long-term climate trend. Phase 5 consolidates the endpoint potential-exposure case without overstating infrastructure, community, or agricultural damage.
 
-## Near-term milestones
+## Completed milestones
 
 1. **Complete:** review RCM products, access constraints, preprocessing, and independent validation.
 2. **Complete:** screen real events and select the December 2025 Lower Fraser case.
@@ -35,7 +34,9 @@ The current scientific result is a **lower final mapped extent after a variable 
 4. **Complete — Phase 5:** quantify priority grids, road/bridge proximity, official place context, ALR overlap, evidence chain, claims, limitations, and reusable maps.
 5. **Complete — Phase 6:** build the Streamlit experience around `data/processed/phase5/`, preserving provenance, uncertainty language, the seven-observation event trajectory, exposure caveats, supported claims, and restricted claims.
 
-The final dashboard separates its narrative responsibilities: Overview explains the event and high-level workflow; Detect identifies local hotspots; Map provides the complete local layer explorer; Monitor presents temporal evolution; Impact presents purpose-built potential-exposure views; Evidence & Method documents validation and limitations.
+The final seven pages are Overview, Map, Monitor, Impact, Detect, Research & Method, and Evidence & Sources. Research explains why experimental Level-1 results were not promoted; the other pages communicate the retained EGS evidence. Map includes a paused, one-pass acquisition player and the spatial explorer. Monitor places discrete EGS observations alongside regional hydrology. See [dashboard and demo guide](dashboard.md).
+
+Scientific inputs are local and frozen. CARTO/OpenStreetMap is restored as an online display basemap only; it is not a scientific source or a new exposure query.
 
 ## Scientific and Phase 6 handoff
 
@@ -57,10 +58,14 @@ The final dashboard separates its narrative responsibilities: Overview explains 
 - `limitations.csv`, notebook-supported claims, and notebook-restricted claims for mandatory caveats
 - four PNG analytical maps in `assets/phase5/` retained as provenance exports; normal Dashboard startup renders local vectors dynamically
 - `phase6_handoff.json` as the machine-readable manifest
-# Phase 3B closure checkpoint — 2026-10-04
+## Phase 3B closure checkpoint — 2026-10-04
 
 Phase3B research/implementation is complete and frozen as **FINAL EXPERIMENTAL
 FAIL**, not a pending REFINE. The final five-scene policy and separate neighboring
 spatial check are archived; original GO thresholds remain unchanged. Level-1
 experiments do not replace the production EGS workflow. No remaining-six-scene
 processing or Phase4B work follows this closure. See [final record](phase3b.md).
+
+## Final delivery
+
+Documentation and a five-slide English presentation complete the wrap-up. The PPTX and private build files remain local and are explicitly Git-ignored. No new scientific iteration, output migration, or automatic commit is part of this delivery.

@@ -62,12 +62,12 @@
 
 ## 2026-10-03 — Phase 6 dashboard presentation
 
-- Use PyDeck/DeckGL with local GeoJSON and an empty map style for primary map views. The dashboard must not require a remote basemap or runtime data query.
+- Initially use PyDeck/DeckGL with local GeoJSON and an empty map style. **Superseded for display on 2026-10-04:** restore CARTO/OpenStreetMap geographic context at the user's request. Scientific inputs remain local, but the display basemap requires internet.
 - Reproject committed EPSG:32610 vectors to WGS84 in memory for rendering; preserve the analytical CRS and source files unchanged.
 - Treat `data/processed/phase4/event_observations.csv`, `rcm_stage_alignment.csv`, and the committed EGS frame GeoJSON as the Dashboard temporal source of truth. `event_trajectory.csv` and `temporal_series.csv` remain generated Phase 6 compatibility views, but Map and Monitor do not use them as startup inputs.
 - Keep the four Phase 5 PNGs as analytical exports and research provenance, but do not make them startup dependencies for the theme-aware dashboard.
 - Keep Map as the only complete layer explorer. Overview, Detect, and Impact use smaller page-specific local map presets so their questions remain distinct.
-- Add a seven-step, paused-by-default Map player ahead of that explorer. Its draggable progress control selects only stored acquisitions; one activation of **Play one pass** visits OBS01 through OBS07 once and then stops. It does not interpolate flood geometry or use a remote basemap.
+- Add a seven-step, paused-by-default Map player ahead of that explorer. Its single draggable progress control selects only stored acquisitions; one activation of **Play one pass** visits OBS01 through OBS07 once and then stops. It does not interpolate flood geometry. The final display uses the restored CARTO/OpenStreetMap basemap.
 - Treat the ALR layer as mapped gain overlapping an agricultural land designation, because the retained handoff contains the overlap geometry rather than the complete ALR boundary.
 
 ## 2026-10-03 — Temporal consistency correction
@@ -83,5 +83,14 @@ The fixed RF v2 final evaluation is **FINAL EXPERIMENTAL FAIL**. Primary origina
 EGS direct-center reference median IoU is0.353; legacy reference0.409. The
 pre-registered accuracy/mode gates are unchanged and fail. Research is frozen;
 no new feature search, RF v3/v4, method_config or remaining-six/Phase4B promotion.
-Existing EGS Phase4/5 and Dashboard remain unchanged. Detailed authoritative
+Existing EGS Phase4/5 scientific outputs remain unchanged. The final Dashboard
+now explains this research decision separately from operational mapping. Detailed authoritative
 record: [Phase3B closure](phase3b.md), [research record](phase3b_method_research.md).
+
+## 2026-10-04 — Final wrap-up
+
+- Freeze scientific code, metrics, sources, and the FAIL gate; do not rerun or promote experimental models.
+- Present the two-stage research-to-operational-evidence story, not an unfinished RF roadmap.
+- Keep seven distinct Dashboard pages and distinguish local analytical layers from the online CARTO/OSM display basemap.
+- Preserve failed experiments, compact audit evidence, and the four Phase 5 PNGs. No destructive cache cleanup is needed for delivery.
+- Keep the five-slide final PPTX and private build artifacts local through explicit Git ignore rules. Do not create a commit automatically.

@@ -67,7 +67,18 @@ Run the local dashboard:
 streamlit run app.py
 ```
 
-The dashboard uses committed CSV and GeoJSON handoff files only. PyDeck is configured without a remote basemap, so startup does not require satellite, OSM, or tile-service access.
+Scientific layers use committed CSV and GeoJSON files. No satellite download, model training, or exposure query runs at dashboard startup. The restored CARTO/OpenStreetMap basemap does request online map resources and needs internet for geographic context. Do not describe the final interface as fully offline.
+
+SNAP 14 is needed only to reproduce Level-1 preprocessing, not to view the final dashboard. Phase 3B is frozen as FINAL EXPERIMENTAL FAIL; environment setup does not authorize another training or processing run. See [Phase 3B](phase3b.md).
+
+Read-only final checks:
+
+```bash
+python scripts/phase45_validate.py
+python -m unittest discover -s tests -p test_dashboard.py -v
+```
+
+The [dashboard guide](dashboard.md) explains the final seven pages and a short demo sequence.
 
 ## Cross-platform note
 

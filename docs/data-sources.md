@@ -1,5 +1,13 @@
 # Data Sources
 
+## Final source roles
+
+The records below preserve discovery history. The final study is the December 2025 Lower Fraser flood, not Folly Lake. Eleven locally accessible RCM Level-1 products supported independent research; five EGS-matched acquisitions were processed and evaluated. The frozen RF v2 failed the unchanged promotion gate, so seven operational RCM-derived EGS snapshots remain the production extent source.
+
+Historical water occurrence, freshwater mapping, elevation, and land-cover layers supported research constraints. Sentinel-2 provides a recovery-period total-water comparison, and WaterOffice gauges provide regional timing context. Neither constitutes same-day flood-pixel ground truth. Saved OSM, ALR, and official place data supply potential-exposure context. The final saved AOI road inventory is **234 ways**, with 14 direct intersections.
+
+The restored CARTO/OpenStreetMap basemap is online display context, separate from the saved OSM exposure snapshot. It neither refreshes those metrics nor provides new satellite evidence. See [frozen research](phase3b.md), [integration](phase45-final-integration.md), and [dashboard guide](dashboard.md) for the final source-selection decision and claim boundaries.
+
 This document records the Phase 1 feasibility snapshot confirmed on 2026-10-03. Folly Lake is a temporary test AOI, not the final hackathon study area.
 
 ## Confirmed facts

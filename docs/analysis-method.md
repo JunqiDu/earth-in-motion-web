@@ -1,5 +1,11 @@
 # Analysis Method
 
+## Final scope and reading order
+
+The earlier Folly Lake sections below are historical feasibility evidence, not the final Lower Fraser classifier. Independent Level-1 research is closed as **FINAL EXPERIMENTAL FAIL**; see [Phase 3B](phase3b.md) and [method comparison](phase3b_method_research.md). The final prototype retains operational RCM-derived EGS mapping; its temporal and exposure contracts are summarized in [Phase 4/5 integration](phase45-final-integration.md).
+
+The Lower Fraser recovery check is total-water agreement with Sentinel-2 approximately **6.2 days later**, not the same-day Folly Lake comparison or validation of RF v2. The two checks must not be conflated. Final Dashboard roles are described in [the dashboard guide](dashboard.md).
+
 This document records the Phase 2 RCM backscatter exploration and Phase 3 preprocessing/validation work confirmed on 2026-10-03. The method is a feasibility baseline for Folly Lake, not a universal water classifier or evidence of environmental change.
 
 ## Confirmed observations

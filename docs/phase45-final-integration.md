@@ -1,5 +1,7 @@
 # Final integration — Stage 1: Phase 4 and Phase 5
 
+Historical Stage 1 audit. Final Dashboard integration and presentation are now complete; see [dashboard guide](dashboard.md). The original audit scope and evidence below are preserved.
+
 Audit date: 2026-10-04. Scope: retained EGS temporal and potential-exposure
 workflow only. No Phase 4B, classifier tuning, Dashboard changes or Git commit.
 
@@ -194,8 +196,9 @@ No deletion, commit, branch manipulation or Dashboard migration was performed.
 **READY for final Dashboard integration**, using EGS production extent and the
 clarified temporal/recovery/potential-exposure contracts. Readiness is not an
 operational flood-mapping certification or a changed Phase 3B GO result.
-Dashboard wording and method presentation are deliberately deferred to the next
-integration stage; this pass does not claim that its UI has been migrated.
+This was the Stage 1 readiness checkpoint. Stage 2 Dashboard integration is now
+complete; see [the final dashboard guide](dashboard.md). The historical record
+below does not authorize another scientific rerun or change the Phase 3B gate.
 
 No manual Phase 4/5 rerun is needed for the metadata delivered in this pass.
 Run the read-only checks from the repository root:
@@ -203,7 +206,7 @@ Run the read-only checks from the repository root:
 ```sh
 conda activate space-hackathon-2026
 python scripts/phase45_validate.py
-MPLCONFIGDIR=/tmp/phase45-mpl python -m unittest discover -s tests -p test_phase45.py -v
+python -m unittest discover -s tests -p test_phase45.py -v
 git diff --check
 ```
 

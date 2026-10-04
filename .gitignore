@@ -83,3 +83,7 @@ data/processed/phase3b/**/snap/
 data/processed/phase3b/**/scratch/
 data/output/*
 !data/output/.gitkeep
+
+# Final presentation is a local deliverable, not a repository asset.
+/presentation/Earth-in-Motion-Final.pptx
+/presentation/.build/
