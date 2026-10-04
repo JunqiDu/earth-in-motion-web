@@ -35,6 +35,17 @@ data/processed/*
 !data/processed/phase3b/masks/
 !data/processed/phase3b/masks/*.tif
 !data/processed/phase3b/masks/.gitkeep
+!data/processed/phase3b/multisource/
+!data/processed/phase3b/multisource/*.csv
+!data/processed/phase3b/multisource/*.json
+!data/processed/phase3b/multisource/sources/
+!data/processed/phase3b/multisource/sources/*.csv
+!data/processed/phase3b/multisource/sources/*.geojson
+!data/processed/phase3b/multisource/sources/*.tif
+!data/processed/phase3b/multisource/derived/
+!data/processed/phase3b/multisource/derived/*.tif
+!data/processed/phase3b/multisource/masks/
+!data/processed/phase3b/multisource/masks/*.tif
 data/processed/phase3b/cache/
 data/output/*
 !data/output/.gitkeep

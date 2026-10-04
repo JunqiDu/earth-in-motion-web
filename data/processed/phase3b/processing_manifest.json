@@ -59,5 +59,12 @@
   "pilot_validation_status": "FAIL",
   "final_pilot_status": "FAIL",
   "method_config_v1_generated": false,
-  "full_11_scene_processing_started": false
+  "full_11_scene_processing_started": false,
+  "multisource_v1": {
+    "status": "FAIL",
+    "path": "data/processed/phase3b/multisource/multisource_validation_summary.json",
+    "method_config_v1_generated": false,
+    "remaining_six_processed": false,
+    "phase4_phase5_dashboard_untouched": true
+  }
 }

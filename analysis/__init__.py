@@ -7,16 +7,20 @@ SNAP or performs network access.
 
 from .rcm_level1 import discover_products, verify_product
 from .rcm_preprocessing import CommonGrid, SnapUnavailableError, find_snap_gpt, preprocess_scene
+from .physical_constraints import PhysicalContext, apply_multisource_constraints, prepare_physical_context
 from .validation import confusion_metrics, evaluate_gate, validate_scene
 
 __all__ = [
     "CommonGrid",
+    "PhysicalContext",
     "SnapUnavailableError",
+    "apply_multisource_constraints",
     "confusion_metrics",
     "discover_products",
     "evaluate_gate",
     "find_snap_gpt",
     "preprocess_scene",
+    "prepare_physical_context",
     "validate_scene",
     "verify_product",
 ]

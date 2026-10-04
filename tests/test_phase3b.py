@@ -1,11 +1,18 @@
 import numpy as np
 from pathlib import Path
+import rasterio
+from rasterio.transform import from_origin
 
+from analysis.physical_constraints import (
+    AAFC_CROPLAND_CODES, PhysicalContext, apply_multisource_constraints,
+    distance_to_mask_m, read_aligned_land_use, rasterize_geojson,
+)
 from analysis.rcm_level1 import discover_products, pilot_inventory
 from analysis.phase3b_diagnostics import lut_gain_at_columns
 from analysis.rcm_preprocessing import CommonGrid, calibrate_dn_power, power_to_db
 from analysis.validation import confusion_metrics, evaluate_gate
 from analysis.water_classification import MethodConfig, classify_scene, otsu_threshold
+from scripts.phase3b_multisource import _fit_fold_constraints
 
 
 def test_common_grid_contract():
@@ -60,3 +67,107 @@ def test_local_inventory_and_five_scene_pilot():
     inventory = discover_products("data/raw/rcm_level1")
     assert len(inventory) == 11
     assert len(pilot_inventory(inventory)) == 5
+
+
+def _physical_context(shape=(2, 3)):
+    elevation = np.array([[4.0, 6.0, 4.0], [4.0, 4.0, 4.0]])
+    land_use = np.array([[51, 51, 31], [31, 31, 31]], dtype=np.int16)
+    hydro = np.zeros(shape, dtype=bool)
+    return PhysicalContext(
+        elevation_m=elevation,
+        elevation_valid=np.ones(shape, dtype=bool),
+        slope_deg=np.zeros(shape, dtype=float),
+        land_use=land_use,
+        land_use_valid=np.ones(shape, dtype=bool),
+        hydrography=hydro,
+        hydro_distance_m=distance_to_mask_m(hydro, 30.0),
+        wetlands=np.zeros(shape, dtype=bool),
+        provenance={},
+    )
+
+
+def test_cropland_margin_and_elevation_gate_keep_eligible_cropland():
+    context = _physical_context()
+    candidate = np.ones((2, 3), dtype=bool)
+    hh_db = np.array([[-14.0, -15.0, -11.0], [-14.0, -14.0, -14.0]])
+    result, flags = apply_multisource_constraints(
+        candidate, hh_db, np.ones((2, 3), dtype=bool), context,
+        hh_threshold_db=-10.0, elevation_max_m=5.0,
+        cropland_extra_darkness_db=3.0,
+        min_component_pixels=1,
+    )
+    # Cropland at -14 dB clears the 3 dB margin.  Cropland at 6 m fails
+    # elevation, while non-cropland needs no additional darkness margin.
+    assert result.tolist() == [[True, False, True], [True, True, True]]
+    assert flags["cropland"].tolist() == [[True, True, False], [False, False, False]]
+
+
+def test_aligned_aafc_grid_and_nodata_handling(tmp_path):
+    grid = CommonGrid()
+    source = tmp_path / "land_use.tif"
+    values = np.full((grid.height, grid.width), 51, dtype="int16")
+    values[0, 0] = -32768
+    with rasterio.open(source, "w", driver="GTiff", height=grid.height, width=grid.width,
+                       count=1, dtype="int16", crs=grid.crs, transform=grid.transform,
+                       nodata=-32768) as destination:
+        destination.write(values, 1)
+    land_use, valid = read_aligned_land_use(source, grid)
+    assert land_use.shape == (200, 200)
+    assert not valid[0, 0]
+    assert valid[1, 1]
+    assert {51, 52, 55, 56} == set(AAFC_CROPLAND_CODES)
+
+
+def test_land_use_grid_mismatch_is_rejected(tmp_path):
+    grid = CommonGrid()
+    source = tmp_path / "wrong_grid.tif"
+    with rasterio.open(source, "w", driver="GTiff", height=200, width=200,
+                       count=1, dtype="uint8", crs=grid.crs,
+                       transform=from_origin(grid.left + 30, grid.top, 30, 30)) as destination:
+        destination.write(np.zeros((200, 200), dtype="uint8"), 1)
+    try:
+        read_aligned_land_use(source, grid)
+    except ValueError as error:
+        assert "transform" in str(error)
+    else:
+        raise AssertionError("misaligned AAFC input was accepted")
+
+
+def test_empty_hydrography_is_safe_and_not_a_binary_mask():
+    grid = CommonGrid()
+    hydro = rasterize_geojson([], grid)
+    assert not hydro.any()
+    assert np.isinf(distance_to_mask_m(hydro, grid.resolution)).all()
+
+
+def test_physical_context_has_no_egs_class2_input_field():
+    assert not any("egs" in field.lower() or "reference" in field.lower()
+                   for field in PhysicalContext.__dataclass_fields__)
+
+
+def test_fold_parameter_selection_is_training_only_and_reproducible():
+    context = _physical_context()
+    train_ids = ["train_a", "train_b"]
+    valid = np.ones((2, 3), dtype=bool)
+    arrays = {
+        "train_a": {"sigma_hh_db": np.full((2, 3), -14.0), "valid": valid},
+        "train_b": {"sigma_hh_db": np.full((2, 3), -13.5), "valid": valid},
+    }
+    base_masks = {name: valid.copy() for name in train_ids}
+    references = {
+        "train_a": np.array([[True, False, True], [True, False, False]]),
+        "train_b": np.array([[True, False, True], [True, False, False]]),
+    }
+    # There intentionally is no held-out key in any input mapping.  A result
+    # demonstrates that selection accesses only the supplied training IDs.
+    first, _ = _fit_fold_constraints(
+        train_ids=train_ids, base_masks=base_masks, arrays=arrays,
+        references=references, threshold_db=-10.0, context=context,
+    )
+    second, _ = _fit_fold_constraints(
+        train_ids=train_ids, base_masks=base_masks, arrays=arrays,
+        references=references, threshold_db=-10.0, context=context,
+    )
+    assert first == second
+    assert first["elevation_max_m"] in {3.0, 5.0, 7.0, 10.0}
+    assert first["cropland_extra_darkness_db"] in {2.0, 3.0, 4.0}

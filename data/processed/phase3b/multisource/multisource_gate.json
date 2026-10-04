@@ -1,0 +1,16 @@
+{
+  "status": "FAIL",
+  "gate": {
+    "status": "FAIL",
+    "reason": "IoU below fail gate",
+    "macro_median_iou": 0.2826603325415677,
+    "macro_median_f1": 0.44074074074074066,
+    "median_abs_area_bias_pct": 68.20603907637656,
+    "scene_count": 5
+  },
+  "decision": "FAIL preserves multisource v1 as an experimental result. It cannot freeze method_config_v1.json or process the remaining six scenes.",
+  "method_config_v1_generated": false,
+  "remaining_six_processed": false,
+  "sentinel2_holdout_run": false,
+  "created_utc": "2026-10-04T11:44:52.309536+00:00"
+}

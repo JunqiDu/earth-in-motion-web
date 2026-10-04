@@ -1,0 +1,69 @@
+{
+  "method_id": "phase3b_multisource_v1",
+  "version": 1,
+  "representation": "Sigma0-HH",
+  "sar_candidate": "Existing leakage-safe LOODO C0 global HH threshold from the Lee-filtered cache; method metadata retains mode group for future matched-temporal work.",
+  "filter_policy": "Existing pre-registered Lee-filtered cache; 5x5 at 16 m and 3x3 at 30 m before 30 m aggregation.",
+  "constraints": {
+    "elevation_candidates_m": [
+      3.0,
+      5.0,
+      7.0,
+      10.0
+    ],
+    "cropland_extra_darkness_candidates_db": [
+      2.0,
+      3.0,
+      4.0
+    ],
+    "cropland_codes": [
+      51,
+      52,
+      55,
+      56
+    ],
+    "component_cleanup": "8-connectivity, remove components under two pixels, fill one-pixel holes",
+    "hydrography": "Stored as distance/connectivity QA only; not a binary exclusion."
+  },
+  "reference_handling": "Classified water is reduced by the fixed EGS semantic permanent-water reference. EGS class-2 is validation only.",
+  "future_temporal_interface": {
+    "status": "metadata only; no change features are generated in v1",
+    "required_scene_fields": [
+      "observation_id",
+      "timestamp_utc",
+      "beam_mode",
+      "mode_group",
+      "orbit_direction",
+      "representation",
+      "source_resolution_m"
+    ],
+    "candidate_same_mode_sequences": {
+      "16M16": [
+        "20251213T141623Z",
+        "20251217T141634Z",
+        "20251221T141646Z"
+      ],
+      "16M9": [
+        "20251214T142421Z",
+        "20251218T142431Z"
+      ],
+      "SC30MA": [
+        "20251214T014240Z",
+        "20251218T014217Z",
+        "20251222T014227Z"
+      ],
+      "SC30MB": [
+        "20251215T015036Z",
+        "20251219T015011Z",
+        "20251223T015021Z"
+      ]
+    },
+    "future_features_not_implemented": [
+      "delta Sigma0",
+      "power ratio",
+      "temporal rank",
+      "persistent darkening",
+      "recovery signal"
+    ]
+  }
+}

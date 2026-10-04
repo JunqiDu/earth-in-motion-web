@@ -1,0 +1,101 @@
+{
+  "schema_version": "phase3b-multisource-inputs-1",
+  "created_utc": "2026-10-04T11:44:51.034946+00:00",
+  "independence_boundary": "No EGS class-2 geometry, label, boundary-distance, ALR overlap, or event-derived flood layer is an input feature.",
+  "aafc_2020_land_use": {
+    "source": "Agriculture and Agri-Food Canada 2020 Land Use, 30 m AOI extract",
+    "dataset_url": "https://open.canada.ca/data/en/dataset/7a098ea9-cc31-4d79-b326-89f6cd1fbb7d",
+    "year": 2020,
+    "cropland_codes": [
+      51,
+      52,
+      55,
+      56
+    ],
+    "path": "data/processed/phase3b/multisource/sources/aafc_landuse_2020_aoi.tif",
+    "sha256": "5f6b135f5a6715ba37e22306af50230f4f9ac02dd2d06e83a44e0d6a6abd0ae1",
+    "class_table_path": "data/processed/phase3b/multisource/sources/aafc_landuse_classes.csv",
+    "class_table_sha256": "1e5c2ac2c2689aba13f531bb501dece7ff17353bd7a0b24429ddedd32713b69a"
+  },
+  "bc_freshwater_atlas": {
+    "source": "BC Freshwater Atlas AOI extracts: streams, rivers, and lakes",
+    "dataset_url": "https://open.canada.ca/data/en/dataset/92344413-8035-4c08-b996-65a9b3f62fca",
+    "extraction_date_utc": "2026-10-04T11:44:51.035122+00:00",
+    "binary_mask_role": "QA and confidence context only; not a hard exclusion in multisource v1",
+    "layers": {
+      "streams": {
+        "path": "data/processed/phase3b/multisource/sources/bc_fwa_streams_aoi.geojson",
+        "sha256": "bb5d8750649e7b80b9feb26ef969f615df4faf782a24b6a9e82f0ce082e698a8"
+      },
+      "rivers": {
+        "path": "data/processed/phase3b/multisource/sources/bc_fwa_rivers_aoi.geojson",
+        "sha256": "e0103a31f85b53ff16c526f73ff5bda71370c3967cd6f35bd344112e6a262704"
+      },
+      "lakes": {
+        "path": "data/processed/phase3b/multisource/sources/bc_fwa_lakes_aoi.geojson",
+        "sha256": "4978f36ba89adc34791bf3bc917d74a38248a8dd0cb3a3e75caad9b74354143a"
+      },
+      "wetlands": {
+        "path": "data/processed/phase3b/multisource/sources/bc_fwa_wetlands_aoi.geojson",
+        "sha256": "4a957f3c16352cf4f35dffd6e0fc0fcecf544fa7ee8bf928f1c7b596c9d65664"
+      },
+      "floodplains": {
+        "path": "data/processed/phase3b/multisource/sources/bc_historical_floodplains_aoi.geojson",
+        "sha256": "4d8e38931e3203a91cf43ff46b6f996a2932bfcaff9c9d508210d23b130a0e2a"
+      }
+    }
+  },
+  "dem": {
+    "source": "Existing ESA SNAP Copernicus 30 m Global DEM provenance",
+    "phase3b_dem_provenance": "data/processed/phase3b/dem_provenance.json",
+    "tiles": [
+      {
+        "path": "/Users/josephdum5pro/.snap/auxdata/dem/Copernicus 30m Global DEM/Copernicus_DSM_COG_10_N49_00_W122_00_DEM.tif",
+        "sha256": "b3db7418945ec29aa790c6acf1758f5b9a781b1f3647af3307221fd2df8a4f06",
+        "bytes": 42933214
+      },
+      {
+        "path": "/Users/josephdum5pro/.snap/auxdata/dem/Copernicus 30m Global DEM/Copernicus_DSM_COG_10_N49_00_W123_00_DEM.tif",
+        "sha256": "bf958587e4ea18408e64e4b5eab00c55557666d6a6d3842d61c0dc4d9752b410",
+        "bytes": 44222170
+      }
+    ]
+  },
+  "grid": {
+    "crs": "EPSG:32610",
+    "left": 563960.0,
+    "bottom": 5443240.0,
+    "right": 569960.0,
+    "top": 5449240.0,
+    "resolution": 30.0,
+    "width": 200,
+    "height": 200,
+    "bounds": [
+      563960.0,
+      5443240.0,
+      569960.0,
+      5449240.0
+    ],
+    "transform": [
+      30.0,
+      0.0,
+      563960.0,
+      0.0,
+      -30.0,
+      5449240.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "pixel_area_ha": 0.09
+  },
+  "fixed_semantic_reference": {
+    "path": "data/processed/phase4/egs_permanent_water_reference.geojson",
+    "semantics": "fixed EGS semantic permanent-water reference",
+    "not_semantics": [
+      "normal water",
+      "pre-event baseline",
+      "hydrologic baseline"
+    ]
+  }
+}
