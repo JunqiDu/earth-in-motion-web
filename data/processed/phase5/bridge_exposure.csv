@@ -1,4 +1,4 @@
-osm_id,name,ref,highway,road_group,bridge,surface,access,length_in_aoi_m,flood_intersection_m,distance_to_gain_m,direct_intersection,within_50m,within_100m,within_250m
-62001004,Lougheed Highway,BC 7,primary,primary,yes,concrete,,60.87430510519482,8.71720046678686,0.0,True,True,True,True
-1346291619,Taylor Road,,residential,residential,yes,,,22.100212884542934,0.0,132.279285976135,False,False,False,True
-35498252,North Nicomen Road,,residential,residential,yes,wood,,12.56474966566733,0.0,343.2199114114992,False,False,False,False
+osm_id,name,ref,highway,road_group,bridge,surface,access,length_in_aoi_m,flood_intersection_m,distance_to_gain_m,direct_intersection,within_50m,within_100m,within_250m,source_observation_id,source_observation_utc,claim_boundary
+62001004,Lougheed Highway,BC 7,primary,primary,yes,concrete,,60.87430510519482,8.71720046678686,0.0,True,True,True,True,OBS01,2025-12-12 14:08:24+00:00,potential exposure only; no damage inference
+1346291619,Taylor Road,,residential,residential,yes,,,22.100212884542934,0.0,132.279285976135,False,False,False,True,OBS01,2025-12-12 14:08:24+00:00,potential exposure only; no damage inference
+35498252,North Nicomen Road,,residential,residential,yes,wood,,12.56474966566733,0.0,343.2199114114992,False,False,False,False,OBS01,2025-12-12 14:08:24+00:00,potential exposure only; no damage inference

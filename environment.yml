@@ -17,6 +17,7 @@ dependencies:
   - pystac-client
   - stackstac
   - streamlit
+  - pydeck
   - plotly
   - folium
   - streamlit-folium

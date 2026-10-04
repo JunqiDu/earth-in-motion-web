@@ -1,9 +1,13 @@
 limitation
 "EGS is operational best-effort open-water mapping and may omit urban, forested or vegetated flooding."
-"The semantic baseline is the EGS permanent-water class, not a multi-date pre-event frequency model."
-Road and bridge results depend on current OSM geometry and tag completeness.
-ALR is a legal designation and cannot identify active crops or losses.
-"Official place points are contextual locations, not settlement boundaries or population surfaces."
-Distance buffers (50/100/250 m) are descriptive and do not estimate damage probability.
-Official reports concern the wider region and are not exact asset-level validation inside the AOI.
+"The fixed reference is OBS01 EGS class 1 permanent water, not an independently observed pre-event normal-water surface."
+"The seven products mix 5/16/30 m sources, beam modes, orbit directions, Gamma/Sigma representations and HH/HV classifier channels."
+The common 20 m grid standardizes spatial accounting but does not normalize sensor or product response.
+The acquisition sequence is discrete and non-monotonic; no daily interpolation or satellite-derived flood peak is claimed.
+The OBS02→OBS03 jump has mixed hydrologic and observational causes; the contribution ratio is unresolved.
+Mission and Chilliwack gauges provide regional context only; the inside-AOI Cannor station lacks December 2025 daily data.
+"Folly Lake values are empirical method-variability context, not universal thresholds or significance tests."
+Road and bridge results depend on OSM geometry/tag completeness and indicate potential exposure only.
+"ALR is a legal designation and cannot identify active crops, crop loss or agricultural damage."
+"Official place points are contextual locations, not population-exposure surfaces."
 Sentinel-2 recovery comparison has a 6.2-day timing offset.

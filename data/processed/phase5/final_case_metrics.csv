@@ -1,10 +1,15 @@
 metric,value,unit_or_class
 AOI area,36.0,km²
-Semantic baseline water,971.88,ha
-Near-event total water,1026.8,ha
-Mapped event water gain,54.92,ha
-Recovery total water,993.52,ha
-Near-event to recovery mapped loss,35.44,ha
+Fixed EGS permanent-water reference,971.88,ha
+Initial fixed-reference total mapped water,1026.8,ha
+Initial-observation open-water flood extent,54.92,ha
+Final fixed-reference total mapped water,993.52,ha
+Gross recession from initial-observation footprint,35.44,ha
+Net endpoint decline in fixed-reference total mapped water,33.28,ha
+Persistent initial-observation flood,19.48,ha
+Final-observation flood outside initial footprint,2.16,ha
+Mapped event water gain,54.92,ha; deprecated Phase 6 alias
+Near-event to recovery mapped loss,35.44,ha; deprecated Phase 6 alias
 Maximum local increase (G042),21.5,percentage points
 Cells above 5.88 pp context,2.0,cells
 Directly intersecting road ways,14.0,ways
@@ -13,4 +18,4 @@ Direct bridge-tagged intersections,1.0,ways
 Mapped gain intersecting ALR,36.64518044420364,ha
 Recovery RCM/Sentinel-2 F1,0.79,score
 Recovery RCM/Sentinel-2 IoU,0.653,score
-Recovery classification,,recovering with localized residual/persistent expansion
+Event interpretation,,lower final extent after a variable acquisition sequence; localized persistence and redistribution

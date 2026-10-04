@@ -1,26 +1,27 @@
 # Earth in Motion Web App
 
-A Python-based geospatial and remote-sensing prototype for detecting and visualizing environmental change in Canada using RADARSAT Constellation Mission (RCM) Earth observation data from EODMS.
+A Python-based geospatial and remote-sensing prototype for detecting and visualizing environmental change in Canada using RADARSAT Constellation Mission (RCM) and supporting Earth observation data.
 
-This project is being developed for Mission Accepted Space Hackathon 2026, Challenge 3: **Earth in Motion: Tracking Canada's Changing Landscape**. Its goal is to explore a reproducible workflow for detecting, mapping, and monitoring landscape change and presenting the results in an accessible web application.
+This project was developed for Mission Accepted Space Hackathon 2026, Challenge 3: **Earth in Motion: Tracking Canada's Changing Landscape**. The final case study follows seven discrete December 2025 Fraser Valley / Lower Fraser RCM-derived flood observations and connects the mapped change to potential infrastructure, community, and Agricultural Land Reserve exposure.
 
-## Planned technology stack
+## Technology stack
 
 - Python 3.12 and Conda
 - JupyterLab for data discovery and exploratory analysis
 - Rasterio, rioxarray, xarray, GeoPandas, Shapely, and pyproj for geospatial processing
 - pystac-client and stackstac for STAC-based data access
-- Streamlit, Plotly, Folium, and streamlit-folium for the web prototype
+- Streamlit, PyDeck/DeckGL, and Plotly for the offline web dashboard
 
 ## Repository structure
 
 ```text
 .
-├── app.py              # Minimal Streamlit entry point
-├── notebooks/          # Executed discovery, validation, and change-analysis notebooks
-├── data/               # Local raw, processed, and output data
+├── app.py              # Final six-section Streamlit dashboard
+├── notebooks/          # Executed Phase 1–5 research notebooks
+├── data/processed/phase4/ # Canonical seven-observation temporal contract and audit
+├── data/processed/phase5/ # Dashboard-ready exposure CSV/GeoJSON and compatibility views
 ├── docs/               # Planning and technical documentation
-└── assets/             # Static project assets
+└── assets/phase5/      # Retained analytical exports for provenance and comparison
 ```
 
 ## Environment setup
@@ -46,20 +47,45 @@ python -m ipykernel install --user \
   --display-name "Python 3.12 (Space Hackathon 2026)"
 ```
 
-Start JupyterLab:
+Start JupyterLab for research notebooks:
 
 ```bash
 jupyter lab
 ```
 
-Run the Streamlit placeholder:
+## Run the dashboard
+
+From the repository root:
 
 ```bash
+conda activate space-hackathon-2026
 streamlit run app.py
 ```
 
-Raw satellite data and general generated outputs are intentionally excluded from Git. The small, reproducible Phase 5 handoff package under `data/processed/phase5/` and four reusable maps under `assets/phase5/` are retained; no source scenes or extracted archives are committed.
+Then open <http://localhost:8501>. The dashboard reads only committed local processed outputs during normal startup; it does not download satellite scenes, query EODMS, contact OSM, load an online basemap, or rerun the research workflow.
+
+## Final workflow
+
+```text
+Phase 1–4 research, validation, and temporal audit
+    -> canonical Phase 4 observation contract
+    -> compact Phase 5 exposure handoff
+    -> Phase 6 Streamlit dashboard
+```
+
+The dashboard follows one question per section:
+
+- **Overview:** what changed and how the result was produced at a high level;
+- **Detect:** where meaningful local water expansion occurred, including G042 and G015;
+- **Map:** the complete interactive, fully local spatial explorer;
+- **Monitor:** the current presentation of the seven discrete acquisitions; the committed Phase 4 contract is the scientific source of truth;
+- **Impact:** potential road, bridge-tagged-way, ALR-designation, and community context;
+- **Evidence & Method:** validation, official sources, limitations, and claim boundaries.
+
+Raw satellite data and general generated outputs are intentionally excluded from Git. `data/processed/phase4/event_observations.csv` and `temporal_audit.json` are the temporal source of truth. The Phase 5 `event_trajectory.csv` and `temporal_series.csv` files are generated compatibility views for the current dashboard, not independent scientific inputs. Four PNG maps remain under `assets/phase5/` as provenance exports and are not required at startup.
+
+The common 20 m grid standardizes spatial accounting but does not normalize different RCM beam modes, source resolutions, viewing directions, radiometry, classifier channels, or independently processed EGS products. The seven observations are therefore an acquisition sequence—not a daily hydrograph, continuous interpolation, or measured flood peak. Endpoint change is reported as 35.44 ha gross recession from the initial footprint and 33.28 ha net decline, with 19.48 ha persistence and 2.16 ha final-only mapping.
 
 ## Status
 
-Phases 1–5 of the satellite and impact analysis are complete for the current prototype. The selected case is the December 2025 Fraser Valley / Lower Fraser flood. Phase 5 consolidates priority grids, road/bridge proximity, community and Agricultural Land Reserve context, official evidence, claims, limitations, and a compact Phase 6 handoff package. The Streamlit application remains a placeholder; no Phase 6 implementation has started.
+Phases 1–5 and the current Phase 6 prototype are complete. The scientific handoff now distinguishes the canonical discrete-acquisition record from the current Dashboard compatibility layer. Intersections and proximity are described as potential exposure only; the project does not claim confirmed damage, flood depth, population impact, crop loss, a satellite-derived flood peak, or climate causation.

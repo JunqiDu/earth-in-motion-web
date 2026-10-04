@@ -1,11 +1,16 @@
 {
   "phase": 5,
   "status": "complete",
+  "dashboard_phase": 6,
+  "schema_version": "2.0.0",
   "crs": "EPSG:32610",
   "event": "December 2025 Fraser Valley / Lower Fraser flood",
+  "scientific_contract": "data/processed/phase4/temporal_audit.json",
+  "temporal_source_of_truth": "data/processed/phase4/event_observations.csv",
   "tables": [
     "bridge_exposure.csv",
     "community_proximity.csv",
+    "event_trajectory.csv",
     "evidence_chain.csv",
     "final_case_metrics.csv",
     "limitations.csv",
@@ -32,5 +37,32 @@
     "unsupported / restricted claims",
     "limitations"
   ],
-  "phase6_note": "Use these derived outputs; do not rerun raw discovery in the dashboard."
+  "temporal_semantics": {
+    "sequence": "seven discrete acquisitions; no daily interpolation or satellite-derived peak",
+    "fixed_reference": "OBS01 EGS class 1 permanent water",
+    "diagnosis": "mixed_hydrologic_and_observational",
+    "gross_recession_ha": 35.44,
+    "net_endpoint_decline_ha": 33.28,
+    "persistent_initial_flood_ha": 19.48,
+    "final_only_flood_ha": 2.16
+  },
+  "deprecated_compatibility_files": {
+    "event_trajectory.csv": "Generated view for the current Phase 6 UI; migrate to Phase 4 event_observations.csv.",
+    "temporal_series.csv": "Two-row generated endpoint view; not a source of truth."
+  },
+  "phase4_tables": [
+    "acquisition_comparisons.csv",
+    "beam_family_comparisons.csv",
+    "event_hydrology.csv",
+    "event_observations.csv"
+  ],
+  "phase4_vectors": [
+    "egs_open_water_flood_frames.geojson",
+    "egs_permanent_water_reference.geojson",
+    "endpoint_transition.geojson"
+  ],
+  "phase4_metadata": [
+    "temporal_audit.json"
+  ],
+  "phase6_note": "Use the Phase 4 temporal contract and Phase 5 exposure snapshots. Do not rerun discovery or raw satellite processing at dashboard startup."
 }

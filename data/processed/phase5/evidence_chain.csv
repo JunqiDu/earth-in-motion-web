@@ -1,9 +1,9 @@
 evidence_type,source,date,observation,role,limitation
-Official warning,EmergencyInfoBC,2025-12-10,Fraser Valley / Lower Fraser flood warning,Establishes event and region,Not a pixel label
-Near-event flood map,"NRCan EGS, RCM-derived",2025-12-12,Permanent-water and open-water flood classes,Maps event-period water,Moderate confidence; open water emphasis
-Change detection,Phase 4/5 fixed-grid analysis,2025-12-12,54.92 ha outside semantic permanent-water baseline,Quantifies mapped gain,Depends on EGS classes and 20 m rasterization
-Temporal recession,NRCan EGS sequence,2025-12-12 to 21,35.44 ha mapped loss by recovery observation,Supports recovery interpretation,Not a long-term trend
-Independent EO,Sentinel-2 L2A,2025-12-27,RCM/optical recovery F1 0.790; IoU 0.653,Independent recovery support,6.2-day timing offset
-Infrastructure exposure,OpenStreetMap / Overpass,retrieved 2026-10-03,14 road ways and 1 bridge-tagged way intersect gain,Adds asset context,Completeness/tagging vary; no damage proof
-Agricultural context,BC Agricultural Land Reserve,retrieved 2026-10-03,36.65 ha of mapped gain intersects ALR designation,Adds authoritative land designation,Not actual crop or damage mapping
-Regional impact,Abbotsford / B.C. official reports,2025-12-11 to 23,"Evacuations, road interruption, property and livestock impacts",Corroborates wider event significance,Not exact AOI asset attribution
+Official warning,EmergencyInfoBC / BC River Forecast Centre,2025-12-10 to 17,Regional warnings and renewed atmospheric-river sequence,Establishes event chronology,Not a pixel label or AOI flood peak
+Initial flood snapshot,"NRCan EGS, RCM-derived",2025-12-12,54.92 ha EGS open-water flood class,Defines OBS01,"Moderate confidence; initial selected observation, not peak"
+Acquisition sequence,Seven NRCan EGS products,2025-12-12 to 21,Variable mapped extents with lower final endpoint,Supports short-term event evolution,Mixed acquisition/product characteristics; no interpolation
+Mixed-cause audit,Phase 4 fixed-grid analysis + WaterOffice,2025-12-14 to 17,Regional gauges rise while OBS02→OBS03 has low spatial continuity,Supports mixed diagnosis,Hydrologic/product contribution ratio unresolved
+Endpoint transition,Phase 4/5 fixed-grid analysis,2025-12-12 to 21,35.44 ha gross recession; 33.28 ha net endpoint decline,Separates gross and net change,Endpoint comparison only
+Independent EO,Sentinel-2 L2A,2025-12-27,RCM/optical recovery F1 0.790; IoU 0.653,Independent recovery-period support,6.2-day timing offset
+Infrastructure exposure,OpenStreetMap / Overpass,retrieved 2026-10-03,14 road ways and 1 bridge-tagged way intersect OBS01,Adds asset context,Completeness/tagging vary; no damage proof
+Agricultural context,BC Agricultural Land Reserve,retrieved 2026-10-03,36.65 ha of OBS01 intersects ALR designation,Adds land designation,Not crop or damage mapping

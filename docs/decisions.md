@@ -7,7 +7,7 @@
 - Use **Streamlit** for the hackathon web prototype.
 - Use **Conda** with `conda-forge` for environment and native geospatial dependency management.
 - Target **Python 3.12** for the shared development environment.
-- Exclude raw and processed satellite data and generated outputs from Git; retain only directory placeholders.
+- Exclude raw satellite scenes and general generated outputs from Git; retain the compact, reproducible Phase 5/6 handoff required by the dashboard and research provenance.
 
 ## 2026-10-03 — Phase 1 RCM feasibility path
 
@@ -44,7 +44,7 @@
 - Use a fixed **1 km grid** for localized change. Treat 3.20%, 5.88%, and 4.88% only as empirical method-noise context from Folly Lake. A grid above 5.88 percentage points is a stronger candidate for corroboration, not a universal flood decision or a formal statistically significant result.
 - Prefer a Lower Fraser baseline made from multiple comparable pre-event observations when such data become available. The already-discovered inputs contain only one pre-event RCM-ARD acquisition and one pre-event Sentinel-2 observation, neither semantically interchangeable with EGS. Phase 4 therefore retains the EGS permanent-water class as a provisional local semantic baseline and does not manufacture a multi-date frequency model.
 - Define the event anomaly as EGS flood water appearing outside that local baseline, interpreted jointly with spatial continuity, temporal evolution, independent EO/official evidence, and impact context. Temporal recovery/persistence labels do not depend on crossing the Folly Lake value.
-- Classify the case as a **recovering flood with localized residual/persistent expansion**: EGS open-water flood declines from 54.92 ha on 12 December to 21.64 ha on 21 December, while two of 49 grid cells exceed the local benchmark.
+- Treat the seven EGS records as **discrete acquisitions**, not a continuous recession curve. The final mapped extent (21.64 ha) is lower than the initial selected observation (54.92 ha), but the sequence is non-monotonic and does not identify a satellite-derived flood peak.
 - Use Sentinel-2 only as independent recovery-period evidence because event-window optical coverage is cloud-obstructed. Retain Sentinel-1 metadata coverage but do not force requester-pays Level-1 measurements into an anonymously reproducible analysis.
 - Describe road/bridge intersections as **intersecting** or **potentially exposed**. Do not claim satellite overlap proves damage, closure, or flood depth.
 - When Phase 5 is started in a later task, focus impact analysis on the two cells above the control-site context while keeping provenance and uncertainty visible.
@@ -59,3 +59,20 @@
 - Use cumulative 50 m, 100 m, and 250 m proximity bands. They are transparent descriptive distances, not hazard or damage-probability thresholds.
 - Keep official regional event reporting separate from pixel and asset-level evidence. Use wording such as *spatially consistent with* and do not transfer the reported Highway 1 closure to the compact AOI; no Highway 1 segment intersects the AOI.
 - Retain a small Phase 6 package of derived CSV, GeoJSON, JSON, and PNG files. Keep raw EGS archives and public-data caches outside the repository.
+
+## 2026-10-03 — Phase 6 dashboard presentation
+
+- Use PyDeck/DeckGL with local GeoJSON and an empty map style for primary map views. The dashboard must not require a remote basemap or runtime data query.
+- Reproject committed EPSG:32610 vectors to WGS84 in memory for rendering; preserve the analytical CRS and source files unchanged.
+- Treat `data/processed/phase4/event_observations.csv` and `temporal_audit.json` as the scientific source of truth. `event_trajectory.csv` and `temporal_series.csv` remain generated Phase 6 compatibility views until the Dashboard migrates to an acquisition-step explorer.
+- Keep the four Phase 5 PNGs as analytical exports and research provenance, but do not make them startup dependencies for the theme-aware dashboard.
+- Keep Map as the only complete layer explorer. Overview, Detect, and Impact use smaller page-specific local map presets so their questions remain distinct.
+- Treat the ALR layer as mapped gain overlapping an agricultural land designation, because the retained handoff contains the overlap geometry rather than the complete ALR boundary.
+
+## 2026-10-03 — Temporal consistency correction
+
+- Use the OBS01 EGS class-1 permanent-water geometry as a **fixed semantic analysis reference** across all seven products. It is not an independently observed pre-event normal-water surface. Keep each product's raw class-1 area only for QA; the 971.88-to-973.28 ha step is a product-production difference, not hydrologic change.
+- Diagnose the OBS02→OBS03 jump as `mixed_hydrologic_and_observational`. Official regional gauges and warnings support a second hydrologic pulse, while the source switches from 16M9/16 m/descending to SC30MB/30 m/ascending and spatial Jaccard is only 0.186. The contribution ratio remains unresolved.
+- Separate endpoint quantities: 35.44 ha is **gross recession from the OBS01 footprint**, 19.48 ha persists, 2.16 ha is mapped only at OBS07, and 33.28 ha is the net endpoint decline. Never present 35.44 ha as the arithmetic difference between 1,026.80 and 993.52 ha.
+- Use WaterOffice Mission and Chilliwack daily values only as regional event context. The preferred inside-AOI Cannor station lacks December 2025 daily values in the selected source; gauge data do not validate individual pixels.
+- Preserve the existing endpoint hotspots and potential-exposure results. Each Phase 5 geometry must identify OBS01 as its source snapshot and retain the damage/crop/population claim boundaries.

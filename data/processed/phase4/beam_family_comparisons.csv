@@ -1,0 +1,4 @@
+beam_mode,from_observation,to_observation,from_area_ha,to_area_ha,net_change_ha,overlap_ha,jaccard,caveat
+5M22,OBS01,OBS04,54.92,36.6,-18.32,26.44,0.40626920712968656,Same beam/radiometry/channel; different platform/date.
+SC30MB,OBS03,OBS06,50.72,28.96,-21.76,19.92,0.3333333333333333,Gamma/HH changes to Sigma/HV; comparability remains limited.
+16M16,OBS05,OBS07,37.28,21.64,-15.64,18.0,0.4398826979472141,Same beam/radiometry/channel; different platform/date.

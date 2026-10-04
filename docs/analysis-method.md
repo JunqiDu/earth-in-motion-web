@@ -209,39 +209,43 @@ Sentinel-2 B03/B08 reflectance uses STAC scale/offset and native 10 m NDWI. SCL 
 
 ### Change and grid logic
 
-The comparable EGS semantic masks are:
+The comparable EGS masks use a fixed semantic reference:
 
-- pre-event semantic baseline: permanent water from the first EGS product;
-- near-event water: permanent water plus 12 December open-water flood;
-- recovery water: permanent water plus 21 December open-water flood.
+- fixed reference: EGS class-1 permanent water from OBS01 (12 December), 971.88 ha;
+- initial selected flood snapshot: OBS01 class-2 open-water flood, 54.92 ha;
+- final selected flood snapshot: OBS07 class-2 open-water flood, 21.64 ha.
 
-The semantic baseline is not mislabelled as a dated RCM acquisition; the actual 8 November ARD observation is displayed separately. Pixel changes are classified as persistent non-water, persistent water, water gain, water loss, or invalid/unknown. Water gain is the primary event signal.
+The fixed class-1 geometry is an analysis convention, not an independently observed pre-event or normal-water surface. Each product's raw class-1 area is retained for QA: OBS01–OBS03 rasterize to 971.88 ha, while OBS04–OBS07 rasterize to 973.28 ha. This 1.40 ha step is excluded from comparable totals and is not interpreted as hydrologic change. The actual 8 November ARD observation remains a separate representation-specific diagnostic.
 
-A fixed 1 km grid provides a local denominator of up to 2,500 20 m cells. Each cell records valid count/percentage, baseline, near-event and recovery water ratios, percentage-point differences, changed area, benchmark status, and temporal class. The grid size was selected for local interpretability and shoreline-noise suppression, not to maximize apparent change.
+A fixed 1 km grid provides a local denominator of up to 2,500 20 m cells. Each cell records valid count/percentage, fixed-reference, initial-observation and final-observation water ratios, percentage-point differences, changed area, benchmark status, and endpoint interpretation. The grid size was selected for local interpretability and shoreline-noise suppression, not to maximize apparent change.
 
 ### Normal versus anomaly
 
 Three distinct concepts govern Phase 4 interpretation:
 
 1. **Method/sensor benchmark.** Folly Lake is a relatively stable control site. Its 3.20% coefficient of variation, 5.88% maximum single-date deviation, and 4.88% same-day RCM/Sentinel area difference describe variability observed in this workflow. They are contextual checks from another landscape, not formal significance levels or universal flood thresholds.
-2. **Site-specific normal baseline.** A real-event baseline should preferably be estimated within the fixed event AOI from multiple seasonally and radiometrically comparable pre-event observations. For a river/floodplain, this means characterizing where water is normally present inside the AOI rather than estimating a river's total area. The already-discovered Lower Fraser data provide only one pre-event RCM-ARD acquisition and one pre-event Sentinel-2 observation. Neither is semantically interchangeable with the EGS event classes, so a defensible multi-date water-frequency baseline is not constructed. The current provisional local baseline remains the EGS permanent-water class.
-3. **Event anomaly.** An anomaly is EGS flood water mapped outside that local permanent-water baseline. Interpretation combines the size of the local deviation, spatial concentration and continuity, recession or persistence, independent EO/official-source agreement, and impact context. No single percentage decides whether a flood is significant.
+2. **Fixed semantic reference.** A hydrologic normal would require multiple seasonally and radiometrically comparable pre-event observations. Those inputs are unavailable. The OBS01 EGS class-1 mask is therefore used only as a fixed semantic reference; it is not renamed as normal or pre-event water.
+3. **Observed event class.** The primary per-acquisition signal is EGS class-2 open-water flood outside the fixed reference. Interpretation combines magnitude, spatial overlap, source comparability, official hydrologic context, independent EO evidence, and potential-exposure overlays. No single percentage decides whether a flood is significant.
 
-The 1 km table therefore labels the binary EGS baseline without arbitrary probability cutoffs: a cell is normally dry only when its baseline ratio is 0%, permanent-water only when it is 100%, and otherwise mixed. Its anomaly field states whether mapped gain is absent, lies within the Folly Lake control context, or is above that context while still requiring corroboration. Temporal classification is based on the observed event-to-recovery trajectory, not on crossing 5.88%.
+The 1 km table therefore describes the binary fixed reference without arbitrary probability cutoffs: a cell contains no fixed-reference permanent water when its reference ratio is 0%, is entirely fixed-reference permanent water when it is 100%, and is otherwise mixed. Its anomaly field states whether mapped gain is absent, lies within the Folly Lake context, or is above that context while still requiring corroboration. Endpoint interpretation compares OBS01 and OBS07; it does not assume that the intervening sequence is monotonic.
 
 ### Uncertainty, temporal behaviour, and validation
 
-The Folly Lake CV 3.20%, maximum single-date deviation 5.88%, and same-day RCM/Sentinel area difference 4.88% remain empirical feasibility context rather than formal confidence limits. The event AOI gained 54.92 ha from the EGS semantic baseline, about 13.2 times the approximately 4.16 ha absolute maximum deviation implied at the 70.76 ha control median. The AOI-wide relative increase is 5.65%, close to the 5.88% control value, while two local grid cells are above 5.88 percentage points (maximum 21.50 points). Those two cells are stronger candidates for attention, not automatically significant detections. Interpretation emphasizes spatial coherence, local magnitude, the official timeline, temporal evolution, and multi-source evidence rather than a single cutoff.
+The Folly Lake CV 3.20%, maximum single-date deviation 5.88%, and same-day RCM/Sentinel area difference 4.88% remain empirical feasibility context rather than formal confidence limits. OBS01 maps 54.92 ha of EGS open-water flood outside the fixed class-1 reference, about 13.2 times the approximately 4.16 ha absolute maximum deviation implied at the 70.76 ha control median. The AOI-wide relative increase over the fixed-reference area is 5.65%, close to the 5.88% contextual value, while two local grid cells are above 5.88 percentage points (maximum 21.50 points). Those two cells are stronger candidates for attention, not automatically significant detections. Interpretation emphasizes spatial coherence, local magnitude, the official timeline, acquisition-to-acquisition variation, and multi-source evidence rather than a single cutoff.
 
-Open-water flood area declined from 54.92 ha on 12 December to 21.64 ha on 21 December. The event is classified as **recovering with localized residual/persistent expansion**. It is not treated as a long-term environmental trend.
+The acquisition sequence is non-monotonic: 54.92, 20.60, 50.72, 36.60, 37.28, 28.96, and 21.64 ha. These values are seven independently processed satellite snapshots, not a continuous hydrograph. The final mapped extent is lower than the initial selected observation, but no satellite-derived flood peak or monotonic recession is claimed.
+
+The OBS02→OBS03 jump is diagnosed as a mixture of real hydrologic and observational effects. Mission water level and Chilliwack water level/discharge rise strongly from 14 to 17 December, consistent with official renewed-atmospheric-river reporting. At the same time, the source changes from RCM-1 16M9, 16 m, descending, Gamma/HH to RCM-3 SC30MB, 30 m, ascending, Gamma/HH. Only 11.20 ha overlaps between the two flood masks; 39.52 ha is newly mapped and Jaccard is 0.186. The analysis therefore does not assign a percentage of the jump to either cause.
+
+Endpoint transition is reported with explicit accounting: 19.48 ha of the OBS01 flood footprint persists at OBS07, 35.44 ha of the initial footprint is no longer mapped, and 2.16 ha is mapped at OBS07 outside the initial footprint. The net decline is 33.28 ha. The 35.44 ha gross-recession value is not the difference between the two fixed-reference total-water values.
 
 The recovery-period RCM water mask (21 December) is compared with Sentinel-2 NDWI (27 December) on mutually valid cells. RCM is the prediction for metric direction. Precision is 0.663, recall 0.978, F1 0.790, and IoU 0.653. The 6.2-day timing offset, recession, cloud/SCL exclusions, resolution, mixed shoreline cells, vegetation, and different SAR/optical physics are plausible disagreement causes.
 
-OpenStreetMap road ways are intersected with the near-event water-gain geometry. Fourteen ways intersect over 0.346 km, including one bridge-tagged way. These are described only as **intersecting** or **potentially exposed**; satellite overlap is not proof of physical damage, closure, depth, or traffic impact.
+OpenStreetMap road ways are intersected with the OBS01 initial-observation open-water-flood geometry. Fourteen ways intersect over 0.346 km, including one bridge-tagged way. These are described only as **intersecting** or **potentially exposed**; satellite overlap is not proof of physical damage, closure, depth, or traffic impact.
 
 ## Phase 5 impact-analysis method
 
-Phase 5 reuses the fixed Phase 4 AOI, 20 m grid, semantic class interpretation, and validated endpoint metrics. It reconstructs only the 12 December near-event and 21 December recovery masks required for impact geometry; it does not repeat candidate screening, the seven-date discovery workflow, or full satellite preprocessing. The reconstruction is accepted only when baseline, near-event, gain, recovery, and loss areas reproduce the validated Phase 4 values to within 0.01 ha.
+Phase 5 consumes `data/processed/phase4/event_observations.csv`, the seven-frame GeoJSON, fixed-reference GeoJSON, endpoint-transition GeoJSON, and temporal audit. It reconstructs only the OBS01 and OBS07 endpoint masks required for potential-exposure geometry and validates 971.88, 54.92, 21.64, 35.44, 19.48, 2.16, and 33.28 ha to within 0.01 ha. It does not hand-code the seven-date sequence or refresh external infrastructure/land/place snapshots.
 
 ### Priority zones and grid interpretation
 
@@ -259,4 +263,4 @@ Community context uses official geolocated Canadian place names as points. Dista
 
 Official warnings and impact reports establish the date, broader affected region, evacuation and road-interruption context. They are kept separate from pixel-level evidence. Spatial patterns may be described as *broadly consistent with* the reported Lower Fraser / Fraser Valley event, but wider regional reporting is not transferred to a particular AOI feature without an exact official geometry or asset record.
 
-Supported claims are limited to observed/mapped quantities, temporal recession, measured spatial intersections and proximity, independent recovery-period agreement, and broad regional consistency. Unsupported claims include physical asset damage, bridge failure, flood depth, population affected, crop loss, climate attribution, full-event representativeness, universal use of the Folly Lake value, or complete OSM coverage.
+Supported claims are limited to observed/mapped quantities, a lower final endpoint, explicit gross/persistent/final-only transition areas, measured spatial intersections and proximity, independent recovery-period agreement, and broad regional consistency. Unsupported claims include a continuous daily trajectory, satellite-derived event peak, exact attribution of the OBS02→OBS03 jump, physical asset damage, bridge failure, flood depth, population affected, crop loss, climate attribution, full-event representativeness, universal use of the Folly Lake value, or complete OSM coverage.

@@ -35,9 +35,8 @@
 ### Dashboard
 
 - streamlit
+- pydeck
 - plotly
-- folium
-- streamlit-folium
 
 ## Common commands
 
@@ -62,11 +61,13 @@ jupyter lab
 
 In JupyterLab, select **Kernel > Change Kernel > Python 3.12 (Space Hackathon 2026)** when the notebook is not already using that kernel.
 
-Run the Streamlit placeholder:
+Run the local dashboard:
 
 ```bash
 streamlit run app.py
 ```
+
+The dashboard uses committed CSV and GeoJSON handoff files only. PyDeck is configured without a remote basemap, so startup does not require satellite, OSM, or tile-service access.
 
 ## Cross-platform note
 

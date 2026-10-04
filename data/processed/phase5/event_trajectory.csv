@@ -1,0 +1,8 @@
+timestamp_utc,temporal_class,observation_id,context_label,platform,beam_mode,source_resolution_m,orbit_direction,swath_radiometry,classifier_channel,confidence,flood_outside_baseline_ha,fixed_reference_total_water_ha,comparability_level
+2025-12-12 14:08:24+00:00,OBS01,OBS01,initial selected observation,RCM-1,5M22,5.0,DSC,Gamma,HH,Moderate,54.92,1026.8,high within 5M22 pair
+2025-12-14 14:24:23+00:00,OBS02,OBS02,intervening low mapped extent,RCM-1,16M9,16.0,DSC,Gamma,HH,Moderate,20.6,992.48,low: no same-beam comparison
+2025-12-15 01:50:37+00:00,OBS03,OBS03,secondary-pulse context,RCM-3,SC30MB,30.0,ASC,Gamma,HH,Moderate,50.72,1022.6,limited: radiometry/channel differ within pair
+2025-12-16 14:08:35+00:00,OBS04,OBS04,later elevated observation,RCM-2,5M22,5.0,DSC,Gamma,HH,Moderate,36.6,1008.48,high within 5M22 pair
+2025-12-17 14:16:34+00:00,OBS05,OBS05,later elevated observation,RCM-2,16M16,16.0,DSC,Sigma,HH,Moderate,37.28,1009.16,high within 16M16 pair
+2025-12-19 01:50:14+00:00,OBS06,OBS06,lower endpoint observation,RCM-1,SC30MB,30.0,ASC,Sigma,HV,Moderate,28.96,1000.84,limited: radiometry/channel differ within pair
+2025-12-21 14:16:46+00:00,OBS07,OBS07,lower endpoint observation,RCM-3,16M16,16.0,DSC,Sigma,HH,Moderate,21.64,993.52,high within 16M16 pair
