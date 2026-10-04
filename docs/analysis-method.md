@@ -189,6 +189,17 @@ It is not reliable enough for small absolute-shoreline claims. Phase 4 must pres
 
 ## Phase 4 real-event change-detection method
 
+### Final production-source decision — 2026-10-04
+
+Phase 4/5 are **Translation & Impact Communication**, following the independent
+Level-1 Research & Method Selection stage. The final Phase 3B experiment is
+frozen as **FINAL EXPERIMENTAL FAIL**; it did not meet the original GO gate.
+Operational NRCan EGS RCM-derived flood products therefore remain the production
+spatial source. RF masks and 30 m research statistics do not enter this 20 m,
+300 × 300, 0.04 ha/pixel workflow. Matching local Level-1 data for the 5 m EGS
+acquisitions were unavailable; resolution may contribute to differences, but
+processing, filtering, ancillary inputs, vectorization and QA also matter.
+
 ### Event feasibility and selection
 
 Candidate cases were screened in order of scientific and access feasibility rather than visual drama:
@@ -239,13 +250,30 @@ The OBS02→OBS03 jump is diagnosed as a mixture of real hydrologic and observat
 
 Endpoint transition is reported with explicit accounting: 19.48 ha of the OBS01 flood footprint persists at OBS07, 35.44 ha of the initial footprint is no longer mapped, and 2.16 ha is mapped at OBS07 outside the initial footprint. The net decline is 33.28 ha. The 35.44 ha gross-recession value is not the difference between the two fixed-reference total-water values.
 
-The recovery-period RCM water mask (21 December) is compared with Sentinel-2 NDWI (27 December) on mutually valid cells. RCM is the prediction for metric direction. Precision is 0.663, recall 0.978, F1 0.790, and IoU 0.653. The 6.2-day timing offset, recession, cloud/SCL exclusions, resolution, mixed shoreline cells, vegetation, and different SAR/optical physics are plausible disagreement causes.
+The recovery-period **fixed-reference total mapped water** mask (fixed OBS01
+class 1 union OBS07 class 2, 21 December) is compared with Sentinel-2 NDWI
+(27 December) on mutually valid cells. EGS-derived total water is the prediction
+for metric direction. Precision is 0.663, recall 0.978, F1 0.790, and IoU 0.653.
+These scores are neither class-2-only flood accuracy nor experimental RF
+performance. The exact offset is 6.2044 days, not same-day validation. Timing,
+cloud/SCL exclusions, resolution, mixed shoreline pixels and SAR/optical physics
+limit interpretation. Existing confusion counts and timestamps are preserved in
+`data/processed/phase4/recovery_validation.json`; no new optical processing was
+performed during final integration.
 
 OpenStreetMap road ways are intersected with the OBS01 initial-observation open-water-flood geometry. Fourteen ways intersect over 0.346 km, including one bridge-tagged way. These are described only as **intersecting** or **potentially exposed**; satellite overlap is not proof of physical damage, closure, depth, or traffic impact.
 
 ## Phase 5 impact-analysis method
 
-Phase 5 consumes `data/processed/phase4/event_observations.csv`, the seven-frame GeoJSON, fixed-reference GeoJSON, endpoint-transition GeoJSON, and temporal audit. It reconstructs only the OBS01 and OBS07 endpoint masks required for potential-exposure geometry and validates 971.88, 54.92, 21.64, 35.44, 19.48, 2.16, and 33.28 ha to within 0.01 ha. It does not hand-code the seven-date sequence or refresh external infrastructure/land/place snapshots.
+Phase 5 consumes `data/processed/phase4/event_observations.csv`, the seven-frame
+GeoJSON, fixed-reference GeoJSON, endpoint-transition GeoJSON, and temporal audit.
+It reconstructs only OBS01/OBS07 endpoint masks and validates 971.88, 54.92,
+21.64, 35.44, 19.48, 2.16 and 33.28 ha. The archived Overpass response, retained
+official place table and retained ALR overlap are now reused without an implicit
+external refresh. Missing snapshots raise an actionable restore error. Full ALR
+AOI polygons are not retained, so their full area cannot be reconstructed from
+the overlap; the notebook no longer silently re-queries them. Endpoint
+compatibility views are derived from the canonical observation table.
 
 ### Priority zones and grid interpretation
 
@@ -258,6 +286,20 @@ All impact geometries are transformed to EPSG:32610 before metric operations. OS
 Distance summaries use cumulative 50 m, 100 m, and 250 m bands for roads, bridge-tagged ways, and official place points. Direct intersections are included in all applicable cumulative bands. These are proximity measures only: the bands do not represent flood depth, damage probability, safety, accessibility, or population exposure.
 
 Community context uses official geolocated Canadian place names as points. Distance is measured from each point to the nearest mapped gain geometry; no population is assigned. Agricultural context uses B.C. Agricultural Land Reserve polygons. The resulting 36.65 ha overlap means mapped gain intersects legally designated ALR land; it is not a crop map or evidence of agricultural loss.
+
+The current clipped snapshot contains **234** unique road ways, not the old
+232 count. Fourteen intersect over 345.7434 m; the 121-way map layer is only the
+250 m subset. Three bridge-tagged ways occur in the full AOI table, two are
+within 250 m, and only BC 7 directly intersects (8.7172 m). Taylor Road is
+132.2793 m away; North Nicomen Road is 343.2199 m away. Distinct OSM ways can
+share a name. The 25 retained nearest place points are a context subset, not a
+complete community inventory.
+
+Legacy `baseline` columns are preserved for consumers but mean the fixed OBS01
+semantic reference, not pre-event water. Human-readable GeoJSON observation
+labels remain compatibility fields; canonical UTC timestamps are in the
+observation CSV. Grid boundary squares may extend beyond the AOI, but all
+coverage denominators are clipped to valid AOI pixels.
 
 ### Evidence consolidation and claims discipline
 

@@ -67,7 +67,42 @@
     "endpoint_transition.geojson"
   ],
   "phase4_metadata": [
-    "temporal_audit.json"
+    "temporal_audit.json",
+    "recovery_validation.json"
   ],
-  "phase6_note": "Use the Phase 4 temporal contract and Phase 5 exposure snapshots. Do not rerun discovery or raw satellite processing at dashboard startup."
+  "phase6_note": "Use the Phase 4 temporal contract and Phase 5 exposure snapshots. Do not rerun discovery or raw satellite processing at dashboard startup.",
+  "method_selection": {
+    "project_stage": "Translation & Impact Communication",
+    "production_spatial_source": "NRCan EGS RCM-derived operational flood extent",
+    "phase3b_status": "FINAL EXPERIMENTAL FAIL",
+    "phase3b_gate_path": "data/processed/phase3b/rf_v2_final/final_gate_status.json",
+    "phase3b_gate_sha256": "e515c49a436d9d4eaeaa1638361ada00155330b804a99b714b8b62cdf561b36f",
+    "level1_promoted": false,
+    "grid_boundary": "Phase 4/5: EPSG:32610, 20 m, 300x300, 0.04 ha/pixel; frozen experimental Phase 3B: 30 m, 200x200, 0.09 ha/pixel. Do not mix masks or statistics.",
+    "rationale": "Independent RCM Level-1 analysis evaluated automated flood extraction. Because the final experimental classifier did not meet the pre-registered GO gate, downstream temporal and impact analysis retains operational EGS flood extent.",
+    "resolution_caveat": "Accessible Level-1 research imagery was 16 m/30 m; matching Level-1 inputs for the 5 m EGS acquisitions were unavailable locally. Finer source imagery may contribute to differences alongside processing, filtering, ancillary data, vectorization and QA; no single-cause explanation is established."
+  },
+  "impact_contract": {
+    "source_observation_id": "OBS01",
+    "source_timestamp_utc": "2025-12-12T14:08:24+00:00",
+    "source_meaning": "Initial selected EGS class-2 open-water flood snapshot; not total event impact or measured peak",
+    "road_snapshot_way_count": 234,
+    "roads_vector_scope": "exposed_roads.geojson retains only ways within 250 m; road_exposure.csv is the full clipped snapshot",
+    "direct_road_definition": "Positive line overlap length with the OBS01 snapshot; repeated names may be distinct OSM ways",
+    "priority_selection": "Mapped gain > 0 AND (increase > 5.88 pp empirical context OR road_count_direct > 0 OR bridge_count_direct > 0)",
+    "priority_order": "Observed percentage-point increase descending, then mapped gain area descending; inspection shortlist, not a risk score",
+    "legacy_field_semantics": {
+      "baseline_water_ratio_pct": "Fixed OBS01 EGS semantic class-1 reference coverage, not pre-event observed water",
+      "event_water_ratio_pct": "Fixed-reference union OBS01 flood coverage",
+      "recovery_water_ratio_pct": "Fixed-reference union OBS07 flood coverage",
+      "event_minus_baseline_pp": "OBS01 union coverage minus fixed-reference coverage in percentage points",
+      "flood_outside_baseline_ha": "Deprecated compatibility alias for EGS open-water flood outside fixed semantic reference"
+    },
+    "alr_geometry_scope": "Only mapped gain overlapping ALR designation is retained, not full AOI ALR polygons or crop area",
+    "community_scope": "25 retained nearest official place points; point context only, not a complete settlement or population inventory",
+    "claim_boundary": "Potential exposure or proximity only; no damage, road closure, bridge failure, crop loss or population estimate",
+    "regional_reporting_boundary": "Highway 1 closure reporting is regional context; the reported closure segment is outside this compact AOI"
+  },
+  "recovery_validation": "data/processed/phase4/recovery_validation.json",
+  "source_provenance": "data/processed/phase5/source_provenance.json"
 }

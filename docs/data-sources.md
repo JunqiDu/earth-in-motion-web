@@ -220,7 +220,14 @@ No credentials, raw satellite scenes, extracted EGS archives, or road snapshots 
 - Use: line intersection and 50/100/250 m proximity context
 - Caveat: coverage and tagging are not guaranteed complete; spatial overlap does not establish damage or closure
 
-The refined exact-AOI clip contains 232 ways, compared with the 238 ways returned within the slightly larger WGS84 query envelope in Phase 4. Both workflows identify the same 14 directly intersecting ways and approximately 0.346 km of line overlap.
+The **current committed snapshot contains 234 unique clipped ways**, verified
+against `road_exposure.csv` and the archived 238-way Overpass response. The older
+232 statement was stale. Fourteen ways still directly intersect over 345.7434 m.
+`exposed_roads.geojson` retains only 121 ways within 250 m, not all AOI roads.
+The response is preserved as `data/processed/phase5/road_source_snapshot.json`;
+its OSM base timestamp is 2026-10-03T20:40:11Z. The cache did not record which
+Overpass endpoint succeeded or an exact HTTP retrieval timestamp; neither is
+inferred. This is a lightweight ODbL source snapshot, not a new query.
 
 ### Official geolocated place names
 
@@ -248,4 +255,18 @@ The refined exact-AOI clip contains 232 ways, compared with the 238 ways returne
 
 Together with the Phase 4 official sources, these establish the wider event timeline and impact context. They are not used as exact pixel or asset labels.
 
-Phase 5 stores only small derived CSV/GeoJSON handoff files and four PNG maps. Public source downloads and caches remain in the system temporary directory; no credentials or raw satellite archives are stored in Git.
+Phase 5 stores compact derived handoff files, four preserved PNGs and the small
+archived Overpass response. No credentials or raw satellite scenes are added.
+`source_provenance.json` records retained source identities, scope, hashes and
+known omissions. Only the ALR/gain intersection and 25 nearest official place
+points are retained; full ALR polygons and a full place inventory are not
+available from those exports. Existing exact-retrieval-time/source-version gaps
+are disclosed rather than manufactured. Phase 4 WaterOffice records preserve
+per-row URLs and unit-value approval fields; they are regional discharge and
+water-level context, not temperature or pixel-level truth.
+
+The retained production spatial source is operational RCM-derived EGS. Phase
+3B's final experimental Level-1 method failed the GO gate and remains frozen
+research evidence. The 20 m EGS accounting grid and 30 m Level-1 research grid
+are separate. See [integration audit](phase45-final-integration.md) for the
+production-source and recovery-comparison contracts.

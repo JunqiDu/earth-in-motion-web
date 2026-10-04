@@ -1,0 +1,27 @@
+{
+  "prediction_source": "Fixed OBS01 EGS class-1 reference union OBS07 EGS class-2 flood",
+  "prediction_observation_id": "OBS07",
+  "prediction_timestamp_utc": "2025-12-21T14:16:46+00:00",
+  "comparison_source": "Sentinel-2C L2A NDWI > 0; SCL exclusion; categorical mode aggregation to 20 m",
+  "comparison_item_id": "S2C_T10UEV_20251227T191058_L2A",
+  "comparison_timestamp_utc": "2025-12-27T19:11:07.775000+00:00",
+  "temporal_offset_days": 6.20441869212963,
+  "analysis_crs": "EPSG:32610",
+  "grid_resolution_m": 20,
+  "pixel_area_ha": 0.04,
+  "evaluation_pixels": 88515,
+  "confusion_pixels": {
+    "TP": 15774,
+    "FP": 8017,
+    "FN": 357,
+    "TN": 64367
+  },
+  "metrics": {
+    "precision": 0.6630238325417175,
+    "recall": 0.9778687000185977,
+    "F1": 0.790240969891288,
+    "IoU": 0.6532217989067418
+  },
+  "claim_boundary": "Recovery-period total-mapped-water agreement, not same-day validation, class-2-only flood accuracy, ground truth, or experimental RF performance.",
+  "record_origin": "Existing Phase 4 agreement output; no new satellite processing"
+}

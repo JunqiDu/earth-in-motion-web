@@ -1,10 +1,11 @@
 evidence_type,source,date,observation,role,limitation
+Production source selection,Frozen Phase 3B final validation + NRCan EGS,2026-10-04,Experimental Level-1 RF did not meet the GO gate; EGS retained,Research-to-production decision,RF is research evidence only; neighboring holdout does not replace five-scene validation
 First hydrologic pulse,WaterOffice + BC River Forecast Centre,2025-12-09 to 12,Chilliwack 5-minute discharge context reaches its first selected-window maximum before OBS01,Establishes regional first-pulse timing,OBS01 follows the gauge maximum; no same-contract pre-event EGS flood frame or satellite peak is claimed
 Inter-pulse low,WaterOffice,2025-12-13 to 15,Chilliwack station context reaches a selected-window low near the OBS02 period,Separates regional pulse windows,Station context is not a pixel-level validation
 Second hydrologic pulse,WaterOffice + BC Government / BC River Forecast Centre,2025-12-15 to 18,Renewed regional flow rise; OBS04/OBS05 occur in the second-pulse window,Establishes regional second-pulse timing,OBS02→OBS03 has low spatial continuity and mixed acquisition characteristics; contribution ratio unresolved
 Initial flood snapshot,"NRCan EGS, RCM-derived",2025-12-12,54.92 ha EGS open-water flood class,Defines OBS01 endpoint snapshot,"Moderate confidence; initial selected observation, not peak"
 Acquisition sequence,Seven NRCan EGS products,2025-12-12 to 21,Variable mapped extents with lower final endpoint,Supports short-term mapped evolution,Discrete acquisitions; no daily interpolation
 Endpoint transition,Phase 4/5 fixed-grid analysis,2025-12-12 to 21,35.44 ha gross recession; 33.28 ha net endpoint decline,Separates gross and net change,Endpoint comparison only
-Independent EO,Sentinel-2 L2A,2025-12-27,RCM/optical recovery F1 0.790; IoU 0.653,Independent recovery-period support,6.2-day timing offset
+Independent EO,Sentinel-2 L2A,2025-12-27,EGS total-water/optical recovery F1 0.790; IoU 0.653,Independent recovery-period support,"6.2-day offset; total-water comparison, not class-2-only flood accuracy or RF performance"
 Infrastructure exposure,OpenStreetMap / Overpass,retrieved 2026-10-03,14 road ways and 1 bridge-tagged way intersect OBS01,Adds asset context,Completeness/tagging vary; no damage proof
 Agricultural context,BC Agricultural Land Reserve,retrieved 2026-10-03,36.65 ha of OBS01 intersects ALR designation,Adds land designation,Not crop or damage mapping

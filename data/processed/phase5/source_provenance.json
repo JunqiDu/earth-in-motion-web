@@ -1,0 +1,70 @@
+{
+  "scope": "Retained Phase 4/5 production snapshots; no new external query during final integration",
+  "egs": {
+    "archive_base_url": "https://data.eodms-sgdot.nrcan-rncan.gc.ca/public/EGS/2025/Flood/CAN/BC/",
+    "observation_table": "data/processed/phase4/event_observations.csv",
+    "processing": "Class vectors to EPSG:32610; pixel-center rasterization on 20 m grid; exported vectorized masks",
+    "reference_definition": "Fixed OBS01 semantic class 1, not observed pre-event normal water",
+    "hash_contract": "data/processed/phase4/temporal_audit.json"
+  },
+  "hydrology": {
+    "snapshots": [
+      "data/processed/phase4/event_hydrology.csv",
+      "data/processed/phase4/event_hydrology_unit_values.csv"
+    ],
+    "source_url_field": "source_url in each record",
+    "meaning": "Regional discharge/water-level context, not water temperature or pixel truth",
+    "approval_field": "Original approval/status preserved; selected unit values report Final/Finales",
+    "distance_note": "Stored station-to-AOI distances are contextual rounded values, not surveyed distances",
+    "retrieval_time": "Exact HTTP retrieval timestamp not retained; do not infer it from event dates"
+  },
+  "recovery_validation": "data/processed/phase4/recovery_validation.json",
+  "osm": {
+    "snapshot": "data/processed/phase5/road_source_snapshot.json",
+    "source": "OpenStreetMap contributors via Overpass",
+    "candidate_urls": [
+      "https://overpass-api.de/api/interpreter",
+      "https://overpass.kumi.systems/api/interpreter"
+    ],
+    "resolved_endpoint": "Not retained in the cached response; do not infer which endpoint succeeded",
+    "query_meaning": "ways tagged highway in WGS84 AOI envelope, clipped to exact EPSG:32610 AOI",
+    "osm_base_timestamp_utc": "2026-10-03T20:40:11Z",
+    "envelope_ways": 238,
+    "clipped_ways": 234,
+    "licence": "ODbL; © OpenStreetMap contributors",
+    "retrieval_note": "Evidence table records 2026-10-03; OSM base timestamp is not HTTP retrieval time"
+  },
+  "alr": {
+    "source_url": "https://delivery.maps.gov.bc.ca/arcgis/rest/services/whse/bcgw_pub_whse_legal_admin_boundaries/MapServer/23/query",
+    "snapshot": "data/processed/phase5/alr_gain_overlap.geojson",
+    "retrieval_date_recorded": "2026-10-03",
+    "full_source_polygons_retained": false,
+    "meaning": "OBS01 gain/ALR designation intersection only, not full ALR AOI area, crop acreage or damage"
+  },
+  "communities": {
+    "source_url": "https://ised-isde.canada.ca/app/scr/sittibc/web/api/openData/MAG_EXO.CSV",
+    "snapshot": "data/processed/phase5/community_proximity.csv",
+    "coordinates_crs": "EPSG:4326",
+    "distance_crs": "EPSG:32610",
+    "scope": "25 retained nearest named points, not settlement boundaries or population inventory",
+    "retrieval_time": "Exact source retrieval timestamp/version unavailable"
+  },
+  "priority_grid": {
+    "spacing_m": 1000,
+    "source": "Deterministic fixed UTM grid in Phase 4/5 notebooks",
+    "boundary_cells": "Nominal squares may extend outside AOI; coverage denominator is valid AOI pixels"
+  },
+  "compatibility": "Existing baseline-named CSV columns and human-readable GeoJSON UTC labels retained; meanings are defined in handoff impact_contract",
+  "artifact_sha256": {
+    "data/processed/phase5/road_source_snapshot.json": "2b0327f0e925a689bc44163dfe30474ea08d17ff379ab9d09dbe7081da39ba0a",
+    "data/processed/phase5/road_exposure.csv": "492fe9c41e4191ffedeaaa4a16a840fb19b5f6e96ad46f0e2a46f43d678516dd",
+    "data/processed/phase5/bridge_exposure.csv": "929b0a7aecacba062f5790d15e4d185a2bfd87cd726708b2d58dae113eefa554",
+    "data/processed/phase5/community_proximity.csv": "1a0cb32392b434e0bb0a2b606217ec603039374be78bb5b819c6cf4cbbcae689",
+    "data/processed/phase5/alr_gain_overlap.geojson": "5c11b5e78df3f2e3b3edee82d0c9352fc88a7e69efd731f582280f7ad0608939",
+    "data/processed/phase5/exposed_roads.geojson": "626a07b757e7bb306a8d61f3507b8a33bcee44978a737ad3660416620b6feac1",
+    "data/processed/phase5/priority_grid_impact.csv": "ee8e209dcc0c8f63d7f9475e715fcda2468da3224b943064771272a06963d4eb",
+    "data/processed/phase5/flood_gain.geojson": "c194a970e993745af9cd55fb6ccdee4a37ca04151eb477eea3da1fe198e54ad3",
+    "data/processed/phase5/evidence_chain.csv": "6eb1f8c1dd41df21869dd702298d2dfd3d5a17e4394eb6bd035d2bd7f03706c1",
+    "data/processed/phase5/limitations.csv": "af60e1e8e49fdec631dcce4b37d6159b1f5f54ed09788e1c605b0230eb3fde50"
+  }
+}

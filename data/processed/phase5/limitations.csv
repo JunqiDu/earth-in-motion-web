@@ -12,4 +12,7 @@ Mission and Chilliwack gauges provide regional context only; the inside-AOI Cann
 Road and bridge results depend on OSM geometry/tag completeness and indicate potential exposure only.
 "ALR is a legal designation and cannot identify active crops, crop loss or agricultural damage."
 "Official place points are contextual locations, not population-exposure surfaces."
-Sentinel-2 recovery comparison has a 6.2-day timing offset.
+"Sentinel-2 recovery comparison has a 6.2-day offset and evaluates total mapped water, not class-2-only flood accuracy or RF performance."
+Frozen Phase 3B RF failed the original GO gate; EGS remains the production source.
+EGS 20 m accounting and experimental Level-1 30 m grids have different pixel areas and must not be mixed.
+"Only ALR/gain overlap and 25 nearest place points are retained, not full ALR boundaries or a complete community inventory."
